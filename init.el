@@ -36,7 +36,30 @@
 
 (setq package-enable-at-startup nil)
 
-(require 'seq)
+(eval-and-compile
+  (defvar bootstrap-version 5)
+  (defvar bootstrap-file
+    (expand-file-name
+      "straight/repos/straight.el/bootstrap.el"
+      user-emacs-directory)))
+
+(unless (file-exists-p bootstrap-file)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+       'silent 'inhibit-cookies)
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
+
+(load bootstrap-file nil 'nomessage)
+
+(with-no-warnings
+  (setq straight-cache-autoloads t)
+  (setq straight-check-for-modifications '(watch-files)))
+
+(require 'straight bootstrap-file t)
+
+(straight-use-package 'seq)
 (seq-map
   (lambda (path)
     (setq load-path
