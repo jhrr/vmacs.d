@@ -25,7 +25,6 @@
      (frame-parameter nil 'font)
      'japanese-jisx0208 '("VL Gothic" . "unicode-bmp")))
 
-(defalias 'file-as-dir 'file-name-as-directory)
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (subword-mode t)
@@ -268,7 +267,6 @@ Single Capitals as you type."
 (defvar lisp-find-map)
 (define-prefix-command #'lisp-find-map)
 (bind-key "C-h e" #'lisp-find-map)
-
 (bind-key "C-h e c" #'finder-commentary)
 (bind-key "C-h e e" #'view-echo-area-messages)
 (bind-key "C-h e f" #'find-function)
@@ -280,14 +278,9 @@ Single Capitals as you type."
 (bind-key "C-h e v" #'find-variable)
 (bind-key "C-h e V" #'apropos-value)
 
-(use-package linum-off :ensure t)
-(use-package smooth-scrolling :ensure t :config (smooth-scrolling-mode t))
-(use-package volatile-highlights :ensure t :config (volatile-highlights-mode t))
+; (use-package linum-off)
+; (use-package smooth-scrolling :config (smooth-scrolling-mode t))
+; (use-package volatile-highlights :config (volatile-highlights-mode t))
 
-;; TODO: https://github.com/anler/minimal-theme
-;; TODO: https://github.com/ksjogo/labburn-theme
-;; TODO: https://github.com/edran/hc-zenburn-emacs
-
-(provide 'vmacs/core)
-
+(provide 'vmacs-core)
 ;;; vmacs-core.el ends here

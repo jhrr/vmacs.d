@@ -81,6 +81,5 @@ nil are ignored."
         (setq modified-found t)))
     modified-found))
 
-(provide 'vmacs/linux)
-
+(provide 'vmacs-linux)
 ;;; vmacs-linux.el ends here

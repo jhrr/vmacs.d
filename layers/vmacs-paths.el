@@ -4,6 +4,8 @@
 
 ;;; Code:
 
+(defalias 'file-as-dir 'file-name-as-directory)
+
 (defun add-to-load-path (path &optional dir)
   (setq load-path
         (cons (expand-file-name path (or dir user-emacs-directory)) load-path)))
@@ -25,8 +27,8 @@ ADD-PATH is non-nil."
 (defconst user-home-directory (getenv "HOME"))
 (defconst user-dropbox-directory
   (concat (file-as-dir user-home-directory) "Dropbox"))
-(defpath vmacs/layers "layers" t)
-(defpath vmacs/lisp "lisp" t)
+(defpath vmacs/layers "layers" nil t)
+(defpath vmacs/lisp "lisp" nil t)
 (defpath vmacs/caches ".caches")
 (defpath vmacs/autosaves "auto-save-list" (file-as-dir vmacs/caches))
 (defpath vmacs/backups "backups" (file-as-dir vmacs/caches))
@@ -40,12 +42,11 @@ ADD-PATH is non-nil."
       kept-old-versions 2
       version-control t)
 
-(let ((my-custom-file (expand-file-name "custom.el" user-emacs-directory)))
-  (unless (file-exists-p my-custom-file)
-    (message "Creating %s because it doesn't exist..." my-custom-file)
-    (shell-command (concat "touch " (shell-quote-argument my-custom-file))))
-  (setq custom-file my-custom-file))
+(let ((vmacs/custom-file (expand-file-name "custom.el" user-emacs-directory)))
+  (unless (file-exists-p vmacs/custom-file)
+    (message "Creating %s because it doesn't exist..." vmacs/custom-file)
+    (shell-command (concat "touch " (shell-quote-argument vmacs/custom-file))))
+  (setq custom-file vmacs/custom-file))
 
-(provide 'vmacs/paths)
-
+(provide 'vmacs-paths)
 ;;; vmacs-paths.el ends here

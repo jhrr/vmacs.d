@@ -17,24 +17,23 @@
 
 ;;; Commentary:
 
-;; Invoke, entice and massage Emacs to be in the state we desire once
-;; it has booted up and is ready for use; appoint load-paths,
-;; establish environment basics and prime package layers. Kwatz!
+;; Induce Emacs into a state of ready-for-use; appoint load-paths, establish
+;; environments and prime package layers. Kwatz!
 
 ;;; Code:
 
 (defconst emacs-start-time (current-time))
+
+(when (version< emacs-version "26")
+  (error (concat "Emacs 26 is required. Currently running: " emacs-version)))
+
 (setq gc-cons-threshold (* 1024 1024 20))
 (setq max-specpdl-size 10000) ;; Needed for stream.el
 (setq message-log-max 16384)
-
-(when (version< emacs-version "26")
-  (error "This version of Emacs is not supported"))
+(setq package-enable-at-startup nil)
 
 (unless noninteractive
   (message "Loading %s..." load-file-name))
-
-(setq package-enable-at-startup nil)
 
 (eval-and-compile
   (defvar bootstrap-version 5)
@@ -46,8 +45,9 @@
 (unless (file-exists-p bootstrap-file)
   (with-current-buffer
       (url-retrieve-synchronously
-       "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-       'silent 'inhibit-cookies)
+        (concat "https://raw.githubusercontent.com/"
+                "raxod502/straight.el/develop/install.el")
+        'silent 'inhibit-cookies)
     (goto-char (point-max))
     (eval-print-last-sexp)))
 
@@ -65,30 +65,31 @@
 (straight-use-package 'use-package)
 (eval-when-compile
   (require 'use-package))
+(require 'seq)
 
-(require
-  'vmacs/paths
-  (expand-file-name "vmacs-paths.el" (concat user-emacs-directory "layers")))
-
-; (use-package vmacs/theme)
-; (use-package vmacs/core)
-; (use-package vmacs/darwin :if (equal system-type 'darwin))
-; (use-package vmacs/linux :if (equal system-type 'gnu/linux))
-; (use-package vmacs/evil)
-; (use-package vmacs/edit)
-; (use-package vmacs/helm)
-; (use-package vmacs/ido)
-; (use-package vmacs/org)
-; (use-package vmacs/git)
-; (use-package vmacs/clojure)
-; (use-package vmacs/company)
-; (use-package vmacs/css)
-; (use-package vmacs/haskell)
-; (use-package vmacs/html)
-; (use-package vmacs/js)
-; (use-package vmacs/lisp)
-; (use-package vmacs/python)
-; (use-package vmacs/rust)
+(use-package vmacs-paths :load-path "layers")
+(use-package vmacs-theme)
+(use-package vmacs-core)
+(use-package vmacs-darwin :if (equal system-type 'darwin))
+(use-package vmacs-linux :if (equal system-type 'gnu/linux))
+; (use-package vmacs-edit)
+; (use-package vmacs-company)
+; (use-package vmacs-evil)
+; (use-package vmacs-git)
+; (use-package vmacs-helm)
+; (use-package vmacs-ido)
+; (use-package vmacs-org)
+; (use-package vmacs-snippets)
+; (use-package vmacs-clojure)
+; (use-package vmacs-css)
+; (use-package vmacs-erlang)
+; (use-package vmacs-haskell)
+; (use-package vmacs-html)
+; (use-package vmacs-js)
+; (use-package vmacs-lisp)
+; (use-package vmacs-python)
+; (use-package vmacs-supercollider)
+; (use-package vmacs-rust)
 
 ;;; --- Post-init
 (progn

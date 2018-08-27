@@ -4,12 +4,12 @@
 
 ;;; Code:
 
-(when (memq window-system '(mac ns))
-  (use-package exec-path-from-shell
-    :config
-    (progn
-      (setq exec-path-from-shell-check-startup-files nil)
-      (exec-path-from-shell-copy-env "PATH"))))
+; (when (memq window-system '(mac ns))
+;   (use-package exec-path-from-shell
+;     :config
+;     (progn
+;       (setq exec-path-from-shell-check-startup-files nil)
+;       (exec-path-from-shell-copy-env "PATH"))))
 
 (set-face-attribute
  'default nil
@@ -31,6 +31,5 @@
 
 (global-set-key "\263" 'insert-hash)
 
-(provide 'vmacs/darwin)
-
+(provide 'vmacs-darwin)
 ;;; vmacs-darwin.el ends here

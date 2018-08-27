@@ -8,6 +8,5 @@
 ;; TODO: https://github.com/anler/minimal-theme
 ;; TODO: https://github.com/edran/hc-zenburn-emacs
 
-(provide 'vmacs/theme)
-
+(provide 'vmacs-theme)
 ;;; vmacs-theme.el ends here
