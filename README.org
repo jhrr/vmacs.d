@@ -1,0 +1,6 @@
+#+AUTHOR: jhrr
+* vmacs.d
+
+An emacs config.
+
+Requires emacs >= 25.
