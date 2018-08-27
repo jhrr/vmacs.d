@@ -59,12 +59,16 @@
 
 (require 'straight bootstrap-file t)
 
-(straight-use-package 'seq)
-(seq-map
-  (lambda (path)
-    (setq load-path
-          (cons (expand-file-name path user-emacs-directory) load-path)))
-  '("layers" "lisp"))
+(with-no-warnings
+  (setq use-package-verbose t))
+(straight-use-package 'bind-map)
+(straight-use-package 'use-package)
+(eval-when-compile
+  (require 'use-package))
+
+(require
+  'vmacs/paths
+  (expand-file-name "vmacs-paths.el" (concat user-emacs-directory "layers")))
 
 ; (use-package vmacs/theme)
 ; (use-package vmacs/core)
