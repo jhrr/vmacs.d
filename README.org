@@ -3,4 +3,9 @@
 
 An emacs config.
 
-Requires emacs >= 25.
+Requires emacs 26.
+
+** TODO
+- [ ] Evil keybindings, refactor core with respect to this.
+- [ ] Move all 'theme' relaated code from ~core.el~ to ~theme.el~.
+- [ ] https://github.com/NicolasPetton/pass
