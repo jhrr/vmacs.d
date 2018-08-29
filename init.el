@@ -75,6 +75,7 @@
 ; (use-package vmacs-edit)
 ; (use-package vmacs-company)
 ; (use-package vmacs-evil)
+; (use-package vmacs-flycheck)
 ; (use-package vmacs-git)
 ; (use-package vmacs-helm)
 ; (use-package vmacs-ido)
@@ -90,6 +91,7 @@
 ; (use-package vmacs-python)
 ; (use-package vmacs-supercollider)
 ; (use-package vmacs-rust)
+; (use-package vmacs-web)
 
 ;;; --- Post-init
 (progn
