@@ -1,6 +1,6 @@
 ;;; vmacs-core.el -*- lexical-binding:t -*-
 
-;;; Commentary: Core configuration.
+;;; Commentary: Core environment configuration, funs and bindings.
 
 ;;; Code:
 
@@ -79,7 +79,6 @@
     (interactive)
     (dired-other-window user-emacs-directory)))
 
-;;; --- Global faces, macros and functions.
 (defface dim-parens-face
   '((((class color) (background dark))
      (:foreground "grey50"))
@@ -131,7 +130,6 @@ Single Capitals as you type."
       (if (vc-backend filename)
           (vc-delete-file filename)
         (progn
-          ;; TODO: move to trash on Darwin?
           (delete-file filename)
           (message "Deleted file %s" filename)
           (kill-buffer))))))
@@ -191,6 +189,18 @@ Single Capitals as you type."
   "Ping a HOST once and return success or failure."
   (= 0 (call-process "/sbin/ping" nil nil nil "-c1" "-W50" "-q" host)))
 
+(defun scratch ()
+  (interactive)
+  (let ((current-mode major-mode))
+    (switch-to-buffer-other-window (get-buffer-create "*scratch*"))
+    (goto-char (point-min))
+    (when (looking-at ";")
+      (forward-line 4)
+      (delete-region (point-min) (point)))
+    (goto-char (point-max))
+    (if (memq current-mode lisp-modes)
+        (funcall current-mode))))
+
 (defun what-face (pos)
   "Get the font-face at cursor POS."
   (interactive "d")
@@ -242,6 +252,7 @@ Single Capitals as you type."
 ;; mode specific compilation or evaluation process.
 
 ;; TODO: work a out consistent info/help lookup system
+;; TODO: parallel evil bindings
 
 (defvar ctrl-period-map)
 (define-prefix-command 'ctrl-period-map)
@@ -250,19 +261,6 @@ Single Capitals as you type."
 (defvar ctrl-semicolon-map)
 (define-prefix-command 'ctrl-semicolon-map)
 (bind-key "C-;" 'ctrl-semicolon-map)
-
-;;; --- C-h -- help-map
-(defun scratch ()
-  (interactive)
-  (let ((current-mode major-mode))
-    (switch-to-buffer-other-window (get-buffer-create "*scratch*"))
-    (goto-char (point-min))
-    (when (looking-at ";")
-      (forward-line 4)
-      (delete-region (point-min) (point)))
-    (goto-char (point-max))
-    (if (memq current-mode lisp-modes)
-        (funcall current-mode))))
 
 (defvar lisp-find-map)
 (define-prefix-command #'lisp-find-map)
@@ -277,10 +275,6 @@ Single Capitals as you type."
 (bind-key "C-h e s" #'scratch)
 (bind-key "C-h e v" #'find-variable)
 (bind-key "C-h e V" #'apropos-value)
-
-; (use-package linum-off)
-; (use-package smooth-scrolling :config (smooth-scrolling-mode t))
-; (use-package volatile-highlights :config (volatile-highlights-mode t))
 
 (provide 'vmacs-core)
 ;;; vmacs-core.el ends here
