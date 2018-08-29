@@ -4,6 +4,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'use-package))
+
 ; (use-package linum-off
 ;   :straight t)
 
@@ -25,17 +28,7 @@
 ;   :commands (global-aggressive-indent-mode)
 ;   :hook (prog-mode . (lambda () (require 'aggressive-indent)))
 ;   :init
-;   (general-setq aggressive-indent-excluded-modes
-;                 '(haskell-mode
-;                   js-mode
-;                   makefile-gmake-mode
-;                   makefile-mode
-;                   python-mode
-;                   rust-mode
-;                   sql-mode
-;                   text-mode
-;                   yaml-mode))
-
+;   (general-setq aggressive-indent-excluded-modes '())
 ;   :preface
 ;   (defun turn-off-aggressive-indent-mode ()
 ;     (when (fboundp 'aggressive-indent-mode)
@@ -44,7 +37,7 @@
 ;   :config
 ;   (progn
 ;     (add-hook 'diff-auto-refine-mode-hook #'turn-off-aggressive-indent-mode)
-;     (global-aggressive-indent-mode +1)))
+;     (global-aggressive-indent-mode t)))
 
 
 (provide 'vmacs-edit)
