@@ -8,9 +8,12 @@ Requires emacs 26.
 ** TODO
 - [ ] Evil keybindings, refactor core with respect to this.
 - [ ] Move all 'theme' related code from ~core.el~ to ~theme.el~.
-- [ ] https://github.com/NicolasPetton/pass
 - [ ] Re-namespace all ~my-~ with ~vmacs/~.
 - [ ] Remove all ~:ensure~ statements.
 - [ ] https://github.com/raxod502/straight.el#installing-org-with-straightel
 - [ ] https://github.com/emacs-evil/evil-collection
 - [ ] https://github.com/supercollider/scel
+- [ ] https://github.com/clojure-emacs/helm-cider
+- [ ] https://github.com/rnkn/olivetti
+- [ ] https://github.com/NicolasPetton/pass
+- [ ] https://github.com/vapniks/ido-gnus
