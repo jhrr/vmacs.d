@@ -162,11 +162,8 @@ Single Capitals as you type."
 (defun insert-guid ()
   "Insert a GUID at point."
   (interactive "*")
-  (require 's)
-  (let ((uuid (s-trim-right (shell-command-to-string "uuidgen"))))
+  (let ((uuid (trim (shell-command-to-string "uuidgen"))))
     (insert uuid)))
-
-(bind-key "C-c U" #'insert-guid)
 
 (defun nuke-all ()
   "Kill all buffers, leaving *scratch* only."
@@ -200,6 +197,27 @@ Single Capitals as you type."
     (goto-char (point-max))
     (if (memq current-mode lisp-modes)
         (funcall current-mode))))
+
+(defun trim-left (s)
+  "Remove whitespace at the beginning of S."
+  (declare (pure t) (side-effect-free t))
+  (save-match-data
+    (if (string-match "\\`[ \t\n\r]+" s)
+        (replace-match "" t t s)
+      s)))
+
+(defun trim-right (s)
+  "Remove whitespace at the end of S."
+  (save-match-data
+    (declare (pure t) (side-effect-free t))
+    (if (string-match "[ \t\n\r]+\\'" s)
+        (replace-match "" t t s)
+      s)))
+
+(defun trim (s)
+  "Remove whitespace at the beginning and end of S."
+  (declare (pure t) (side-effect-free t))
+  (trim-left (trim-right s)))
 
 (defun what-face (pos)
   "Get the font-face at cursor POS."
