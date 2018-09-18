@@ -33,6 +33,32 @@ ADD-PATH is non-nil."
 (defpath vmacs/autosaves "auto-save-list" (file-as-dir vmacs/caches))
 (defpath vmacs/backups "backups" (file-as-dir vmacs/caches))
 
+(defun hash-keys (hash-table)
+  "Return all the keys in a hash-table."
+  (let ((keys ()))
+    (maphash (lambda (k v) (push k keys)) hash-table)
+    (reverse keys)))
+
+; TODO: Ignore files beginning with .#
+(defun vmacs/layer-map ()
+  "Return a hash of layer names mapped to layer paths."
+  (let ((layers-hash (make-hash-table :test 'equal)))
+    (seq-map (lambda (path)
+               (puthash
+                (file-name-sans-extension (file-name-nondirectory path)) path
+                layers-hash))
+             (directory-files vmacs/layers t "\.el$" nil))
+    layers-hash))
+
+(defun vmacs/jump-to-layer ()
+  "Quickly jump to a config layer."
+  (interactive)
+    (find-file
+     (gethash
+      (ido-completing-read "Open layer file: "
+                           (hash-keys (vmacs/layer-map)))
+      (vmacs/layer-map))))
+
 (setq auto-save-list-file-prefix (concat (file-as-dir vmacs/autosaves) ".auto-save-")
       auto-save-file-name-transforms `((".*" ,vmacs/autosaves t))
       backup-directory-alist '(("." . "~/.emacs.d/.caches/backups"))

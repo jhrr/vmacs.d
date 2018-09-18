@@ -17,3 +17,4 @@ Requires emacs 26.
 - [ ] https://github.com/rnkn/olivetti
 - [ ] https://github.com/NicolasPetton/pass
 - [ ] https://github.com/vapniks/ido-gnus
+- [ ] https://vxlabs.com/2018/06/08/python-language-server-with-emacs-and-lsp-mode/
