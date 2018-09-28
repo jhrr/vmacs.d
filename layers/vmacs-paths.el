@@ -33,6 +33,13 @@ ADD-PATH is non-nil."
 (defpath vmacs/autosaves "auto-save-list" (file-as-dir vmacs/caches))
 (defpath vmacs/backups "backups" (file-as-dir vmacs/caches))
 
+(defun jump-to-init ()
+  "Edit the `user-init-file', in another window."
+  (interactive)
+  (find-file-other-window user-init-file))
+
+(bind-key* "C-c I" 'jump-to-init)
+
 (defun hash-keys (hash-table)
   "Return all the keys in a hash-table."
   (let ((keys ()))
@@ -40,13 +47,15 @@ ADD-PATH is non-nil."
     (reverse keys)))
 
 ; TODO: Ignore files beginning with .#
+; TODO: Add init.el to the hash.
 (defun vmacs/layer-map ()
   "Return a hash of layer names mapped to layer paths."
   (let ((layers-hash (make-hash-table :test 'equal)))
     (seq-map (lambda (path)
                (puthash
-                (file-name-sans-extension (file-name-nondirectory path)) path
-                layers-hash))
+                (file-name-sans-extension
+                 (file-name-nondirectory path))
+                path layers-hash))
              (directory-files vmacs/layers t "\.el$" nil))
     layers-hash))
 
