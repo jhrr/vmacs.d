@@ -84,6 +84,7 @@
 ; (use-package vmacs-snippets)
 ; (use-package vmacs-clojure)
 ; (use-package vmacs-css)
+; (use-package vmacs-elm)
 ; (use-package vmacs-erlang)
 ; (use-package vmacs-haskell)
 ; (use-package vmacs-html)
