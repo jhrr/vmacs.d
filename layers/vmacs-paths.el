@@ -36,7 +36,7 @@ ADD-PATH is non-nil."
 (defun jump-to-init ()
   "Edit the `user-init-file', in another window."
   (interactive)
-  (find-file-other-window user-init-file))
+  (find-file user-init-file))
 
 (bind-key* "C-c I" 'jump-to-init)
 
