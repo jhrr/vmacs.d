@@ -79,7 +79,7 @@
 ; (use-package vmacs-git)
 ; (use-package vmacs-helm)
 (use-package vmacs-ido)
-; (use-package vmacs-org)
+(use-package vmacs-org)
 (use-package vmacs-search)
 ; (use-package vmacs-snippets)
 ; (use-package vmacs-clojure)
