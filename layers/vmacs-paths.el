@@ -33,12 +33,10 @@ ADD-PATH is non-nil."
 (defpath vmacs/autosaves "auto-save-list" (file-as-dir vmacs/caches))
 (defpath vmacs/backups "backups" (file-as-dir vmacs/caches))
 
-(defun jump-to-init ()
+(defun vmacs/jump-to-init ()
   "Edit the `user-init-file', in another window."
   (interactive)
   (find-file user-init-file))
-
-(bind-key* "C-c I" 'jump-to-init)
 
 (defun hash-keys (hash-table)
   "Return all the keys in a hash-table."
@@ -67,6 +65,9 @@ ADD-PATH is non-nil."
       (ido-completing-read "Open layer file: "
                            (hash-keys (vmacs/layer-map)))
       (vmacs/layer-map))))
+
+(bind-key* "C-c I" 'vmacs/jump-to-init)
+(bind-key* "C-c L" 'vmacs/jump-to-layer)
 
 (setq auto-save-list-file-prefix (concat (file-as-dir vmacs/autosaves) ".auto-save-")
       auto-save-file-name-transforms `((".*" ,vmacs/autosaves t))

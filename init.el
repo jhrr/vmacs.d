@@ -91,8 +91,8 @@
 ; (use-package vmacs-js)
 ; (use-package vmacs-lisp)
 ; (use-package vmacs-python)
-; (use-package vmacs-supercollider)
 ; (use-package vmacs-rust)
+; (use-package vmacs-supercollider)
 ; (use-package vmacs-web)
 
 ;;; --- Post-init
@@ -113,7 +113,6 @@
                  (message "Loading %s...done (%.3fs) [after-init]"
                           ,load-file-name elapsed)))
             t))
-
 ;;; init.el ends here
 
 ;; Local Variables:
