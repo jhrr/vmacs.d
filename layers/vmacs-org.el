@@ -4,7 +4,7 @@
 
 ; Simple is better with org-mode, it gets out of control and confusing fast.
 ; This configuration is not really about using org-mode for planning, it's
-; about capturing the CHAOS.
+; about capturing my particular CHAOS.
 
 ; 1. Capture templates (inbox and vocab only).
 ; 2. Refiling from inbox.
@@ -47,16 +47,18 @@
 
 (defvar user-org-directory (concat user-dropbox-directory "org/"))
 (defvar org-archive-directory (concat user-org-directory "archive/"))
-(setq org-directory user-org-directory)
 (setq org-default-notes-file (concat user-org-directory "gtd-inbox.org"))
-(setq org-journal-dir (concat org-archive-directory "journal/"))
+(setq org-journal-directory (concat org-archive-directory "journal/"))
+
+(defun nolinum () (global-linum-mode 0))
+(add-hook 'org-mode-hook 'nolinum)
 
 (defun vmacs-org/jump-to-inbox ()
   "Open org-inbox in another window."
   (interactive)
   (find-file org-default-notes-file))
 
-(bind-key* "C-. o" 'vmacs-org/jump-to-inbox)
+(bind-key* "C-c o" 'vmacs-org/jump-to-inbox)
 
 (setq org-capture-templates
       '(("q" "Quick" entry
@@ -94,7 +96,7 @@ Don't go through the template selection screen."
 ;       (defun find-journal-file (offset)
 ;         "Find and load a journal file, if it exists, by a date OFFSET from today."
 ;         (let* ((file-name (get-journal-file-by-offset offset))
-;                 (journal-file (expand-file-name (concat org-journal-dir file-name))))
+;                 (journal-file (expand-file-name (concat org-journal-directory file-name))))
 ;           (if (file-exists-p journal-file) (find-file-other-window journal-file)
 ;             (message
 ;               (format "The journal file for date %s does not exist." file-name)))))
@@ -118,10 +120,10 @@ Don't go through the template selection screen."
 ;         "Use ido to load the journal file for a specific date."
 ;         (interactive)
 ;         (let* ((all-journal-entries
-;                  (directory-files org-journal-dir
+;                  (directory-files org-journal-directory
 ;                                   nil "^\\([^.]\\|\\.[^.]\\|\\.\\..\\)"))
 ;                  (target-journal-file
-;                    (concat org-journal-dir
+;                    (concat org-journal-directory
 ;                            (ido-completing-read "date: " all-journal-entries))))
 ;             (find-file-other-window target-journal-file)))
 

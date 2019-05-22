@@ -26,7 +26,7 @@ ADD-PATH is non-nil."
 
 (defconst user-home-directory (getenv "HOME"))
 (defconst user-dropbox-directory
-  (concat (file-as-dir user-home-directory) "Dropbox"))
+  (concat (file-as-dir user-home-directory) "Dropbox/"))
 (defpath vmacs/layers "layers" nil t)
 (defpath vmacs/lisp "lisp" nil t)
 (defpath vmacs/caches ".caches")
@@ -45,7 +45,6 @@ ADD-PATH is non-nil."
     (reverse keys)))
 
 ; TODO: Ignore files beginning with .#
-; TODO: Add init.el to the hash.
 (defun vmacs/layer-map ()
   "Return a hash of layer names mapped to layer paths."
   (let ((layers-hash (make-hash-table :test 'equal)))
