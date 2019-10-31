@@ -48,6 +48,7 @@
 
 (setq tab-width 4)
 (setq standard-indent 4)
+(setq create-lockfiles nil)
 (setq vc-follow-symlinks t)
 (setq mouse-yank-at-point t)
 (setq transient-mark-mode t)
