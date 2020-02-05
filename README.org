@@ -1,6 +1,6 @@
 #+AUTHOR: jhrr
 * vmacs.d
 
-An emacs config.
+An Emacs config written after a few years jaunt with Vim.
 
-Requires emacs 26.
+Requires Emacs 26.

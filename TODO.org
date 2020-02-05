@@ -1,7 +1,8 @@
--  Evil keybindings, refactor core with respect to this.
--  Move all 'theme' related code from ~core.el~ to ~theme.el~.
--  Re-namespace all ~my-~ with ~vmacs/~.
--  Remove all ~:ensure~ statements.
--  Open org-inbox in halfscreen on startup
--  https://github.com/emacs-evil/evil-collection
--  https://github.com/rnkn/olivetti
+- Bring org-journal config back over.
+- Evil keybindings, refactor core with respect to this.
+- Move all 'theme' related code from ~core.el~ to ~theme.el~.
+- Re-namespace all ~my-~ with ~vmacs/~.
+- Remove all ~:ensure~ statements.
+- Open org-inbox in halfscreen on startup
+- https://github.com/emacs-evil/evil-collection
+- ttps://github.com/rnkn/olivetti
