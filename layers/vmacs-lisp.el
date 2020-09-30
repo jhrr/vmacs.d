@@ -1,3 +1,17 @@
+(defvar lisp-find-map)
+(define-prefix-command #'lisp-find-map)
+(bind-key "C-h e" #'lisp-find-map)
+(bind-key "C-h e c" #'finder-commentary)
+(bind-key "C-h e e" #'view-echo-area-messages)
+(bind-key "C-h e f" #'find-function)
+(bind-key "C-h e F" #'find-face-definition)
+(bind-key "C-h e i" #'info-apropos)
+(bind-key "C-h e k" #'find-function-on-key)
+(bind-key "C-h e l" #'find-library)
+(bind-key "C-h e s" #'scratch)
+(bind-key "C-h e v" #'find-variable)
+(bind-key "C-h e V" #'apropos-value)
+
 ; (eval-after-load "slime"
 ;   '(progn
 ;      (setq common-lisp-hyperspec-root

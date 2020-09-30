@@ -4,6 +4,31 @@
 
 ;;; Code:
 
+;;; --- Custom key-maps
+;; Main keymap prefixes are:
+;;
+;;   C-x <keys> -- primary map
+;;   C-c <keys> -- secondary map
+;;   C-. <keys> -- tertiary map
+;;   C-h <keys> -- help map
+;;   C-; <keys> -- helm map
+
+;; "C-. r" brings up a mode-appropriate repl/interpreter, if one is available.
+;; So ielm for elisp modes, slime for common lisp modes, ghci when in
+;; haskell-mode, and on on and so forth.  Likewise "C-. c" will try to run a
+;; mode specific compilation or evaluation process.
+
+;; TODO: work a out consistent info/help lookup system
+;; TODO: parallel evil bindings
+
+(defvar ctrl-period-map)
+(define-prefix-command 'ctrl-period-map)
+(bind-key "C-." 'ctrl-period-map)
+
+(defvar ctrl-semicolon-map)
+(define-prefix-command 'ctrl-semicolon-map)
+(bind-key "C-;" 'ctrl-semicolon-map)
+
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
   (when (fboundp mode) (funcall mode -1)))
 
@@ -96,6 +121,7 @@
 (bind-key "C-c !" #'shell-command)
 (bind-key "C-c &" #'async-shell-command)
 
+;; TODO: Use ~ up/down case when evil mode is up.
 (bind-key "C-c U" #'capitalize-region)
 
 (defun dcaps-to-scaps ()
@@ -255,45 +281,6 @@ Single Capitals as you type."
     (view-mode)))
 
 (bind-key "C-c V" #'view-clipboard)
-
-;;; --- Custom key-maps
-;; Main keymap prefixes are:
-;;
-;;   C-x <keys> -- primary map
-;;   C-c <keys> -- secondary map
-;;   C-. <keys> -- tertiary map
-;;   C-h <keys> -- help map
-;;   C-; <keys> -- helm map
-
-;; "C-. r" brings up a mode-appropriate repl/interpreter, if one is available.
-;; So ielm for elisp modes, slime for common lisp modes, ghci when in
-;; haskell-mode, and on on and so forth.  Likewise "C-. c" will try to run a
-;; mode specific compilation or evaluation process.
-
-;; TODO: work a out consistent info/help lookup system
-;; TODO: parallel evil bindings
-
-(defvar ctrl-period-map)
-(define-prefix-command 'ctrl-period-map)
-(bind-key "C-." 'ctrl-period-map)
-
-(defvar ctrl-semicolon-map)
-(define-prefix-command 'ctrl-semicolon-map)
-(bind-key "C-;" 'ctrl-semicolon-map)
-
-(defvar lisp-find-map)
-(define-prefix-command #'lisp-find-map)
-(bind-key "C-h e" #'lisp-find-map)
-(bind-key "C-h e c" #'finder-commentary)
-(bind-key "C-h e e" #'view-echo-area-messages)
-(bind-key "C-h e f" #'find-function)
-(bind-key "C-h e F" #'find-face-definition)
-(bind-key "C-h e i" #'info-apropos)
-(bind-key "C-h e k" #'find-function-on-key)
-(bind-key "C-h e l" #'find-library)
-(bind-key "C-h e s" #'scratch)
-(bind-key "C-h e v" #'find-variable)
-(bind-key "C-h e V" #'apropos-value)
 
 (provide 'vmacs-core)
 ;;; vmacs-core.el ends here

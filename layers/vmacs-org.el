@@ -2,16 +2,7 @@
 
 ;;; Commentary: Configure org-mode.
 
-; Simple is better with org-mode, it gets out of control and confusing fast.
-; This configuration is not really about using org-mode for planning, it's
-; about capturing my particular CHAOS.
-
-; 1. Capture templates (inbox and vocab only).
-; 2. Refiling from inbox.
-; 3. Journal.
-
 ;;; Code:
-
 
 (use-package org)
 
