@@ -4,44 +4,48 @@
 
 ;;; Code:
 
-(use-package org)
+;; TODO: (def vmacs-org/new-gtd-file)
+;; Adds the ~#+ARCHIVE: %s_done::~ to top.
+;; (def vmacs/gtd-layers)
 
-(defvar user-org-directory (concat user-dropbox-directory "org/"))
-(defvar org-archive-directory (concat user-org-directory "archive/"))
-(setq org-default-notes-file (concat user-org-directory "gtd-inbox.org"))
-(setq org-journal-dir (concat org-archive-directory "journal/"))
+(use-package org
+  :defer t
+  :init
+  (progn
+    (defvar user-org-directory (concat user-dropbox-directory "org/"))
+    (defvar org-archive-directory (concat user-org-directory "archive/"))
+    (setq org-default-notes-file (concat user-org-directory "gtd-inbox.org"))
+    (setq org-journal-dir (concat org-archive-directory "journal/"))
+    (setq org-capture-templates
+          '(("q" "Quick" entry
+             (file+headline org-default-notes-file "Quick") "* %?\n  %t")))
 
-(defun nolinum () (global-linum-mode 0))
-(add-hook 'org-mode-hook 'nolinum)
-
-(defun vmacs-org/jump-to-inbox ()
-  "Open org-inbox in another window."
-  (interactive)
-  (find-file org-default-notes-file))
-
-(bind-key* "C-c o" 'vmacs-org/jump-to-inbox)
-
-(setq org-capture-templates
-      '(("q" "Quick" entry
-         (file+headline org-default-notes-file "Quick") "* %?\n  %t")))
-
-(defun vmacs-org/quick-capture ()
-  "Capture an item using the quick template.
-Don't go through the template selection screen."
-  (interactive)
-  (org-capture nil "q"))
-
-(bind-key* "C-. c" 'vmacs-org/quick-capture)
-
-(defun iso-week ()
-  "Return the ISO week number, human readable and Monday indexed."
-  (concat "Week " (format-time-string "%V")))
+    (defun vmacs-org/jump-to-inbox ()
+      "Open org-inbox in another window."
+      (interactive)
+      (find-file org-default-notes-file))
+    (bind-key* "C-c o" 'vmacs-org/jump-to-inbox)
+        
+    (defun vmacs-org/quick-capture ()
+      "Capture an item using the quick template. Don't go through
+the template selection screen."
+      (interactive)
+      (org-capture nil "q"))
+    (bind-key* "C-. c" 'vmacs-org/quick-capture))
+  :config
+  (progn
+    (defun nolinum () (global-linum-mode 0))
+    (add-hook 'org-mode-hook 'nolinum)))
 
 (use-package org-journal
   :straight t
   :bind ("C-c C-j" . org-journal-new-entry)
   :config
-    (progn
+  (progn
+    (defun iso-week ()
+      "Return the ISO week number, human readable and Monday indexed."
+      (concat "Week " (format-time-string "%V")))
+
       (setq org-journal-date-format (concat "%Y/%m/%d, " (iso-week) ", %A"))
       (setq org-journal-date-prefix "#+TITLE: ")
 
@@ -87,15 +91,19 @@ Don't go through the template selection screen."
                            (ido-completing-read "date: " all-journal-entries))))
           (find-file-other-window target-journal-file)))
 
+      (defun org-journal-save-entry()
+        (interactive)
+        (save-buffer))
+      (define-key org-journal-mode-map (kbd "C-x s") 'org-journal-save-entry)
+
       (defun org-journal-save-entry-and-exit()
         (interactive)
         (save-buffer)
         (kill-buffer-and-window))
-      (define-key org-journal-mode-map (kbd "C-x C-s") 'org-journal-save-entry-and-exit)
+      (define-key org-journal-mode-map (kbd "C-c C-s") 'org-journal-save-entry-and-exit)
 
       (add-to-list 'auto-mode-alist '(".*/[0-9]*$" . org-mode))
 
-      (bind-key* "C-c C-j" 'org-journal-new-entry)
       (bind-key* "C-c j a" 'get-specific-journal-entry)
       (bind-key* "C-c j t" 'journal-file-today)
       (bind-key* "C-c j y" 'journal-file-yesterday)

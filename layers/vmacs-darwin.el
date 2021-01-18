@@ -4,9 +4,6 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'use-package))
-
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . nil))
 
@@ -24,9 +21,7 @@
         "SSH_AGENT_PID"
         "GPG_TTY"
         "TEXINPUTS"
-        "RUST_SRC_PATH")))
-  :config
-  (progn
+        "RUST_SRC_PATH"))
     (exec-path-from-shell-initialize)
     (when-let* ((gls (executable-find "gls")))
       (setq insert-directory-program gls))))
@@ -53,7 +48,6 @@
 (setq ring-bell-function #'ignore)
 (setq frame-resize-pixelwise t)
 (setq ns-use-proxy-icon nil)
-(toggle-frame-maximized)
 
 (provide 'vmacs-darwin)
 ;;; vmacs-darwin.el ends here

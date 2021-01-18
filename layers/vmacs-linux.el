@@ -17,11 +17,11 @@
 	  '((font . "inconsolata-g-10")))))
 
 (defun client-save-kill-emacs(&optional display)
-  "This is a function that can be used to shutdown save buffers
-and shutdown the emacs daemon. It should be called using
-emacsclient -e '(client-save-kill-emacs)'. It checks to see if
-there are any modified buffers, active clients or frames. If so
-an X window will be opened and the user will be prompted."
+  "Save buffers and shutdown the emacs daemon. It should be
+called using emacsclient -e '(client-save-kill-emacs)'. It checks
+to see if there are any modified buffers, active clients or
+frames. If so an X window will be opened and the user will be
+prompted to proceed."
   (let (new-frame modified-buffers active-clients-or-frames)
     ;; Check if there are modified buffers, active clients or frames.
     (setq modified-buffers (modified-buffers-exist))
@@ -64,10 +64,8 @@ an X window will be opened and the user will be prompted."
     (when (or modified-buffers active-clients-or-frames) (delete-frame new-frame))))
 
 (defun modified-buffers-exist()
-  "This function will check to see if there are any buffers
-that have been modified.  It will return true if there are
-and nil otherwise. Buffers that have buffer-offer-save set to
-nil are ignored."
+  "Check if any buffers have been modified. Buffers that have
+buffer-offer-save set to nil are ignored."
   (let (modified-found)
     (dolist (buffer (buffer-list))
       (when (and (buffer-live-p buffer)

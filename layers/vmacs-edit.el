@@ -4,9 +4,6 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'use-package))
-
 ; (use-package linum-off
 ;   :straight t)
 
