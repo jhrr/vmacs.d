@@ -38,7 +38,7 @@
         inhibit-startup-echo-area-message (user-login-name)
         inhibit-startup-message t
         initial-scratch-buffer nil)
-  (custom-set-variables '(menu-bar-mode nil)
+  (custom-set-variables '(menu-bar-mode . nil)
                         '(tool-bar-mode . nil)
                         '(scroll-bar-mode nil))
   (toggle-frame-maximized)
@@ -71,57 +71,22 @@
   (require 'seq))
 
 (use-package vmacs-paths :load-path "layers")
-(use-package vmacs-theme)
 (use-package vmacs-core)
 (use-package vmacs-darwin :if (equal system-type 'darwin))
 (use-package vmacs-linux :if (equal system-type 'gnu/linux))
-
-; (use-package vmacs-clojure)
-; (use-package vmacs-company)
-; (use-package vmacs-css)
-; (use-package vmacs-edit)
-; (use-package vmacs-erlang)
-; (use-package vmacs-evil)
-; (use-package vmacs-flycheck)
-(use-package vmacs-git)
-; (use-package vmacs-haskell)
-; (use-package vmacs-html)
-(use-package vmacs-menus)
-; (use-package vmacs-js)
-; (use-package vmacs-lisp)
-(use-package vmacs-org)
-; (use-package vmacs-python)
-; (use-package vmacs-rust)
-(use-package vmacs-search)
-; (use-package vmacs-snippets)
-; (use-package vmacs-supercollider)
-; (use-package vmacs-web)
-
-(defun vmacs/layers ()
-  (seq-filter
-   (lambda (path) (not (string-prefix-p ".#" path)))
-   (directory-files vmacs/layers t "\.el$" nil)))
-
-(defun vmacs/layers-map ()
-  "Return a hash of layer names mapped to layer paths."
-  (let ((layers-hash (make-hash-table :test 'equal)))
-    (seq-map (lambda (path)
-               (puthash
-                (file-name-sans-extension
-                 (file-name-nondirectory path))
-                path layers-hash))
-             (vmacs/layers))
-    layers-hash))
-
-(defun vmacs/jump-to-layer ()
-  "Quickly jump to a config layer."
-  (interactive)
-  (let ((layers-map (vmacs/layers-map)))
-    (find-file
-     (gethash
-      (completing-read "Open layer file: " (hash-keys layers-map))
-      layers-map))))
-(bind-key* "C-c L" 'vmacs/jump-to-layer)
+(seq-doseq (feature
+         (seq-reduce (lambda (acc it)
+                       (let ((layer (file-name-base it))
+                             (exclude-layers
+                              '("vmacs-core"
+                                "vmacs-paths"
+                                "vmacs-darwin"
+                                "vmacs-linux")))
+                         (if (not (member layer exclude-layers))
+                             (cons (intern layer) acc)
+                           acc)))
+                     (layers) nil))
+  (eval `(use-package ,feature)))
 
 ;;; --- Post-init
 (progn

@@ -1,6 +1,6 @@
 ;;; vmacs-edit.el -*- lexical-binding:t -*-
 
-;;; Commentary: Packages that enhance the editing experience.
+;;; Commentary: Enhance the text editing experience.
 
 ;;; Code:
 

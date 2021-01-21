@@ -6,7 +6,7 @@
 
 ;; TODO: (def vmacs-org/new-gtd-file)
 ;; Adds the ~#+ARCHIVE: %s_done::~ to top.
-;; (def vmacs/gtd-layers)
+;; (def gtd-layers)
 
 (use-package org
   :defer t

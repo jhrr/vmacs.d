@@ -25,7 +25,7 @@
       :config
       (progn
         (use-package embark-consult
-          :ensure t
+          :straight t
           :after (embark consult)
           :demand t
           :hook (embark-collect-mode . embark-consult-preview-minor-mode))))
@@ -72,12 +72,12 @@
          (width . 0.7)
          (left . 0.5))))))
 
-(defun vmacs/layers ()
+(defun layers ()
   (seq-filter
    (lambda (path) (not (string-prefix-p ".#" path)))
-   (directory-files vmacs/layers t "\.el$" nil)))
+   (directory-files layers t "\.el$" nil)))
 
-(defun vmacs/layers-map ()
+(defun layers-map ()
   "Return a hash of layer names mapped to layer paths."
   (let ((layers-hash (make-hash-table :test 'equal)))
     (seq-map (lambda (path)
@@ -85,18 +85,18 @@
                 (file-name-sans-extension
                  (file-name-nondirectory path))
                 path layers-hash))
-             (vmacs/layers))
+             (layers))
     layers-hash))
 
-(defun vmacs/jump-to-layer ()
+(defun jump-to-layer ()
   "Quickly jump to a config layer."
   (interactive)
-  (let ((layers-map (vmacs/layers-map)))
+  (let ((layers-map (layers-map)))
     (find-file
      (gethash
       (completing-read "Open layer file: " (hash-keys layers-map))
       layers-map))))
-(bind-key* "C-c L" 'vmacs/jump-to-layer)
+(bind-key* "C-c L" 'jump-to-layer)
 
 (provide 'vmacs-menus)
 ;;; vmacs-menus.el ends here

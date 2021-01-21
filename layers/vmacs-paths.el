@@ -28,14 +28,14 @@ ADD-PATH is non-nil."
 (defconst user-home-directory (getenv "HOME"))
 (defconst user-dropbox-directory
   (concat (file-as-dir user-home-directory) "Dropbox/"))
-(defpath vmacs/layers "layers" nil t)
-(defpath vmacs/lisp "lisp" nil t)
-(defpath vmacs/caches ".caches")
-(defpath vmacs/autosaves "auto-save-list" (file-as-dir vmacs/caches))
-(defpath vmacs/backups "backups" (file-as-dir vmacs/caches))
+(defpath layers "layers" nil t)
+(defpath lisp "lisp" nil t)
+(defpath caches ".caches")
+(defpath autosaves "auto-save-list" (file-as-dir caches))
+(defpath backups "backups" (file-as-dir caches))
 
-(setq auto-save-list-file-prefix (concat (file-as-dir vmacs/autosaves) ".auto-save-")
-      auto-save-file-name-transforms `((".*" ,vmacs/autosaves t))
+(setq auto-save-list-file-prefix (concat (file-as-dir autosaves) ".auto-save-")
+      auto-save-file-name-transforms `((".*" ,autosaves t))
       backup-directory-alist '(("." . "~/.emacs.d/.caches/backups"))
       backup-by-copying t
       delete-old-versions t
@@ -43,11 +43,36 @@ ADD-PATH is non-nil."
       kept-old-versions 2
       version-control t)
 
-(let ((vmacs/custom-file (expand-file-name "custom.el" user-emacs-directory)))
-  (unless (file-exists-p vmacs/custom-file)
-    (message "Creating %s because it doesn't exist..." vmacs/custom-file)
-    (shell-command (concat "touch " (shell-quote-argument vmacs/custom-file))))
-  (setq custom-file vmacs/custom-file))
+(let ((custom-file (expand-file-name "custom.el" user-emacs-directory)))
+  (unless (file-exists-p custom-file)
+    (message "Creating %s because it doesn't exist..." custom-file)
+    (shell-command (concat "touch " (shell-quote-argument custom-file))))
+  (setq custom-file custom-file))
+
+(defun layers ()
+  (seq-filter
+   (lambda (path) (not (string-prefix-p ".#" path)))
+   (directory-files layers t "\.el$" nil)))
+
+(defun layers-map ()
+  "Return a hash of layer names mapped to layer paths."
+  (let ((layers-hash (make-hash-table :test 'equal)))
+    (seq-map (lambda (path)
+               (puthash
+                 (file-name-base path)
+                path layers-hash))
+             (layers))
+    layers-hash))
+
+(defun jump-to-layer ()
+  "Quickly jump to a config layer."
+  (interactive)
+  (let ((layers-map (layers-map)))
+    (find-file
+     (gethash
+      (completing-read "Open layer file: " (hash-keys layers-map))
+      layers-map))))
+(bind-key* "C-c L" 'jump-to-layer)
 
 (provide 'vmacs-paths)
 ;;; vmacs-paths.el ends here

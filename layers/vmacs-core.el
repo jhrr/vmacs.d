@@ -1,16 +1,8 @@
 ;;; vmacs-core.el -*- lexical-binding:t -*-
 
-;;; Commentary: Core environment configuration, funs and bindings.
+;;; Commentary: Core editor configuration.
 
 ;;; Code:
-
-;;; --- Custom key-maps
-;; Main keymap prefixes are:
-;;
-;;   C-x <keys> -- primary map
-;;   C-c <keys> -- secondary map
-;;   C-. <keys> -- tertiary map
-;;   C-h <keys> -- help map
 
 (prefer-coding-system 'utf-8)
 (set-language-environment 'utf-8)
@@ -37,10 +29,7 @@
 (setq scroll-preserve-screen-position t)
 (setq compile-command "CC=clang make -k")
 (setq initial-major-mode 'fundamental-mode)
-(setq frame-title-format
-      '((:eval (if (buffer-file-name)
-                   (abbreviate-file-name (buffer-file-name))
-                 "%b"))))
+(setq base16-theme-256-color-source "base16-shell")
 (setq browse-url-generic-program (executable-find "chromium")
       browse-url-browser-function 'browse-url-generic)
 
@@ -60,24 +49,20 @@
 (global-auto-revert-mode t)
 (mouse-avoidance-mode 'jump)
 
-(defvar ctrl-period-map)
-(define-prefix-command 'ctrl-period-map)
-(bind-key "C-." 'ctrl-period-map)
-
 (defalias 'yes-or-no-p 'y-or-n-p)
-
-(defface dim-parens-face
-  '((((class color) (background dark))
-     (:foreground "grey50"))
-    (((class color) (background light))
-     (:foreground "grey55")))
-  "Face used to tastefully dim parentheses.")
 
 (defmacro hook-into-modes (func mode-hooks)
   "Add a FUNC to multiple MODE-HOOKS simultaneously."
   `(dolist (mode-hook ,mode-hooks)
      (add-hook mode-hook ,func)))
 
+(defvar ctrl-period-map)
+(define-prefix-command 'ctrl-period-map)
+(bind-key "C-." 'ctrl-period-map)
+
+(add-hook 'before-save-hook 'whitespace-cleanup)
+
+;; TODO: Move all to lisp/utility-funcs.el
 (defun dcaps-to-scaps ()
   "Convert word in DOuble CApitals to Single Capitals."
   (interactive)
@@ -148,11 +133,11 @@ Single Capitals as you type."
   (let ((uuid (trim (shell-command-to-string "uuidgen"))))
     (insert uuid)))
 
-(defun vmacs/jump-to-init ()
+(defun jump-to-init ()
   "Edit the `user-init-file', in another window."
   (interactive)
   (find-file user-init-file))
-(bind-key* "C-c I" 'vmacs/jump-to-init)
+(bind-key* "C-c I" 'jump-to-init)
 
 (defun nuke-all ()
   "Kill all buffers, leaving *scratch* only."
@@ -250,8 +235,6 @@ Single Capitals as you type."
 (bind-key "C-x C-k" #'kill-region) ;; We lose edit-kbd-macro with this.
 (bind-key "C-c C-k" #'kill-region) ;; Catch typos.
 (bind-key "<s-return>" #'toggle-frame-fullscreen)
-
-(add-hook 'before-save-hook 'whitespace-cleanup)
 
 (provide 'vmacs-core)
 ;;; vmacs-core.el ends here
