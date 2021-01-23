@@ -7,6 +7,7 @@
 ;; TODO: (def vmacs-org/new-gtd-file)
 ;; Adds the ~#+ARCHIVE: %s_done::~ to top.
 ;; (def gtd-layers)
+;; org-hydra C-c o - , go
 
 (use-package org
   :defer t
@@ -19,19 +20,20 @@
     (setq org-capture-templates
           '(("q" "Quick" entry
              (file+headline org-default-notes-file "Quick") "* %?\n  %t")))
+    (setq org-adapt-indentation nil)
 
     (defun vmacs-org/jump-to-inbox ()
       "Open org-inbox in another window."
       (interactive)
       (find-file org-default-notes-file))
     (bind-key* "C-c o" 'vmacs-org/jump-to-inbox)
-        
+
     (defun vmacs-org/quick-capture ()
       "Capture an item using the quick template. Don't go through
 the template selection screen."
       (interactive)
       (org-capture nil "q"))
-    (bind-key* "C-. c" 'vmacs-org/quick-capture))
+    (bind-key* "C-c c" 'vmacs-org/quick-capture))
   :config
   (progn
     (defun nolinum () (global-linum-mode 0))
@@ -39,7 +41,7 @@ the template selection screen."
 
 (use-package org-journal
   :straight t
-  :bind ("C-c C-j" . org-journal-new-entry)
+  :bind ("C-c j" . org-journal-new-entry)
   :config
   (progn
     (defun iso-week ()
@@ -108,6 +110,11 @@ the template selection screen."
       (bind-key* "C-c j t" 'journal-file-today)
       (bind-key* "C-c j y" 'journal-file-yesterday)
       (bind-key* "C-c j l" 'journal-last-year)))
+
+
+;; (use-package org-roam
+;;   :straight t
+;;   :init (progn (setq org-roam-directory "~/org-roam")))
 
 (provide 'vmacs-org)
 ;;; vmacs-org.el ends here

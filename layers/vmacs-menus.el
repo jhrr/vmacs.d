@@ -10,41 +10,67 @@
   :config
   (progn
     (use-package consult
-      :straight t)
+      :straight t
+      :bind (("C-. b" . consult-buffer)
+             ("C-. w" . consult-buffer-other-window)
+             ("C-. f" . consult-find)
+             ("C-. g" . consult-ripgrep))
+      :init
+      (progn
+        (setq register-preview-delay 0
+              register-preview-function #'consult-register-preview)
+        (advice-add #'register-preview :around
+                    (lambda (fun buffer &optional show-empty)
+                      (let ((register-alist
+                             (seq-sort #'car-less-than-car register-alist)))
+                        (funcall fun buffer show-empty))
+                      (when-let (win (get-buffer-window buffer))
+                        (with-selected-window win
+                          (setq-local mode-line-format nil)
+                          (setq-local window-min-height 1)
+                          (fit-window-to-buffer)))))))
+
+    ;; (use-package consult-flycheck
+    ;;   :straight t
+    ;;   :bind (:map flycheck-command-map
+    ;;               ("!" . consult-flycheck)))
 
     (use-package selectrum-prescient
       :straight t
-      :config
+      :init
       (progn
         (selectrum-prescient-mode 1)
         (prescient-persist-mode 1)))
 
     (use-package embark
       :straight t
-      :bind ("C-M-a" . embark-act)
-      :config
-      (progn
-        (use-package embark-consult
-          :straight t
-          :after (embark consult)
-          :demand t
-          :hook (embark-collect-mode . embark-consult-preview-minor-mode))))
+      :bind ("C-. e" . embark-act))
+
+    (use-package embark-consult
+      :straight t
+      :after (embark consult)
+      :demand t
+      :hook (embark-collect-mode . embark-consult-preview-minor-mode))
 
     (use-package marginalia
       :straight t
-      :bind (:map minibuffer-local-map ("C-s-a" . marginalia-cycle))
-      :config (marginalia-mode))
+      :bind (:map minibuffer-local-map ("C-. m" . marginalia-cycle))
+      :init
+      (progn
+        (marginalia-mode)
+        (advice-add #'marginalia-cycle :after
+              (lambda () (when (bound-and-true-p selectrum-mode) (selectrum-exhibit))))
+        (setq marginalia-annotators
+              '(marginalia-annotators-heavy marginalia-annotators-light nil))))
 
     (use-package orderless
       :straight t
-      :config (icomplete-mode)
+      :init (icomplete-mode)
       :custom (completion-styles '(orderless)))
 
     (setq selectrum-num-candidates-displayed 30)
     (setq selectrum-refine-candidates-function #'orderless-filter)
-    (setq selectrum-highlight-candidates-function #'orderless-highlight-matches)
-    ; TODO: Probably better moved to magit.
-    (setq magit-completing-read-function #'selectrum-completing-read)))
+    (setq selectrum-highlight-candidates-function #'orderless-highlight-matches)))
 
 ;; TODO: Won't need this when emacs 27.2 comes out?
 (use-package mini-frame
@@ -68,9 +94,13 @@
     (mini-frame-mode 1)
     (custom-set-variables
      '(mini-frame-show-parameters
-       '((top . 100)
+       '((top . 70)
          (width . 0.7)
          (left . 0.5))))))
+
+(use-package which-key
+  :straight t
+  :init (which-key-mode))
 
 (defun layers ()
   (seq-filter

@@ -4,6 +4,8 @@
 
 ;;; Code:
 
+;; https://github.com/Fuco1/smartparens
+
 ; (use-package linum-off
 ;   :straight t)
 

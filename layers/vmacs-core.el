@@ -159,6 +159,7 @@ Single Capitals as you type."
   (= 0 (call-process "/sbin/ping" nil nil nil "-c1" "-W50" "-q" host)))
 
 (defun scratch ()
+  "Jump to the scratch buffer."
   (interactive)
   (let ((current-mode major-mode))
     (switch-to-buffer-other-window (get-buffer-create "*scratch*"))
@@ -211,18 +212,6 @@ Single Capitals as you type."
         (select-window (funcall selector)))
       (setq arg (if (plusp arg) (1- arg) (1+ arg))))))
 (bind-key "C-x 4" #'win-swap)
-
-(defun view-clipboard ()
-  (interactive)
-  (delete-other-windows)
-  (switch-to-buffer "*Clipboard*")
-  (let ((inhibit-read-only t))
-    (erase-buffer)
-    (clipboard-yank)
-    (goto-char (point-min))
-    (html-mode)
-    (view-mode)))
-(bind-key "C-c V" #'view-clipboard)
 
 ;; TODO: Replace all this with Evil & Hydras.
 (bind-key* "<C-return>" #'other-window)

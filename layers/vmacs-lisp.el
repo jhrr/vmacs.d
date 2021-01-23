@@ -4,6 +4,10 @@
 
 ;;; Code:
 
+;; https://github.com/joaotavora/sly
+;; https://github.com/abo-abo/lispy
+;; macrostep
+
 ;; (defvar lisp-find-map)
 ;; (define-prefix-command #'lisp-find-map)
 ;; (bind-key "C-h e" #'lisp-find-map)

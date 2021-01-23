@@ -13,7 +13,8 @@
   :config
   (progn
     (setq magit-display-buffer-function
-          #'magit-display-buffer-fullframe-status-v1)))
+          #'magit-display-buffer-fullframe-status-v1)
+    (setq magit-completing-read-function #'selectrum-completing-read)))
 
 (provide 'vmacs-git)
 ;;; vmacs-git.el ends here
