@@ -60,6 +60,13 @@
 (define-prefix-command 'ctrl-period-map)
 (bind-key "C-." 'ctrl-period-map)
 
+(defface global-dim-paren-face
+  '((((class color) (background dark))
+     (:foreground "grey50"))
+    (((class color) (background light))
+     (:foreground "grey55")))
+  "Face used to tastefully dim parentheses.")
+
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
 ;; TODO: Move all to lisp/utility-funcs.el

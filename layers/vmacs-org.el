@@ -13,10 +13,10 @@
   :defer t
   :init
   (progn
-    (defvar user-org-directory (concat user-dropbox-directory "org/"))
-    (defvar org-archive-directory (concat user-org-directory "archive/"))
-    (setq org-default-notes-file (concat user-org-directory "gtd-inbox.org"))
-    (setq org-journal-dir (concat org-archive-directory "journal/"))
+    (defvar user-org-directory (expand-file-name "org/" user-dropbox-directory))
+    (defvar org-archive-directory (expand-file-name "archive/" user-org-directory))
+    (setq org-default-notes-file (expand-file-name "gtd-inbox.org" user-org-directory))
+    (setq org-journal-dir (expand-file-name "journal/" user-org-directory))
     (setq org-capture-templates
           '(("q" "Quick" entry
              (file+headline org-default-notes-file "Quick") "* %?\n  %t")))
@@ -41,7 +41,7 @@ the template selection screen."
 
 (use-package org-journal
   :straight t
-  :bind ("C-c j" . org-journal-new-entry)
+  :bind ("C-c C-j" . org-journal-new-entry)
   :config
   (progn
     (defun iso-week ()
@@ -111,10 +111,11 @@ the template selection screen."
       (bind-key* "C-c j y" 'journal-file-yesterday)
       (bind-key* "C-c j l" 'journal-last-year)))
 
-
 ;; (use-package org-roam
 ;;   :straight t
-;;   :init (progn (setq org-roam-directory "~/org-roam")))
+;;   :init
+;;   (progn
+;;     (setq org-roam-directory (expand-file-name "index/" user-org-directory))))
 
 (provide 'vmacs-org)
 ;;; vmacs-org.el ends here

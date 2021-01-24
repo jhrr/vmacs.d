@@ -67,7 +67,6 @@
 (straight-use-package 'bind-map)
 (straight-use-package 'use-package)
 (eval-when-compile
-  (require 'use-package)
   (require 'seq))
 
 (use-package vmacs-paths :load-path "layers")
