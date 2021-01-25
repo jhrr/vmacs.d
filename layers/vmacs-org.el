@@ -9,7 +9,6 @@
 ;; org-hydra C-c o - , o
 
 (use-package org
-  :defer t
   :init
   (progn
     (defvar user-org-directory (expand-file-name "org/" user-dropbox-directory))
@@ -53,8 +52,7 @@ selection screen."
 
   :config
   (progn
-    (defun nolinum () (global-linum-mode nil))
-    (add-hook 'org-mode-hook 'nolinum)))
+    (add-hook 'org-mode-hook '(lambda () (linum-mode -1)))))
 
 (use-package org-journal
   :straight t
