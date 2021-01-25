@@ -128,12 +128,6 @@ Single Capitals as you type."
                          (read-string "Google: "))))))
 (bind-key "C-c G" #'google)
 
-(defun hash-keys (hash-table)
-  "Return all the keys in a hash-table."
-  (let ((keys ()))
-    (maphash (lambda (k v) (push k keys)) hash-table)
-    (reverse keys)))
-
 (defun insert-guid ()
   "Insert a GUID at point."
   (interactive "*")

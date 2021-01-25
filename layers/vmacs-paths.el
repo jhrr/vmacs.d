@@ -9,7 +9,7 @@
 (defun add-to-load-path (path &optional dir)
   (setq load-path
         (cons
-          (expand-file-name path (or dir user-emacs-directory)) load-path)))
+         (expand-file-name path (or dir user-emacs-directory)) load-path)))
 
 (defmacro defpath (sym path &optional root add-path)
   "Define a subfolder of the `user-emacs-directory' or ROOT.
@@ -49,30 +49,35 @@ ADD-PATH is non-nil."
     (shell-command (concat "touch " (shell-quote-argument custom-file))))
   (setq custom-file custom-file))
 
-(defun layers ()
-  (seq-filter
-   (lambda (path) (not (string-prefix-p ".#" path)))
-   (directory-files layers t "\.el$" nil)))
+(defun hash-keys (hash)
+  "Return all the keys in a HASH."
+  (let ((keys ()))
+    (maphash (lambda (k v) (push k keys)) hash)
+    (reverse keys)))
 
-(defun layers-map ()
-  "Return a hash of layer names mapped to layer paths."
-  (let ((layers-hash (make-hash-table :test 'equal)))
+(defun filename-map (filenames)
+  "Hash FILENAMES mapped to their paths."
+  (let ((filename-hash (make-hash-table :test 'equal)))
     (seq-map (lambda (path)
                (puthash
                  (file-name-base path)
-                path layers-hash))
-             (layers))
-    layers-hash))
+                path filename-hash))
+             filenames)
+    filename-hash))
 
-(defun jump-to-layer ()
-  "Quickly jump to a config layer."
-  (interactive)
-  (let ((layers-map (layers-map)))
-    (find-file
-     (gethash
-      (completing-read "Open layer file: " (hash-keys layers-map))
-      layers-map))))
-(bind-key* "C-c L" 'jump-to-layer)
+(defun jump-to-file (map)
+  "Jump to a file via a MAP produced by FILENAME-MAP."
+  (find-file
+   (gethash (completing-read "Open file: " (hash-keys map)) map)))
+
+(defun directory-el (dir)
+  "Return all .el files under a DIR."
+  (seq-filter
+   (lambda (filename) (not (string-prefix-p ".#" filename)))
+   (directory-files dir t "\.el$" nil)))
+
+(setq vmacs-features
+      (seq-concatenate 'list (directory-el layers) (directory-el lisp)))
 
 (provide 'vmacs-paths)
 ;;; vmacs-paths.el ends here

@@ -74,18 +74,24 @@
 (use-package vmacs-darwin :if (equal system-type 'darwin))
 (use-package vmacs-linux :if (equal system-type 'gnu/linux))
 (seq-doseq (feature
-         (seq-reduce (lambda (acc it)
-                       (let ((layer (file-name-base it))
-                             (exclude-layers
-                              '("vmacs-core"
-                                "vmacs-paths"
-                                "vmacs-darwin"
-                                "vmacs-linux")))
-                         (if (not (member layer exclude-layers))
-                             (cons (intern layer) acc)
-                           acc)))
-                     (layers) nil))
+            (seq-reduce (lambda (acc it)
+                          (let ((layer (file-name-base it))
+                                (exclude-layers
+                                 '("vmacs-core"
+                                   "vmacs-paths"
+                                   "vmacs-darwin"
+                                   "vmacs-linux")))
+                            (if (not (member layer exclude-layers))
+                                (cons (intern layer) acc)
+                              acc)))
+                        vmacs-features nil))
   (eval `(use-package ,feature)))
+
+(defun jump-to-layer ()
+  "Jump to a selected layer file."
+  (interactive)
+  (jump-to-file (filename-map (directory-el layers))))
+(bind-key* "C-c L" 'jump-to-layer)
 
 ;;; --- Post-init
 (progn
