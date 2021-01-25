@@ -63,16 +63,6 @@
                nil t)))))
       lisp-modes)
 
-(use-package highlight-cl
-  :straight t
-  :commands (highlight-cl-add-font-lock-keywords)
-  :init
-  (mapc (function
-         (lambda (mode-hook)
-           (add-hook mode-hook
-                     'highlight-cl-add-font-lock-keywords)))
-        lisp-mode-hooks))
-
 (defun uncomment-sexp (&optional n)
   "Uncomment a sexp around point."
   (interactive "P")
