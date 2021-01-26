@@ -38,9 +38,9 @@
 (set-face-attribute
  'default nil
  :font (font-candidate
-	'"Inconsolata LGC 11"
-	;; '"Source Code Pro 11"
-	))
+        '"Inconsolata LGC 11"
+        ;; '"Source Code Pro 11"
+        ))
 
 (defun insert-hash () (interactive) (insert "#"))
 (global-set-key "\263" 'insert-hash)

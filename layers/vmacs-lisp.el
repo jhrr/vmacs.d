@@ -7,6 +7,7 @@
 ;; https://github.com/joaotavora/sly
 ;; https://github.com/abo-abo/lispy
 ;; macrostep
+;; Hyperspec available via homebrew.
 
 ;; (defvar lisp-find-map)
 ;; (define-prefix-command #'lisp-find-map)
@@ -49,9 +50,9 @@
    (lambda (mode) (intern (concat (symbol-name mode) "-hook")))
    lisp-modes))
 
-(seq-do (lambda (major-mode)
+(seq-do (lambda (mode)
         (font-lock-add-keywords
-         major-mode
+         mode
          '(("(\\(lambda\\)\\>"
             (0 (ignore
                 (compose-region (match-beginning 1)

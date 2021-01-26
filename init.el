@@ -1,4 +1,4 @@
-;;; init.el -*- lexical-binding:t -*-
+;;; init.el -- Initialize Emacs. -*- lexical-binding:t -*-
 
 ;; This file is not part of GNU Emacs.
 
@@ -17,8 +17,7 @@
 
 ;;; Commentary:
 
-;; Induce Emacs into a state of ready-for-use; appoint load-paths, establish
-;; environments and prime package layers. Kwatz!
+;; Kwatz!
 
 ;;; Code:
 
@@ -69,6 +68,7 @@
 (eval-when-compile
   (require 'seq))
 (use-package f :straight t)
+(use-package s :straight t)
 
 (use-package vmacs-paths :load-path "layers")
 (use-package vmacs-core)

@@ -4,19 +4,24 @@
 
 ;;; Code:
 
+(set-charset-priority 'unicode)
 (prefer-coding-system 'utf-8)
 (set-language-environment 'utf-8)
 (set-default-coding-systems 'utf-8)
 (set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
+(setq locale-coding-system 'utf-8)
 (setq buffer-file-coding-system 'utf-8)
+(setq default-process-coding-system '(utf-8-unix . utf-8-unix))
 (if (display-graphic-p)
     (set-fontset-font
      (frame-parameter nil 'font)
      'japanese-jisx0208 '("VL Gothic" . "unicode-bmp")))
 
-(setq tab-width 4)
+(setq tabs-width 4)
 (setq standard-indent 4)
+(setq use-dialog-box nil)
 (setq create-lockfiles nil)
 (setq vc-follow-symlinks t)
 (setq mouse-yank-at-point t)
@@ -131,7 +136,7 @@ Single Capitals as you type."
 (defun insert-guid ()
   "Insert a GUID at point."
   (interactive "*")
-  (let ((uuid (trim (shell-command-to-string "uuidgen"))))
+  (let ((uuid (s-trim (shell-command-to-string "uuidgen"))))
     (insert uuid)))
 
 (defun jump-to-init ()
@@ -172,26 +177,9 @@ Single Capitals as you type."
     (if (memq current-mode lisp-modes)
         (funcall current-mode))))
 
-(defun trim-left (s)
-  "Remove whitespace at the beginning of S."
-  (declare (pure t) (side-effect-free t))
-  (save-match-data
-    (if (string-match "\\`[ \t\n\r]+" s)
-        (replace-match "" t t s)
-      s)))
-
-(defun trim-right (s)
-  "Remove whitespace at the end of S."
-  (save-match-data
-    (declare (pure t) (side-effect-free t))
-    (if (string-match "[ \t\n\r]+\\'" s)
-        (replace-match "" t t s)
-      s)))
-
-(defun trim (s)
-  "Remove whitespace at the beginning and end of S."
-  (declare (pure t) (side-effect-free t))
-  (trim-left (trim-right s)))
+(defun under-vc-p ()
+  "Determine if we are currently under version control."
+  (magit-git-repo-p (or (vc-root-dir) "")))
 
 (defun what-face (pos)
   "Get the font-face at cursor POS."

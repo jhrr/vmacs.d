@@ -1,6 +1,8 @@
-;;; vmacs-ido.el -*- lexical-binding:t -*-
+;;; vmacs-menus.el -*- lexical-binding:t -*-
 
-;;; Commentary: Configure menus and navigation.
+;;; Commentary:
+
+;; Configure menus and navigation.
 
 ;;; Code:
 
@@ -30,12 +32,10 @@
                           (setq-local window-min-height 1)
                           (fit-window-to-buffer)))))
 
-        (defun under-vc ()
-          (magit-git-repo-p (or (vc-root-dir) "")))
-
         (defun git-files ()
+          "Jump to a file in the git tree."
           (interactive)
-          (if (under-vc)
+          (if (under-vc-p)
               (find-file
                (f-expand
                 (let ((selectrum-should-sort-p nil))
@@ -47,8 +47,9 @@
         (bind-key* "C-. j" 'git-files)
 
         (defun git-modified-files ()
+          "Jump to a modified file in the git tree."
           (interactive)
-          (if (under-vc)
+          (if (under-vc-p)
               (find-file
                (f-expand
                 (let ((selectrum-should-sort-p nil))
@@ -59,10 +60,9 @@
             (message "Not under vc: %s" buffer-file-name)))
         (bind-key* "C-. f" 'git-modified-files)))
 
-    ;; (use-package consult-flycheck
-    ;;   :straight t
-    ;;   :bind (:map flycheck-command-map
-    ;;               ("!" . consult-flycheck)))
+    (use-package consult-flycheck
+      :straight t
+      :bind ("C-. x" . consult-flycheck))
 
     (use-package selectrum-prescient
       :straight t
@@ -132,6 +132,7 @@
   :init (which-key-mode))
 
 (defun layers ()
+  "List all layer files."
   (seq-filter
    (lambda (path) (not (string-prefix-p ".#" path)))
    (directory-files layers t "\.el$" nil)))

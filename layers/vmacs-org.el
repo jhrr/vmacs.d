@@ -1,6 +1,8 @@
-;;; vmacs-org.el -*- lexical-binding:t -*-
+;;; vmacs-org.el -- Configure org-mode -*- lexical-binding:t -*-
 
-;;; Commentary: Configure org-mode.
+;;; Commentary:
+
+;; "Capture a little wave."
 
 ;;; Code:
 
@@ -10,6 +12,7 @@
 ;; org-protocol - https://orgmode.org/worg/org-contrib/org-protocol.html
 
 (use-package org
+  :defer t
   :init
   (progn
     (defvar user-org-directory (expand-file-name "org/" user-dropbox-directory))
@@ -50,7 +53,6 @@ selection screen."
       (interactive)
       (org-capture nil "q"))
     (bind-key* "C-c c" 'quick-capture))
-
   :config
   (progn
     (add-hook 'org-mode-hook '(lambda () (linum-mode -1)))))
