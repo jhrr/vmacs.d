@@ -7,6 +7,7 @@
 ;; TODO: (def create-new-gtd-file)
 ;; Adds the ~#+ARCHIVE: %s_done::~ to top.
 ;; org-hydra C-c o - , o
+;; org-protocol - https://orgmode.org/worg/org-contrib/org-protocol.html
 
 (use-package org
   :init
@@ -35,13 +36,13 @@
       "Jump to a selected gtd file."
       (interactive)
       (jump-to-file (filename-map (gtd))))
-    (bind-key* "C-c g" 'jump-to-gtd)
+    (bind-key* "C-c o" 'jump-to-gtd)
 
     (defun jump-to-inbox ()
       "Open the org-inbox in another window."
       (interactive)
       (find-file org-default-notes-file))
-    (bind-key* "C-c o" 'jump-to-inbox)
+    (bind-key* "C-c O" 'jump-to-inbox)
 
     (defun quick-capture ()
       "Capture an item without going through the template

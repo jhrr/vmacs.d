@@ -68,6 +68,7 @@
 (straight-use-package 'use-package)
 (eval-when-compile
   (require 'seq))
+(use-package f :straight t)
 
 (use-package vmacs-paths :load-path "layers")
 (use-package vmacs-core)

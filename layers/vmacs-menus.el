@@ -13,12 +13,12 @@
       :straight t
       :bind (("C-. b" . consult-buffer)
              ("C-. w" . consult-buffer-other-window)
-             ("C-. f" . consult-find)
              ("C-. g" . consult-ripgrep))
       :init
       (progn
         (setq register-preview-delay 0
               register-preview-function #'consult-register-preview)
+
         (advice-add #'register-preview :around
                     (lambda (fun buffer &optional show-empty)
                       (let ((register-alist
@@ -28,7 +28,36 @@
                         (with-selected-window win
                           (setq-local mode-line-format nil)
                           (setq-local window-min-height 1)
-                          (fit-window-to-buffer)))))))
+                          (fit-window-to-buffer)))))
+
+        (defun under-vc ()
+          (magit-git-repo-p (or (vc-root-dir) "")))
+
+        (defun git-files ()
+          (interactive)
+          (if (under-vc)
+              (find-file
+               (f-expand
+                (let ((selectrum-should-sort-p nil))
+                  (completing-read
+                   "Open tracked file: "
+                   (magit-git-lines "-C" (magit-git-dir) "ls-files" "--full-name"))
+                  (vc-root-dir))))
+            (message "Not under vc: %s" buffer-file-name)))
+        (bind-key* "C-. j" 'git-files)
+
+        (defun git-modified-files ()
+          (interactive)
+          (if (under-vc)
+              (find-file
+               (f-expand
+                (let ((selectrum-should-sort-p nil))
+                  (completing-read
+                   "Open modified file: "
+                   (magit-git-lines "ls-files" "--full-name" "-m"))
+                  (vc-root-dir))))
+            (message "Not under vc: %s" buffer-file-name)))
+        (bind-key* "C-. f" 'git-modified-files)))
 
     ;; (use-package consult-flycheck
     ;;   :straight t
