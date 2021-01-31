@@ -62,13 +62,28 @@
   (load bootstrap-file nil 'nomessage))
 
 (with-no-warnings
-  (setq use-package-verbose t))
-(straight-use-package 'bind-map)
+  (setq use-package-verbose t)
+  ;; (setq straight-use-package-by-default t)
+  ;; (setq use-package-always-defer t)
+)
 (straight-use-package 'use-package)
+
 (eval-when-compile
-  (require 'seq))
+  (require 'seq)
+  (require 'subr-x)
+  (require 'bind-key)
+  (require 'use-package))
 (use-package f :straight t)
 (use-package s :straight t)
+(use-package el-patch :straight t)
+
+(defmacro use-feature (name &rest args)
+  "Like `use-package', but with `straight-use-package-by-default' disabled.
+NAME and ARGS are as in `use-package'."
+  (declare (indent defun))
+  `(use-package ,name
+     :straight nil
+     ,@args))
 
 (use-package vmacs-paths :load-path "layers")
 (use-package vmacs-core)

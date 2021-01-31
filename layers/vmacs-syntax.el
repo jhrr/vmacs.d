@@ -6,20 +6,20 @@
 
 ;;; Code:
 
-;; TODO: https://github.com/sachac/artbollocks-mode
-
 (use-package flycheck
   :straight t
   :custom
-  (progn
-    (flycheck-emacs-lisp-initialize-packages t)
-    (flycheck-display-errors-delay 0.1))
+  (flycheck-emacs-lisp-initialize-packages t)
+  (flycheck-display-errors-delay 0.1)
   :config
-  (progn
-    (global-flycheck-mode)
-    (flycheck-set-indication-mode 'left-margin)
+  (global-flycheck-mode)
+  (flycheck-set-indication-mode 'left-margin)
 
-    (add-to-list 'flycheck-checkers 'proselint)))
+  (add-to-list 'flycheck-checkers 'proselint))
+
+(use-package artbollocks-mode
+  :straight t
+  :init (add-hook 'text-mode-hook 'artbollocks-mode))
 
 (provide 'vmacs-syntax)
 ;;; vmacs-syntax.el ends here

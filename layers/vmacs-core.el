@@ -54,6 +54,10 @@
 (global-auto-revert-mode t)
 (mouse-avoidance-mode 'jump)
 
+(recentf-mode)
+(setq recentf-max-menu-items 25)
+(setq recentf-max-saved-items 25)
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (defmacro hook-into-modes (func mode-hooks)
@@ -73,6 +77,39 @@
   "Face used to tastefully dim parentheses.")
 
 (add-hook 'before-save-hook 'whitespace-cleanup)
+
+(defun jump-to-init ()
+  "Edit the `user-init-file', in another window."
+  (interactive)
+  (find-file user-init-file))
+(bind-key* "C-c I" 'jump-to-init)
+
+(defun layers ()
+  "List all layer files."
+  (seq-filter
+   (lambda (path) (not (string-prefix-p ".#" path)))
+   (directory-files layers t "\.el$" nil)))
+
+(defun layers-map ()
+  "Return a hash of layer names mapped to layer paths."
+  (let ((layers-hash (make-hash-table :test 'equal)))
+    (seq-map (lambda (path)
+               (puthash
+                (file-name-sans-extension
+                 (file-name-nondirectory path))
+                path layers-hash))
+             (layers))
+    layers-hash))
+
+(defun jump-to-layer ()
+  "Quickly jump to a config layer."
+  (interactive)
+  (let ((layers-map (layers-map)))
+    (find-file
+     (gethash
+      (completing-read "Open layer file: " (hash-keys layers-map))
+      layers-map))))
+(bind-key* "C-c L" 'jump-to-layer)
 
 ;; TODO: Move all to lisp/utility-funcs.el
 (defun dcaps-to-scaps ()
@@ -119,7 +156,7 @@ Single Capitals as you type."
     t))
 
 (defun font-candidate (&rest fonts)
-  "Return the first available font."
+  "Return the first available font from FONTS."
   (seq-find #'font-exists-p fonts))
 
 (defun google ()
@@ -138,12 +175,6 @@ Single Capitals as you type."
   (interactive "*")
   (let ((uuid (s-trim (shell-command-to-string "uuidgen"))))
     (insert uuid)))
-
-(defun jump-to-init ()
-  "Edit the `user-init-file', in another window."
-  (interactive)
-  (find-file user-init-file))
-(bind-key* "C-c I" 'jump-to-init)
 
 (defun nuke-all ()
   "Kill all buffers, leaving *scratch* only."

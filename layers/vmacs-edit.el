@@ -1,43 +1,29 @@
-;;; vmacs-edit.el -*- lexical-binding:t -*-
+;;; vmacs-edit.el --- Text editing packages. -*- lexical-binding:t -*-
 
-;;; Commentary: Enhance the text editing experience.
+;;; Commentary:
+
+;; Enhance the text editing experience.
 
 ;;; Code:
 
-;; https://github.com/Fuco1/smartparens
+(use-package aggressive-indent
+  :straight t
+  :config
+  (global-aggressive-indent-mode)
+  (seq-do
+   (lambda (mode) (add-to-list 'aggressive-indent-excluded-modes mode))
+   '(org-mode)))
 
-; (use-package linum-off
-;   :straight t)
+(use-package rainbow-mode
+  :straight t
+  :config
+  (define-globalized-minor-mode global-rainbow-mode rainbow-mode
+    (lambda () (rainbow-mode)))
+  (global-rainbow-mode))
 
-; (use-package smooth-scrolling
-;   :straight t
-;   :config (smooth-scrolling-mode t))
-
-;; TODO: try this...
-; (setq scroll-preserve-screen-position t)
-; (setq scroll-margin 0)
-; (setq scroll-conservatively 101)
-
-; (use-package volatile-highlights
-;   :straight t
-;   :config (volatile-highlights-mode t))
-
-; (use-package aggressive-indent
-;   :straight t
-;   :commands (global-aggressive-indent-mode)
-;   :hook (prog-mode . (lambda () (require 'aggressive-indent)))
-;   :init
-;   (general-setq aggressive-indent-excluded-modes '())
-;   :preface
-;   (defun turn-off-aggressive-indent-mode ()
-;     (when (fboundp 'aggressive-indent-mode)
-;       (aggressive-indent-mode -1)))
-
-;   :config
-;   (progn
-;     (add-hook 'diff-auto-refine-mode-hook #'turn-off-aggressive-indent-mode)
-;     (global-aggressive-indent-mode t)))
-
+(use-package smooth-scrolling
+  :straight t
+  :config (smooth-scrolling-mode))
 
 (provide 'vmacs-edit)
 ;;; vmacs-edit.el ends here
