@@ -1,4 +1,4 @@
-;;; vmacs-org.el -- Configure org-mode -*- lexical-binding:t -*-
+;;; vmacs-org.el -- Configure org-mode. -*- lexical-binding:t -*-
 
 ;;; Commentary:
 
@@ -9,45 +9,26 @@
 ;; TODO: (def create-new-gtd-file)
 ;; Adds the ~#+ARCHIVE: %s_done::~ to top.
 ;; org-hydra C-c o - , o
-;; (defhydra hydra--org-clock (:color blue)
-;;   "
-;;     ^
-;;     ^Clock^             ^Do^
-;;     ^─────^─────────────^──^─────────
-;;     _q_ quit            _c_ cancel
-;;     ^^                  _d_ display
-;;     ^^                  _e_ effort
-;;     ^^                  _i_ punch in
-;;     ^^                  _j_ jump
-;;     ^^                  _o_ punch out
-;;     ^^                  _r_ report
-;;     ^^                  ^^
-;;     "
-;;   ("q" nil)
-;;   ("c" org-clock-cancel :color pink)
-;;   ("d" org-clock-display)
-;;   ("e" org-clock-modify-effort-estimate)
-;;   ("i" org-clock-in)
-;;   ("j" org-clock-goto)
-;;   ("o" org-clock-out)
-;;   ("r" org-clock-report))s
+;; defhydra hydra--org-clock
 
-(use-package org
-  :defer t
+(use-package org-plus-contrib
+  :bind
+  ("C-c a" . org-agenda)
   :init
-  (defvar user-org-directory (expand-file-name "org/" user-dropbox-directory))
-  (defvar org-archive-directory (expand-file-name "archive/" user-org-directory))
-  (defvar org-gtd-directory (expand-file-name "dasein/" user-org-directory))
-
-  (setq org-adapt-indentation nil)
-  (setq org-default-notes-file
-        (expand-file-name "gtd-inbox.org" user-org-directory))
-  (setq org-startup-folded t)
+  (defvar user-org-directory
+    (expand-file-name "org/" user-dropbox-directory))
+  (defvar org-archive-directory
+    (expand-file-name "archive/" user-org-directory))
+  (defvar org-gtd-directory
+    (expand-file-name "dasein/" user-org-directory))
+  (defvar org-default-notes-file
+    (expand-file-name "gtd-inbox.org" user-org-directory))
 
   ;; Capture Templates
   (setq org-capture-templates
         '(("q" "Quick" entry
-           (file+headline org-default-notes-file "Quick") "* %?\n  %t")))
+           (file+headline org-default-notes-file "Quick")
+           "* %?\n  %t" :clock-in t :clock-resume t)))
 
   (defun gtd ()
     "Return all 'gtd' files in the 'dasein' directory."
@@ -72,16 +53,29 @@
 selection screen."
     (interactive)
     (org-capture nil "q"))
-  (bind-key* "C-c c" 'quick-capture))
-:config
-(add-hook 'org-mode-hook '(lambda () (linum-mode -1)))
+  (bind-key* "C-c c" 'quick-capture)
+  :config
+  (require 'org-checklist)
+
+  (setq org-adapt-indentation nil)
+  (setq org-agenda-span 'day)
+  (setq org-agenda-sticky t)
+  (setq org-ellipsis " …")
+  (setq org-startup-folded t)
+  ;; Activate org-columns with C-c C-x C-c while on a top-level heading.
+  ;; (setq org-columns-default-format "%50ITEM(Task) %10CLOCKSUM %16TIMESTAMP_IA")
+  ;; (setq org-refile-targets '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9)))
+
+  (add-hook 'org-mode-hook '(lambda () (linum-mode -1))))
 
 (use-package org-journal
   :straight t
   :after org
-  :bind ("C-c C-j" . org-journal-new-entry)
-  :init (setq org-journal-dir
-              (expand-file-name "journal/" org-archive-directory))
+  :bind
+  ("C-c C-j" . org-journal-new-entry)
+  :init
+  (setq org-journal-dir
+        (expand-file-name "journal/" org-archive-directory))
   :config
   (defun iso-week ()
     "Return the ISO week number, human readable and Monday indexed."
@@ -156,11 +150,11 @@ selection screen."
   (bind-key "C-c j p" 'org-journal-previous-entry 'org-journal-mode-map)
   (bind-key "C-c C-s" 'org-journal-save-entry-and-exit 'org-journal-mode-map))
 
-  ;; (use-package org-roam
-  ;;   :straight t
-  ;;   :init
-  ;;   (progn
-  ;;     (setq org-roam-directory (expand-file-name "index/" user-org-directory))))
+;; (use-package org-roam
+;;   :straight t
+;;   :init
+;;   (progn
+;;     (setq org-roam-directory (expand-file-name "index/" user-org-directory))))
 
-  (provide 'vmacs-org)
+(provide 'vmacs-org)
 ;;; vmacs-org.el ends here

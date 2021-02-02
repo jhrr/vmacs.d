@@ -8,8 +8,9 @@
 
 (use-package aggressive-indent
   :straight t
-  :config
+  :init
   (global-aggressive-indent-mode)
+  :config
   (seq-do
    (lambda (mode) (add-to-list 'aggressive-indent-excluded-modes mode))
    '(org-mode)))
