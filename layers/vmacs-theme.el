@@ -59,7 +59,7 @@
 ;; #d0cfca rgb(208, 207, 202) //Ansi 7 Color
 ;; #000000 rgb(0, 0, 0) //Ansi 8 Color
 ;; #e97073 rgb(233, 112, 115) //Ansi 9 Color
-;; #262526 rgb(38, 37, 38) //Background Color
+;; #262526 rgb(38, 37, 38) //Background Color <- try this with Chalk
 ;; #c5c8c6 rgb(197, 200, 198) //Bold Color
 ;; #c5c8c6 rgb(197, 200, 198) //Cursor Color
 ;; #1d1f21 rgb(29, 31, 33) //Cursor Text Color

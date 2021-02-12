@@ -108,18 +108,20 @@
    lisp-modes))
 
 (seq-do (lambda (mode)
-        (font-lock-add-keywords
-         mode
-         '(("(\\(lambda\\)\\>"
-            (0 (ignore
-                (compose-region (match-beginning 1)
-                                (match-end 1) ?λ))))
-           ("(\\|)" . 'global-dim-paren-face)
-           ("(\\(ert-deftest\\)\\>[ '(]*\\(setf[ ]+\\sw+\\|\\sw+\\)?"
-            (1 font-lock-keyword-face)
-            (2 font-lock-function-name-face
-               nil t)))))
-      lisp-modes)
+          (font-lock-add-keywords
+           mode
+           '(("(\\(lambda\\)\\>"
+              (0 (ignore
+                  (compose-region (match-beginning 1)
+                                  (match-end 1) ?λ))))
+             ("(\\|)" . 'global-dim-paren-face)
+             ("(\\(ert-deftest\\)\\>[ '(]*\\(setf[ ]+\\sw+\\|\\sw+\\)?"
+              (1 font-lock-keyword-face)
+              (2 font-lock-function-name-face nil t)))))
+        lisp-modes)
+
+;; (use-package slime :straight t)
+;; (use-package sly :straight t)
 
 (defun uncomment-sexp (&optional n)
   "Uncomment a sexp around point."

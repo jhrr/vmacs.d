@@ -26,24 +26,25 @@
 (when (version< emacs-version "26")
   (error (concat "Emacs 26 is required. Currently running: " emacs-version)))
 
-(setq package-enable-at-startup nil)
-(setq read-process-output-max (* 1024 1024))
-(setq gc-cons-threshold (* 1024 1024 20))
-(setq frame-resize-pixelwise t)
-(setq max-specpdl-size 10000) ;; Needed for stream.el
-(setq message-log-max 16384)
-(progn
-  (setq inhibit-startup-screen t
-        inhibit-startup-echo-area-message (user-login-name)
-        inhibit-startup-message t
-        initial-scratch-buffer nil)
-  (custom-set-variables '(menu-bar-mode . nil)
-                        '(tool-bar-mode . nil)
-                        '(scroll-bar-mode nil))
-  (toggle-frame-maximized)
-  (modify-all-frames-parameters '((vertical-scroll-bars)
-                                  (name . "Emacs")))
-  (set-face-attribute 'mode-line nil :box nil))
+(setq package-enable-at-startup nil
+      read-process-output-max (* 1024 1024)
+      gc-cons-threshold (* 1024 1024 20)
+      max-specpdl-size 10000 ;; Needed for stream.el
+      message-log-max 16384)
+
+(custom-set-variables
+ '(menu-bar-mode . nil)
+ '(tool-bar-mode . nil)
+ '(scroll-bar-mode nil))
+(modify-all-frames-parameters
+ '((vertical-scroll-bars) (name . "Emacs")))
+(set-face-attribute 'mode-line nil :box nil)
+(setq frame-resize-pixelwise t
+      inhibit-startup-screen t
+      inhibit-startup-echo-area-message (user-login-name)
+      inhibit-startup-message t
+      initial-scratch-buffer nil)
+(toggle-frame-maximized)
 
 (unless noninteractive
   (message "Loading %s..." load-file-name))
