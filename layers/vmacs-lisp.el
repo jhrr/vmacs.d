@@ -114,7 +114,7 @@
               (0 (ignore
                   (compose-region (match-beginning 1)
                                   (match-end 1) ?λ))))
-             ("(\\|)" . 'global-dim-paren-face)
+             ("(\\|)" . 'dim-parens-face)
              ("(\\(ert-deftest\\)\\>[ '(]*\\(setf[ ]+\\sw+\\|\\sw+\\)?"
               (1 font-lock-keyword-face)
               (2 font-lock-function-name-face nil t)))))
