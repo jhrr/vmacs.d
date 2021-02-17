@@ -129,7 +129,6 @@ NAME and ARGS are as in `use-package'."
                           ,load-file-name elapsed)))
             t))
 ;;; init.el ends here
-
 ;; Local Variables:
 ;; no-byte-compile: t
 ;; End:

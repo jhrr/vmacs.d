@@ -43,6 +43,19 @@
   ;; (setq org-columns-default-format "%50ITEM(Task) %10CLOCKSUM %16TIMESTAMP_IA")
   ;; (setq org-refile-targets '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9)))
 
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+          (sequence "BLOCKED(b@/!)" "|" "CANCELLED(c@/!)" "MEETING")))
+
+  ;; TODO: Merge colors with vmacs-theme.el
+  (setq org-todo-keyword-faces
+        '(("TODO" :foreground "red" :weight bold)
+          ("NEXT" :foreground "blue" :weight bold)
+          ("DONE" :foreground "forest green" :weight bold)
+          ("BLOCKED" :foreground "orange" :weight bold)
+          ("CANCELLED" :foreground "black" :weight bold)
+          ("MEETING" :foreground "blue" :weight bold)))
+
   ;; Capture Templates
   (setq org-capture-templates
         '(("q" "Quick" entry

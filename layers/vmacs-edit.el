@@ -1,15 +1,15 @@
-;;; vmacs-edit.el --- Text editing packages. -*- lexical-binding:t -*-
+;;; vmacs-edit.el --- Text editing. -*- lexical-binding:t -*-
 
 ;;; Commentary:
 
-;; Enhance the text editing experience.
+;; Enhance the overall text editing experience.
 
 ;;; Code:
 
 (use-package aggressive-indent
   :straight t
-  :init
-  (global-aggressive-indent-mode)
+  :hook
+  (after-init . global-aggressive-indent-mode)
   :config
   (seq-do
    (lambda (mode) (add-to-list 'aggressive-indent-excluded-modes mode))
@@ -24,7 +24,8 @@
 
 (use-package smooth-scrolling
   :straight t
-  :config (smooth-scrolling-mode))
+  :hook
+  (after-init . smooth-scrolling-mode))
 
 (provide 'vmacs-edit)
 ;;; vmacs-edit.el ends here

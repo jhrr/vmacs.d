@@ -14,7 +14,7 @@
 (defmacro defpath (sym path &optional root add-path)
   "Define a subfolder of the `user-emacs-directory' or ROOT.
 SYM is declared as a special variable set to PATH. This directory
-will be created if it doesn't exist and added to the load-path if
+will be created if it doesn't exist and added to the `load-path' if
 ADD-PATH is non-nil."
   `(defconst ,sym
      (let ((dir (concat (or ,root user-emacs-directory) ,path)))
@@ -43,11 +43,14 @@ ADD-PATH is non-nil."
       kept-old-versions 2
       version-control t)
 
-(let ((custom-file (expand-file-name "custom.el" user-emacs-directory)))
-  (unless (file-exists-p custom-file)
-    (message "Creating %s because it doesn't exist..." custom-file)
-    (shell-command (concat "touch " (shell-quote-argument custom-file))))
-  (setq custom-file custom-file))
+(let ((custom-path (expand-file-name "custom.el" user-emacs-directory)))
+  (unless (file-exists-p custom-path)
+    (message "Creating %s because it doesn't exist..." custom-path)
+    (shell-command (concat "touch " (shell-quote-argument custom-path))))
+  (setq custom-file custom-path)
+  (load custom-file))
+
+(add-to-list 'custom-theme-load-path layers)
 
 (defun hash-keys (hash)
   "Return all the keys in a HASH."

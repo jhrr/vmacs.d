@@ -109,33 +109,31 @@
       (message "Not under vc: %s" buffer-file-name)))
   (bind-key* "C-. f" 'git-modified-files))
 
+(use-package mini-frame
+  :straight t
+  :init
+  ;; Workaround bug#44080, should be fixed in version 27.2 and above.
+  (define-advice fit-frame-to-buffer (:around (f &rest args) dont-skip-ws-for-mini-frame)
+    (cl-letf* ((orig (symbol-function #'window-text-pixel-size))
+               ((symbol-function #'window-text-pixel-size)
+                (lambda (win from to &rest args)
+                  (apply orig
+                         (append (list win from
+                                       (if (and (window-minibuffer-p win)
+                                                (frame-root-window-p win)
+                                                (eq t to))
+                                           nil
+                                         to))
+                                 args)))))
+      (apply f args)))
 
-
-  (use-package mini-frame
-    :straight t
-    :init
-    ;; Workaround bug#44080, should be fixed in version 27.2 and above.
-    (define-advice fit-frame-to-buffer (:around (f &rest args) dont-skip-ws-for-mini-frame)
-      (cl-letf* ((orig (symbol-function #'window-text-pixel-size))
-                 ((symbol-function #'window-text-pixel-size)
-                  (lambda (win from to &rest args)
-                    (apply orig
-                           (append (list win from
-                                         (if (and (window-minibuffer-p win)
-                                                  (frame-root-window-p win)
-                                                  (eq t to))
-                                             nil
-                                           to))
-                                   args)))))
-        (apply f args)))
-
-    (mini-frame-mode)
-    (custom-set-variables
-     '(mini-frame-show-parameters
-       '((top . 70)
-         (width . 0.7)
-         (left . 0.5))))
-    (add-to-list 'mini-frame-ignore-commands "vr/*"))
+  (mini-frame-mode)
+  (custom-set-variables
+   '(mini-frame-show-parameters
+     '((top . 70)
+       (width . 0.7)
+       (left . 0.5))))
+  (add-to-list 'mini-frame-ignore-commands "vr/*"))
 
 (use-package which-key
   :straight t
