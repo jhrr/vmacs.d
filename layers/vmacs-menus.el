@@ -6,11 +6,6 @@
 
 ;;; Code:
 
-;; https://github.com/jerrypnz/major-mode-hydra.el
-;; https://github.com/jerrypnz/major-mode-hydra.el#use-package-integration
-;; https://github.com/Ladicle/hydra-posframe
-;; https://github.com/chrisbarrett/.emacs.d/blob/e1bf2e5d07a8ec1c643e6eafba13485e0a9b6bfe/config/config-hydras.el
-
 (use-package hydra :straight t)
 
 (use-package major-mode-hydra :straight t :after hydra)

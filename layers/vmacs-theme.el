@@ -20,7 +20,7 @@
     (((class color) (background light))
      (:foreground "grey55")))
   "Face used to tastefully dim parentheses."
-  :group 'vmacs)
+  :group 'faces)
 
 (deftheme vmacs
   "Custom theme for vmacs.")
@@ -30,14 +30,12 @@
     (ansi-1 . "#c15064")
     (ansi-2 . "#89a97d")
     (ansi-4 . "#88afd4")
-    (ansi-5 . "#ca656d")
     (ansi-6 . "#51b4a9")
     (ansi-7 . "#dadfe0")
     (ansi-8 . "#999999")
     (ansi-9 . "#f76050")
     (ansi-10 . "#79ab87")
     (ansi-11 . "#ffc900")
-    (ansi-12 . "#88afd4")
     (ansi-13 . "#e39f89")
     (ansi-14 . "#61afab")
     (ansi-15 . "#dadfe0")
@@ -49,7 +47,8 @@
     (cursor-guide . "#b3ecff")
     (cursor-text . "#003440")
     (foreground . "#dadfe0")
-    (link . "#005bbb")
+    (link . "#88afd4")
+    (keybinding . "#ca656d")
     (keyword . "#f5d99a")
     (selected-text . "#505052")
     (selection-colour . "#e9edf1")))
@@ -60,21 +59,27 @@
     (custom-theme-set-faces
      'vmacs
      `(default ((,class (:foreground ,.foreground :background ,.background))))
-     `(cursor  ((,class (:background ,.cursor))))
 
-     `(font-lock-builtin-face ((,class (:foreground ,.keyword :background ,.background))))
-     `(font-lock-comment-face ((,class (:foreground ,.comments :background ,.background))))
-     `(font-lock-comment-delimiter-face ((,class (:foreground ,.comments :background ,.background))))
-     `(font-lock-constant-face ((,class (:foreground ,.foreground :background ,.background))))
-     `(font-lock-doc-face ((,class (:foreground ,.comments :background ,.background))))
-     `(font-lock-function-name-face ((,class (:foreground ,.foreground :background ,.background))))
-     `(font-lock-keyword-face ((,class (:foreground ,.foreground :background ,.background))))
-     `(font-lock-string-face ((,class (:foreground ,.comments :background ,.background))))
-     `(font-lock-type-face ((,class (:foreground ,.foreground :background ,.background))))
-     `(font-lock-variable-name-face ((,class (:foreground ,.foreground :background ,.background))))
+     `(cursor  ((,class (:background ,.cursor))))
+     `(link ((,class (:foreground ,.link))))
+     `(minibuffer-prompt ((,class (:foreground ,.link))))
      `(show-paren-match ((,class (:foreground ,.bold))))
 
-     `(selectrum-current-candidate ((,class (:foreground ,.keyword :underline t :weight bold))))
+     `(font-lock-builtin-face ((,class (:foreground ,.keyword))))
+     `(font-lock-comment-face ((,class (:foreground ,.comments))))
+     `(font-lock-comment-delimiter-face ((,class (:foreground ,.comments))))
+     `(font-lock-constant-face ((,class (:foreground ,.foreground))))
+     `(font-lock-doc-face ((,class (:foreground ,.comments))))
+     `(Font-lock-function-name-face ((,class (:foreground ,.foreground))))
+     `(font-lock-keyword-face ((,class (:foreground ,.foreground))))
+     `(font-lock-string-face ((,class (:foreground ,.keybinding))))
+     `(font-lock-type-face ((,class (:foreground ,.foreground))))
+     `(font-lock-variable-name-face ((,class (:foreground ,.foreground))))
+
+     `(selectrum-current-candidate
+       ((,class (:foreground ,.keyword :underline t :weight bold))))
+
+     `(marginalia-key ((,class (:foreground ,.keybinding))))
 
      )))
 
