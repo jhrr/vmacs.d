@@ -78,7 +78,6 @@
 
      )))
 
-
 (set-face-attribute 'fringe nil :background nil)
 (fringe-mode 10)
 
