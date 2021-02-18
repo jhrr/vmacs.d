@@ -6,6 +6,9 @@
 
 ;;; Code:
 
+(use-package evil :straight t)
+(evil-mode)
+
 (use-package aggressive-indent
   :straight t
   :hook

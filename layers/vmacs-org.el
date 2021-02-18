@@ -31,17 +31,15 @@
     (expand-file-name "archive/" user-org-directory))
   (defvar org-gtd-directory
     (expand-file-name "dasein/" user-org-directory))
+  (defvar org-work-directory
+    (expand-file-name "work/" user-org-directory))
   (defvar org-default-notes-file
     (expand-file-name "gtd-inbox.org" user-org-directory))
 
-  (setq org-adapt-indentation nil)
-  (setq org-agenda-span 'day)
-  (setq org-agenda-sticky t)
-  (setq org-ellipsis " …")
-  (setq org-startup-folded t)
-  ;; Activate org-columns with C-c C-x C-c while on a top-level heading.
-  ;; (setq org-columns-default-format "%50ITEM(Task) %10CLOCKSUM %16TIMESTAMP_IA")
-  ;; (setq org-refile-targets '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9)))
+  (setq org-capture-templates
+        '(("q" "Quick" entry
+           (file+headline org-default-notes-file "Quick")
+           "* %?\n  %t" :clock-in t :clock-resume t)))
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
@@ -56,11 +54,14 @@
           ("CANCELLED" :foreground "black" :weight bold)
           ("MEETING" :foreground "blue" :weight bold)))
 
-  ;; Capture Templates
-  (setq org-capture-templates
-        '(("q" "Quick" entry
-           (file+headline org-default-notes-file "Quick")
-           "* %?\n  %t" :clock-in t :clock-resume t)))
+  (setq org-adapt-indentation nil)
+  (setq org-agenda-span 'day)
+  (setq org-agenda-sticky t)
+  (setq org-ellipsis " …")
+  (setq org-startup-folded t)
+  ;; Activate org-columns with C-c C-x C-c while on a top-level heading.
+  ;; (setq org-columns-default-format "%50ITEM(Task) %10CLOCKSUM %16TIMESTAMP_IA")
+  ;; (setq org-refile-targets '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9)))
 
   (defun gtd ()
     "List all files in the `org-gtd-directory'."
@@ -81,11 +82,10 @@
   (bind-key* "C-c O" 'jump-to-inbox)
 
   (defun quick-capture ()
-    "Capture an item without going through the template selection
-screen."
+    "Capture an item without going through template selection."
     (interactive)
     (org-capture nil "q"))
-  (bind-key* "C-c c" 'quick-capture)
+  (bind-key* "C-. ;" 'quick-capture)
 
   (add-hook 'org-mode-hook '(lambda () (linum-mode -1)))
   :config
@@ -164,13 +164,13 @@ screen."
     (save-buffer)
     (kill-buffer-and-window))
 
-  (bind-key "C-. j l" 'journal-last-year 'org-journal-mode-map)
-  (bind-key "C-. j t" 'journal-file-today 'org-journal-mode-map)
-  (bind-key "C-. j y" 'journal-file-yesterday 'org-journal-mode-map)
-  (bind-key "C-. j s" 'org-journal-save-entry 'org-journal-mode-map)
-  (bind-key "C-. j a" 'get-specific-journal-entry 'org-journal-mode-map)
-  (bind-key "C-. j p" 'org-journal-previous-entry 'org-journal-mode-map)
-  (bind-key "C-. C-s" 'org-journal-save-entry-and-exit 'org-journal-mode-map))
+  (bind-key "C-. j l" #'journal-last-year 'org-journal-mode-map)
+  (bind-key "C-. j t" #'journal-file-today 'org-journal-mode-map)
+  (bind-key "C-. j y" #'journal-file-yesterday 'org-journal-mode-map)
+  (bind-key "C-. j a" #'get-specific-journal-entry 'org-journal-mode-map)
+  (bind-key "C-. j p" #'org-journal-previous-entry 'org-journal-mode-map)
+  (bind-key "C-. j s" #'org-journal-save-entry 'org-journal-mode-map)
+  (bind-key "C-. j x" #'org-journal-save-entry-and-exit 'org-journal-mode-map))
 
 ;; (use-package org-roam
 ;;   :straight t

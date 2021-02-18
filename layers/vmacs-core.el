@@ -35,8 +35,6 @@
 (setq compile-command "CC=clang make -k")
 (setq initial-major-mode 'fundamental-mode)
 (setq base16-theme-256-color-source "base16-shell")
-(setq browse-url-generic-program (executable-find "chromium")
-      browse-url-browser-function 'browse-url-generic)
 
 (setq-default line-number-mode t)
 (setq-default column-number-mode t)
@@ -48,7 +46,7 @@
 (show-paren-mode t)
 (blink-cursor-mode t)
 (global-linum-mode t)
-(global-hl-line-mode t)
+; (global-hl-line-mode t)
 (auto-compression-mode t)
 (delete-selection-mode t) ;; overwrite marked text
 (global-auto-revert-mode t)
@@ -68,13 +66,6 @@
 (defvar ctrl-period-map)
 (define-prefix-command 'ctrl-period-map)
 (bind-key "C-." 'ctrl-period-map)
-
-(defface dim-parens-face
-  '((((class color) (background dark))
-     (:foreground "grey50"))
-    (((class color) (background light))
-     (:foreground "grey55")))
-  "Face used to tastefully dim parentheses.")
 
 (add-hook 'before-save-hook 'whitespace-cleanup)
 

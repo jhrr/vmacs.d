@@ -124,7 +124,7 @@
 ;; (use-package sly :straight t)
 
 (defun uncomment-sexp (&optional n)
-  "Uncomment a sexp around point."
+  "Uncomment a sexp, or N sexps, around point."
   (interactive "P")
   (let* ((initial-point (point-marker))
          (inhibit-field-text-motion t)

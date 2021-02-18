@@ -35,10 +35,11 @@
 (custom-set-variables
  '(menu-bar-mode . nil)
  '(tool-bar-mode . nil)
- '(scroll-bar-mode nil))
+ '(scroll-bar-mode . nil))
 (modify-all-frames-parameters
  '((vertical-scroll-bars) (name . "Emacs")))
 (set-face-attribute 'mode-line nil :box nil)
+(setq initial-frame-alist '((name . "")))
 (setq frame-resize-pixelwise t
       inhibit-startup-screen t
       inhibit-startup-echo-area-message (user-login-name)
@@ -77,6 +78,7 @@
 (use-package f :straight t)
 (use-package s :straight t)
 (use-package el-patch :straight t)
+(use-package anaphora :straight t)
 
 (defmacro use-feature (name &rest args)
   "Like `use-package', but with `straight-use-package-by-default' disabled.
