@@ -55,7 +55,7 @@ ADD-PATH is non-nil."
 (defun hash-keys (hash)
   "Return all the keys in a HASH."
   (let ((keys ()))
-    (maphash (lambda (k v) (push k keys)) hash)
+    (maphash (lambda (k _v) (push k keys)) hash)
     (reverse keys)))
 
 (defun filename-map (filenames)
@@ -63,24 +63,36 @@ ADD-PATH is non-nil."
   (let ((filename-hash (make-hash-table :test 'equal)))
     (seq-map (lambda (path)
                (puthash
-                 (file-name-base path)
+                (file-name-base path)
                 path filename-hash))
              filenames)
     filename-hash))
 
-(defun jump-to-file (map)
-  "Jump to a file via a MAP produced by FILENAME-MAP."
-  (find-file
-   (gethash (completing-read "Open file: " (hash-keys map)) map)))
-
 (defun directory-el (dir)
-  "Return all .el files under a DIR."
+  "Return all elisp files under a DIR."
   (seq-filter
    (lambda (filename) (not (string-prefix-p ".#" filename)))
    (directory-files dir t "\.el$" nil)))
 
-(setq vmacs-features
-      (seq-concatenate 'list (directory-el layers) (directory-el lisp)))
+(defun jump-to-file (map)
+  "Jump to a file via a MAP produced by `filename-map'."
+  (find-file
+   (gethash (completing-read "Open file: " (hash-keys map)) map)))
+
+(defun jump-to-init ()
+  "Edit the `user-init-file', in another window."
+  (interactive)
+  (find-file user-init-file))
+(bind-key* "C-c I" 'jump-to-init)
+
+(defun jump-to-layer ()
+  "Jump to a selected layer file."
+  (interactive)
+  (jump-to-file (filename-map (directory-el layers))))
+(bind-key* "C-c L" 'jump-to-layer)
+
+(defconst vmacs-features
+  (seq-concatenate 'list (directory-el layers) (directory-el lisp)))
 
 (provide 'vmacs-paths)
 ;;; vmacs-paths.el ends here

@@ -70,16 +70,16 @@
      `(font-lock-comment-delimiter-face ((,class (:foreground ,.comments))))
      `(font-lock-constant-face ((,class (:foreground ,.foreground))))
      `(font-lock-doc-face ((,class (:foreground ,.comments))))
-     `(Font-lock-function-name-face ((,class (:foreground ,.foreground))))
+     `(font-lock-function-name-face ((,class (:foreground ,.foreground))))
      `(font-lock-keyword-face ((,class (:foreground ,.foreground))))
-     `(font-lock-string-face ((,class (:foreground ,.keybinding))))
+     `(font-lock-string-face ((,class (:foreground ,.comments))))
      `(font-lock-type-face ((,class (:foreground ,.foreground))))
      `(font-lock-variable-name-face ((,class (:foreground ,.foreground))))
 
      `(selectrum-current-candidate
        ((,class (:foreground ,.keyword :underline t :weight bold))))
 
-     `(marginalia-key ((,class (:foreground ,.keybinding))))
+     `(marginalia-key ((,class (:foreground ,.keyword))))
 
      )))
 

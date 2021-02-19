@@ -69,39 +69,6 @@
 
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
-(defun jump-to-init ()
-  "Edit the `user-init-file', in another window."
-  (interactive)
-  (find-file user-init-file))
-(bind-key* "C-c I" 'jump-to-init)
-
-(defun layers ()
-  "List all layer files."
-  (seq-filter
-   (lambda (path) (not (string-prefix-p ".#" path)))
-   (directory-files layers t "\.el$" nil)))
-
-(defun layers-map ()
-  "Return a hash of layer names mapped to layer paths."
-  (let ((layers-hash (make-hash-table :test 'equal)))
-    (seq-map (lambda (path)
-               (puthash
-                (file-name-sans-extension
-                 (file-name-nondirectory path))
-                path layers-hash))
-             (layers))
-    layers-hash))
-
-(defun jump-to-layer ()
-  "Quickly jump to a config layer."
-  (interactive)
-  (let ((layers-map (layers-map)))
-    (find-file
-     (gethash
-      (completing-read "Open layer file: " (hash-keys layers-map))
-      layers-map))))
-(bind-key* "C-c L" 'jump-to-layer)
-
 ;; TODO: Move all to lisp/utility-funcs.el
 (defun dcaps-to-scaps ()
   "Convert word in DOuble CApitals to Single Capitals."

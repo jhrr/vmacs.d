@@ -106,11 +106,7 @@ NAME and ARGS are as in `use-package'."
                         vmacs-features nil))
   (eval `(use-package ,feature)))
 
-(defun jump-to-layer ()
-  "Jump to a selected layer file."
-  (interactive)
-  (jump-to-file (filename-map (directory-el layers))))
-(bind-key* "C-c L" 'jump-to-layer)
+(load-theme 'vmacs t)
 
 ;;; --- Post-init
 (progn
