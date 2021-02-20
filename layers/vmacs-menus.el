@@ -1,14 +1,18 @@
-;;; vmacs-menus.el -*- lexical-binding:t -*-
+;;; vmacs-menus.el -- Menus and navigation -*- lexical-binding:t -*-
 
 ;;; Commentary:
 
-;; Configure menus and navigation.
-
 ;;; Code:
 
-(use-package hydra :straight t)
+(use-package posframe
+  :straight t)
 
-(use-package major-mode-hydra :straight t :after hydra)
+(use-package hydra
+  :straight t)
+
+(use-package major-mode-hydra
+  :straight t
+  :bind ("M-SPC" . major-mode-hydra))
 
 (use-package selectrum
   :straight t

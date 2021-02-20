@@ -19,6 +19,7 @@
 
 (use-package artbollocks-mode
   :straight t
+  :disabled t
   :init (add-hook 'text-mode-hook 'artbollocks-mode))
 
 (provide 'vmacs-syntax)

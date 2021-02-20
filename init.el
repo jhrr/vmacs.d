@@ -106,8 +106,6 @@ NAME and ARGS are as in `use-package'."
                         vmacs-features nil))
   (eval `(use-package ,feature)))
 
-(load-theme 'vmacs t)
-
 ;;; --- Post-init
 (progn
   (when (member (expand-file-name "~/.emacs.d") load-path)

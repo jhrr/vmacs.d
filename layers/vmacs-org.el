@@ -6,19 +6,6 @@
 
 ;;; Code:
 
-;; TODO: (def create-new-gtd-file)
-;; Adds the ~#+ARCHIVE: %s_done::~ to top.
-;; defhydra hydra--org
-;;   - agenda
-;;   - capture
-;;   - clocking
-;;   - go to clocked item
-;;   - journal new entry, open today's journal
-;; defhydra hydra--org-agenda -> subhydra necessary?
-;; defhydra hydra--org-clock -> subhydra necessary?
-;; State -> TODO NEXT BLOCKED DONE
-;; Category -> TASK PROJECT META
-
 (use-package org-plus-contrib
   :bind
   (("C-c a" . org-agenda)
@@ -43,16 +30,21 @@
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-          (sequence "BLOCKED(b@/!)" "|" "CANCELLED(c@/!)" "MEETING")))
+          (sequence "BLOCKED(b@/!)" "|" "CANCELLED(c@/!)")))
 
-  ;; TODO: Merge colors with vmacs-theme.el
+  ;; (setq org-todo-keyword-faces
+  ;;       `'(("TODO" :foreground ,(get-colour "ansi-9") :weight bold)
+  ;;          ("NEXT" :foreground ,(get-colour "ansi-4") :weight bold)
+  ;;          ("DONE" :foreground ,(get-colour "ansi-2") :weight bold)
+  ;;          ("BLOCKED" :foreground ,(get-colour "ansi-13") :weight bold)
+  ;;          ("CANCELLED" :foreground ,(get-colour "blackish") :weight bold)))
+
   (setq org-todo-keyword-faces
-        '(("TODO" :foreground "red" :weight bold)
-          ("NEXT" :foreground "blue" :weight bold)
-          ("DONE" :foreground "forest green" :weight bold)
-          ("BLOCKED" :foreground "orange" :weight bold)
-          ("CANCELLED" :foreground "black" :weight bold)
-          ("MEETING" :foreground "blue" :weight bold)))
+        '(("TODO" :foreground "#f76050" :weight bold)
+          ("NEXT" :foreground "#ffc900" :weight bold)
+          ("DONE" :foreground "#89a97d" :weight bold)
+          ("BLOCKED" :foreground "#e39f89" :weight bold)
+          ("CANCELLED" :foreground "#dadfe0" :weight bold)))
 
   (setq org-adapt-indentation nil)
   (setq org-agenda-span 'day)
@@ -99,12 +91,12 @@
   (setq org-journal-dir
         (expand-file-name "journal/" org-archive-directory))
   :config
-  (setq org-journal-date-format (concat "%Y/%m/%d, " (iso-week) ", %A"))
-  (setq org-journal-date-prefix "#+TITLE: ")
-
   (defun iso-week ()
     "Return the ISO week number, human readable and Monday indexed."
     (concat "Week " (format-time-string "%V")))
+
+  (setq org-journal-date-format (concat "%Y/%m/%d, " (iso-week) ", %A"))
+  (setq org-journal-date-prefix "#+TITLE: ")
 
   (defun get-offset-date (offset)
     "Calculate a date OFFSET from the current time."
@@ -164,11 +156,18 @@
     (save-buffer)
     (kill-buffer-and-window))
 
-  (bind-key "C-. j l" #'journal-last-year 'org-journal-mode-map)
-  (bind-key "C-. j t" #'journal-file-today 'org-journal-mode-map)
-  (bind-key "C-. j y" #'journal-file-yesterday 'org-journal-mode-map)
-  (bind-key "C-. j a" #'get-specific-journal-entry 'org-journal-mode-map)
-  (bind-key "C-. j p" #'org-journal-previous-entry 'org-journal-mode-map)
+  ;; TODO: Namespace funcs correctly/cleanly.
+  (major-mode-hydra-define org-journal-mode nil
+    ("Browse"
+     (("t" journal-file-today "today")
+      ("y" journal-file-yesterday "yesterday")
+      ("l" journal-last-year  "last year")
+      ("p" get-previous-journal-entry "previous")
+      ("d" get-specific-journal-entry "by date"))
+     "Save"
+     (("s" org-journal-save-entry "save")
+      ("x" org-journal-save-entry-and-exit "save and exit"))))
+
   (bind-key "C-. j s" #'org-journal-save-entry 'org-journal-mode-map)
   (bind-key "C-. j x" #'org-journal-save-entry-and-exit 'org-journal-mode-map))
 
