@@ -4,16 +4,6 @@
 
 ;;; Code:
 
-(use-package posframe
-  :straight t)
-
-(use-package hydra
-  :straight t)
-
-(use-package major-mode-hydra
-  :straight t
-  :bind ("M-SPC" . major-mode-hydra))
-
 (use-package selectrum
   :straight t
   :init (selectrum-mode)

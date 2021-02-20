@@ -73,12 +73,15 @@
 (eval-when-compile
   (require 'seq)
   (require 'subr-x)
+  (require 'cl-lib)
   (require 'bind-key)
   (require 'use-package))
 (use-package f :straight t)
 (use-package s :straight t)
+(use-package general :straight t)
 (use-package el-patch :straight t)
 (use-package anaphora :straight t)
+(use-package all-the-icons :straight t)
 
 (defmacro use-feature (name &rest args)
   "Like `use-package', but with `straight-use-package-by-default' disabled.

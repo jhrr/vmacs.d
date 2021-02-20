@@ -97,6 +97,7 @@
 
   (setq org-journal-date-format (concat "%Y/%m/%d, " (iso-week) ", %A"))
   (setq org-journal-date-prefix "#+TITLE: ")
+  (setq org-journal-time-prefix "* ")
 
   (defun get-offset-date (offset)
     "Calculate a date OFFSET from the current time."

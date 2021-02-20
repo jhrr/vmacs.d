@@ -4,6 +4,26 @@
 
 ;;; Code:
 
+;; https://github.com/chrisbarrett/.emacs.d/blob/351ea06dcad538ac80d3c17cbcae897d1d7091e8/init.el#L49
+(use-package major-mode-hydra
+  :straight t
+  :general
+  (:states '(normal motion) "," #'major-mode-hydra)
+  :preface
+  (autoload 'all-the-icons-icon-for-mode "all-the-icons")
+
+  (defun init--major-mode-hydra-title-generator (mode)
+    (let* ((icon (all-the-icons-icon-for-mode mode :v-adjust -0.15))
+           (mode-title (string-remove-suffix "-mode" (symbol-name mode)))
+           (components
+            (seq-filter #'stringp
+                        (list icon (s-titleized-words mode-title) "Commands"))))
+      (string-join components " ")))
+  :custom
+  ((major-mode-hydra-invisible-quit-key "q")
+   (major-mode-hydra-title-generator
+    #'init--major-mode-hydra-title-generator)))
+
 (set-charset-priority 'unicode)
 (prefer-coding-system 'utf-8)
 (set-language-environment 'utf-8)
