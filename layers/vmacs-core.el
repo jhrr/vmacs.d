@@ -7,6 +7,7 @@
 ;; https://github.com/chrisbarrett/.emacs.d/blob/351ea06dcad538ac80d3c17cbcae897d1d7091e8/init.el#L49
 (use-package major-mode-hydra
   :straight t
+  :demand t
   :general
   (:states '(normal motion) "," #'major-mode-hydra)
   :preface

@@ -7,10 +7,19 @@
 ;;; Code:
 
 (use-package org-plus-contrib
-  :bind
-  (("C-c a" . org-agenda)
-   ("C-c c" . org-capture)
-   ("C-c l" . org-store-link))
+  :mode ("\\.org\\'" . org-mode)
+  :mode-hydra
+  (org-mode
+   ("Agenda"
+    (("a" #'org-agenda "agenda"))
+    "Todo"
+    (("i" #'jump-to-inbox "inbox")
+     ("j" #'jump-to-gtd "jump to gtd"))
+    "Capture"
+    (("q" #'org-quick-capture "quick capture")
+     ("c" #'org-capture "capture")
+     ("s" #'org-store-link "store link")
+     ("l" #'org-insert-link "insert link"))))
   :init
   (defvar user-org-directory
     (expand-file-name "org/" user-dropbox-directory))
@@ -87,6 +96,17 @@
   :straight t
   :bind
   ("C-. C-j" . org-journal-new-entry)
+  :mode-hydra
+  (org-journal-mode
+   ("Browse"
+    (("t" journal-file-today "today")
+     ("y" journal-file-yesterday "yesterday")
+     ("l" journal-last-year  "last year")
+     ("p" get-previous-journal-entry "previous")
+     ("d" get-specific-journal-entry "by date"))
+    "Save"
+    (("s" org-journal-save-entry "save")
+     ("x" org-journal-save-entry-and-exit "save and exit"))))
   :init
   (setq org-journal-dir
         (expand-file-name "journal/" org-archive-directory))
@@ -158,16 +178,6 @@
     (kill-buffer-and-window))
 
   ;; TODO: Namespace funcs correctly/cleanly.
-  (major-mode-hydra-define org-journal-mode nil
-    ("Browse"
-     (("t" journal-file-today "today")
-      ("y" journal-file-yesterday "yesterday")
-      ("l" journal-last-year  "last year")
-      ("p" get-previous-journal-entry "previous")
-      ("d" get-specific-journal-entry "by date"))
-     "Save"
-     (("s" org-journal-save-entry "save")
-      ("x" org-journal-save-entry-and-exit "save and exit"))))
 
   (bind-key "C-. j s" #'org-journal-save-entry 'org-journal-mode-map)
   (bind-key "C-. j x" #'org-journal-save-entry-and-exit 'org-journal-mode-map))
