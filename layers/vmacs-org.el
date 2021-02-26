@@ -115,9 +115,10 @@
     "Return the ISO week number, human readable and Monday indexed."
     (concat "Week " (format-time-string "%V")))
 
-  (setq org-journal-date-format (concat "%Y/%m/%d, " (iso-week) ", %A"))
   (setq org-journal-date-prefix "#+TITLE: ")
+  (setq org-journal-date-format (concat "%Y/%m/%d, " (iso-week) ", %A"))
   (setq org-journal-time-prefix "* ")
+  (setq org-journal-time-format "%R  ")
 
   (defun get-offset-date (offset)
     "Calculate a date OFFSET from the current time."
@@ -158,7 +159,7 @@
      #'string-greaterp))
 
   (defun get-specific-journal-entry ()
-    "Use ido to load the journal file for a specific date."
+    "Prompt to open the journal file for a specific date."
     (interactive)
     (let* ((selectrum-should-sort-p nil)
            (target-journal-file

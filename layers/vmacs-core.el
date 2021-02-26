@@ -1,10 +1,10 @@
-;;; vmacs-core.el -*- lexical-binding:t -*-
+;;; vmacs-core.el -- Core configuration. -*- lexical-binding:t -*-
 
-;;; Commentary: Core editor configuration.
+;;; Commentary:
 
 ;;; Code:
 
-;; https://github.com/chrisbarrett/.emacs.d/blob/351ea06dcad538ac80d3c17cbcae897d1d7091e8/init.el#L49
+;; TODO: dispatcher -> https://github.com/chrisbarrett/.emacs.d/blob/e1bf2e5d07a8ec1c643e6eafba13485e0a9b6bfe/config/config-hydras.el
 (use-package major-mode-hydra
   :straight t
   :demand t
@@ -89,31 +89,6 @@
 (bind-key "C-." 'ctrl-period-map)
 
 (add-hook 'before-save-hook 'whitespace-cleanup)
-
-;; TODO: Move all to lisp/utility-funcs.el
-(defun dcaps-to-scaps ()
-  "Convert word in DOuble CApitals to Single Capitals."
-  (interactive)
-  (and (= ?w (char-syntax (char-before)))
-       (save-excursion
-         (and (if (called-interactively-p)
-                  (skip-syntax-backward "w")
-                (= -3 (skip-syntax-backward "w")))
-              (let (case-fold-search)
-                (looking-at "\\b[[:upper:]]\\{2\\}[[:lower:]]"))
-              (capitalize-word 1)))))
-
-(define-minor-mode dubcaps-mode
-  "Toggle `dubcaps-mode'. Converts words in DOuble CApitals to
-Single Capitals as you type."
-  :init-value nil
-  :lighter (" DC")
-  (if dubcaps-mode
-      (add-hook 'post-self-insert-hook #'dcaps-to-scaps nil 'local)
-    (remove-hook 'post-self-insert-hook #'dcaps-to-scaps 'local)))
-(add-hook 'post-self-insert-hook #'dcaps-to-scaps nil 'local)
-(add-hook 'text-mode-hook #'turn-on-auto-fill)
-(add-hook 'text-mode-hook #'dubcaps-mode)
 
 (defun delete-file-and-buffer ()
   "Kill the current buffer and deletes the file it is visiting."

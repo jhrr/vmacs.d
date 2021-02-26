@@ -16,11 +16,6 @@
   "Face used to tastefully dim parentheses."
   :group 'vmacs-faces)
 
-(defface comment-todo-face
-  '((t :inherit default))
-  "Face to highlight TODOs in comments and strings."
-  :group 'vmacs-faces)
-
 (defconst vmacs-palette
   '((ansi-0 . "#8f9ca0")
     (ansi-1 . "#c15064")
@@ -28,26 +23,26 @@
     (ansi-4 . "#88afd4")
     (ansi-6 . "#51b4a9")
     (ansi-8 . "#999999")
-    (ansi-9 . "#f76050")
-    (ansi-13 . "#e39f89")
     (ansi-14 . "#61afab")
+    ;; (cursor-text . "#003440")
+    ;; (selected-text . "#505052")
+    ;; (string . "#e39f89")
+    ;; (comments . "#79ab87")
+    ;; (dim-parens-light . "#8c8c8c")
+    ;; (cursor-guide . "#b3ecff")
 
     (background . "#393a3c")
     (blackish . "#242424")
     (bold . "#eff0ef")
-    ;; (comments . "#79ab87")
     (comments . "#89a97d")
     (cursor . "#839495")
-    (cursor-guide . "#b3ecff")
-    (cursor-text . "#003440")
-    (dim-parens-dark . "#7f7f7f")
-    (dim-parens-light . "#8c8c8c")
+    (dim-parens . "#7f7f7f")
+    (err . "#f76050")
     (foreground . "#dadfe0")
     (golden . "#ffc900")
     (link . "#88afd4")
-    (string . "#ca656d")
+    (string . "#cd9494")
     (keyword . "#f5d99a")
-    (selected-text . "#505052")
     (selection-colour . "#e9edf1")))
 
 ;; TODO: (list-faces-display)
@@ -56,7 +51,8 @@
     (custom-theme-set-faces
      'vmacs
      `(default ((,class (:foreground ,.foreground :background ,.background))))
-     `(cursor  ((,class (:background ,.cursor))))
+     `(cursor  ((,class (:background ,.selection-colour))))
+     `(error ((,class (:foreground ,.err :weight bold))))
      `(highlight ((,class (:foreground ,.background :background ,.selection-colour))))
      `(link ((,class (:foreground ,.link))))
      `(minibuffer-prompt ((,class (:foreground ,.link))))
@@ -79,22 +75,31 @@
      ;; https://github.com/tkf/org-mode/blob/master/lisp/org-faces.el
      `(org-ellipsis ((,class (:foreground ,.selection-colour))))
      `(org-target ((,class (:foreground ,.link))))
+     `(org-level-1 ((,class (:foreground ,.selection-colour :weight bold))))
+     `(org-level-2 ((,class (:foreground ,.selection-colour :weight bold))))
+     `(org-level-3 ((,class (:foreground ,.selection-colour :weight bold))))
+     `(org-level-4 ((,class (:foreground ,.selection-colour :weight bold))))
+     `(org-level-5 ((,class (:foreground ,.selection-colour :weight bold))))
+     `(org-level-6 ((,class (:foreground ,.selection-colour :weight bold))))
+     `(org-level-7 ((,class (:foreground ,.selection-colour :weight bold))))
+     `(org-level-8 ((,class (:foreground ,.selection-colour :weight bold))))
+     `(org-level-9 ((,class (:foreground ,.selection-colour :weight bold))))
      ;; org-document-info-keyword
      ;; org-document-info
      ;; org-doument-title
-     ;; org-meta-line
+     `(org-meta-line ((,class (:foreground ,.string :weight bold))))
      ;; org-agenda-dimmed-todo-face -> https://github.com/tkf/org-mode/blob/c2ebeea6f68f2ef804d387c238e4acccf655dc64/lisp/org-faces.el#L632
 
      `(selectrum-current-candidate
        ((,class (:foreground ,.keyword :underline t :weight bold))))
 
-     `(dim-parens-face ((,class (:foreground ,.dim-parens-dark))))
+     `(dim-parens-face ((,class (:foreground ,.dim-parens))))
      `(comment-todo-face ((,class (:foreground ,.golden))))
 
      )))
 
 (defun get-colour (colour)
-  "Lookup a COLOUR (as a string) from VMACS-PALETTE."
+  "Lookup a COLOUR (from a string) in `vmacs-palette'."
   (cdr (assoc (intern colour) vmacs-palette)))
 
 ;; (use-package hl-todo
@@ -114,6 +119,7 @@
 (set-face-attribute 'fringe nil :background nil)
 (fringe-mode 10)
 
+;; TODO: Move to vmacs-hydras
 (bind-key* "C-. d" #'describe-face)
 
 (provide-theme 'vmacs)
