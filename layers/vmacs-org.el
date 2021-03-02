@@ -7,19 +7,28 @@
 ;;; Code:
 
 (use-package org-plus-contrib
-  :mode ("\\.org\\'" . org-mode)
+  :mode
+  ("\\.org\\'" . org-mode)
   :mode-hydra
   (org-mode
    ("Agenda"
     (("a" #'org-agenda "agenda"))
-    "Todo"
-    (("i" #'jump-to-inbox "inbox")
-     ("j" #'jump-to-gtd "jump to gtd"))
+    "Browse"
+    (("i" #'org-jump-to-inbox "jump to inbox")
+     ("g" #'org-jump-to-gtd "jump to gtd"))
     "Capture"
     (("q" #'org-quick-capture "quick capture")
      ("c" #'org-capture "capture")
-     ("s" #'org-store-link "store link")
-     ("l" #'org-insert-link "insert link"))))
+     ("l" #'org-insert-link "insert link")
+     ("s" #'org-store-link "store link"))
+    "Roam"
+    (("<tab>" #'org-roam-buffer-toggle-display "toggle backlinks")
+     ("rc" #'org-roam-capture "org-roam capture")
+     ("rf" #'org-roam-find-file "find org-roam file")
+     ("rh" #'org-roam-find-index "jump to org-roam index")
+     ("ri" #'org-roam-insert "insert file link"))
+    "Journal"
+    (("j" #'org-journal-new-entry "new entry"))))
   :init
   (defvar user-org-directory
     (expand-file-name "org/" user-dropbox-directory))
@@ -33,20 +42,14 @@
     (expand-file-name "gtd-inbox.org" user-org-directory))
 
   (setq org-capture-templates
-        '(("q" "Quick" entry
-           (file+headline org-default-notes-file "Quick")
-           "* %?\n  %t" :clock-in t :clock-resume t)))
+        '(("q" "Quick" entry (file+headline org-default-notes-file "Quick")
+           "* %?"
+           :clock-in t
+           :clock-resume t)))
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
           (sequence "BLOCKED(b@/!)" "|" "CANCELLED(c@/!)")))
-
-  ;; (setq org-todo-keyword-faces
-  ;;       `'(("TODO" :foreground ,(get-colour "ansi-9") :weight bold)
-  ;;          ("NEXT" :foreground ,(get-colour "ansi-4") :weight bold)
-  ;;          ("DONE" :foreground ,(get-colour "ansi-2") :weight bold)
-  ;;          ("BLOCKED" :foreground ,(get-colour "ansi-13") :weight bold)
-  ;;          ("CANCELLED" :foreground ,(get-colour "blackish") :weight bold)))
 
   (setq org-todo-keyword-faces
         '(("TODO" :foreground "#f76050" :weight bold)
@@ -64,49 +67,85 @@
   ;; (setq org-columns-default-format "%50ITEM(Task) %10CLOCKSUM %16TIMESTAMP_IA")
   ;; (setq org-refile-targets '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9)))
 
+  (defun org-quick-capture ()
+    "Capture an item without going through template selection."
+    (interactive)
+    (org-capture nil "q"))
+
+  (defun org-jump-to-inbox ()
+    "Open the `org-default-notes-file' file in another window."
+    (interactive)
+    (find-file org-default-notes-file))
+
   (defun gtd ()
     "List all files in the `org-gtd-directory'."
     (seq-filter
      (lambda (path) (not (string-prefix-p ".#" path)))
      (directory-files org-gtd-directory t "\.org$" nil)))
 
-  (defun jump-to-gtd ()
+  (defun org-jump-to-gtd ()
     "Jump to a selected file in the `org-gtd-directory'."
     (interactive)
     (jump-to-file (filename-map (gtd))))
-  (bind-key* "C-c o" 'jump-to-gtd)
 
-  (defun jump-to-inbox ()
-    "Open the `org-default-notes-file' file in another window."
-    (interactive)
-    (find-file org-default-notes-file))
-  (bind-key* "C-c O" 'jump-to-inbox)
-
-  (defun quick-capture ()
-    "Capture an item without going through template selection."
-    (interactive)
-    (org-capture nil "q"))
-  (bind-key* "C-. ;" 'quick-capture)
-
-  (add-hook 'org-mode-hook '(lambda () (linum-mode -1)))
+  (add-hook 'org-mode-hook #'(lambda () (linum-mode -1)))
+  (add-hook 'org-mode-hook #'org-roam-mode)
   :config
-  (require 'org-checklist))
+  (require 'org-checklist)
+
+  (org-defkey org-mode-map (kbd "RET") #'(lambda () (interactive) (org-return nil)))
+  ;; (org-defkey org-mode-map (kbd "RET") #'org-return)
+  )
+
+(use-package org-roam
+  :straight t
+  :commands
+  (org-roam-capture org-roam-find-file org-roam-jump-to-index org-roam-mode)
+  :init
+  (setq org-roam-directory (expand-file-name "index/" user-org-directory))
+  (defvar org-roam-index-file (expand-file-name "index.org" org-roam-directory))
+  (defvar org-roam-matter-directory (expand-file-name "matter/" org-roam-directory))
+  (defvar org-roam-reading-directory (expand-file-name "reading/" org-roam-directory))
+
+  ;; (defconst org-roam-notes-file-template (string-trim-left "
+  ;; #+title: ${title}
+  ;; #+roam_key: cite:${=key=}
+  ;; #+category: ${=key=}
+  ;; #+roam_tags:
+  ;; - keywords ::
+  ;; * %s
+  ;; :PROPERTIES:
+  ;; :CUSTOM_ID: ${=key=}
+  ;; :END:"))
+
+  (setq org-roam-capture-templates
+        '(("m" "matter" plain (function org-roam-capture--get-point)
+           "* %?"
+           :file-name "matter/${title}"
+           :head "#+title: ${title}\n#+roam_alias: \"${alias}\"\n\n"
+           :unnarrowed t)
+          ("r" "reading" plain (function org-roam-capture--get-point)
+           "* %?"
+           :file-name "reading/%<%Y%m%d%H%M%S>-${slug}"
+           :head "#+title: ${title}\n\n"
+           :unnarrowed t))))
 
 (use-package org-journal
   :straight t
-  :bind
-  ("C-. C-j" . org-journal-new-entry)
+  :defer t
   :mode-hydra
   (org-journal-mode
-   ("Browse"
-    (("t" journal-file-today "today")
-     ("y" journal-file-yesterday "yesterday")
-     ("l" journal-last-year  "last year")
-     ("p" get-previous-journal-entry "previous")
-     ("d" get-specific-journal-entry "by date"))
+   ("Entry"
+    (("j" #'org-journal-new-entry "new entry"))
+    "Browse"
+    (("t" #'journal-file-today "today")
+     ("y" #'journal-file-yesterday "yesterday")
+     ("l" #'journal-last-year  "last year")
+     ("p" #'get-previous-journal-entry "previous")
+     ("d" #'get-specific-journal-entry "by date"))
     "Save"
-    (("s" org-journal-save-entry "save")
-     ("x" org-journal-save-entry-and-exit "save and exit"))))
+    (("s" #'org-journal-save-entry "save")
+     ("x" #'org-journal-save-entry-and-exit "save and exit"))))
   :init
   (setq org-journal-dir
         (expand-file-name "journal/" org-archive-directory))
@@ -118,7 +157,7 @@
   (setq org-journal-date-prefix "#+TITLE: ")
   (setq org-journal-date-format (concat "%Y/%m/%d, " (iso-week) ", %A"))
   (setq org-journal-time-prefix "* ")
-  (setq org-journal-time-format "%R  ")
+  (setq org-journal-time-format "%R ")
 
   (defun get-offset-date (offset)
     "Calculate a date OFFSET from the current time."
@@ -176,20 +215,7 @@
   (defun org-journal-save-entry-and-exit ()
     (interactive)
     (save-buffer)
-    (kill-buffer-and-window))
-
-  ;; TODO: Namespace funcs correctly/cleanly.
-
-  (bind-key "C-. j s" #'org-journal-save-entry 'org-journal-mode-map)
-  (bind-key "C-. j x" #'org-journal-save-entry-and-exit 'org-journal-mode-map))
-
-;; (use-package org-roam
-;;   :straight t
-;;   :bind
-;;   (("C-. n" . org-roam-capture)
-;;    ("C-. C-n" . org-roam-find-file))
-;;   :init
-;;   (setq org-roam-directory (expand-file-name "index/" user-org-directory))))
+    (kill-buffer-and-window)))
 
 (provide 'vmacs-org)
 ;;; vmacs-org.el ends here

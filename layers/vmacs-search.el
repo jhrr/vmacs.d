@@ -1,13 +1,22 @@
-;;; vmacs-search.el -*- lexical-binding:t -*-
+;;; vmacs-search.el --- Configure greppage and findage. -*- lexical-binding:t -*-
 
-;;; Commentary: Configure grepping and finding.
+;;; Commentary:
 
 ;;; Code:
 
+(defun find-project-todo-file ()
+  "Open up the nearest TODO.org file, if it exists."
+  (interactive)
+  (let ((todo-path
+         (locate-dominating-file (or (buffer-file-name) "") "TODO.org")))
+    (if todo-path
+        (find-file (concat todo-path "TODO.org"))
+      (message "No suitable `TODO.org' candidate found."))))
+
 (use-package visual-regexp
   :straight t
-  :bind (("C-c r" . vr/replace)
-         ("C-c q" . vr/query-replace)))
+  :commands
+  (vr/replace vr/query-replace))
 
 (provide 'vmacs-search)
 ;;; vmacs-search.el ends here

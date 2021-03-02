@@ -9,8 +9,17 @@
   :hook
   (after-init . evil-mode)
   :config
-  ;; TODO: Find a better way of dealing with this clash.
-  (define-key evil-normal-state-map (kbd "C-.") nil))
+  (setq key-chord-two-keys-delay 0.5)
+  (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+  (key-chord-mode 1))
+
+(use-package evil-nerd-commenter
+  :straight t
+  :defer t
+  :after evil
+  :commands
+  (evilnc-comment-or-uncomment-lines
+   evilnc-comment-or-uncomment-paragraphs))
 
 (provide 'vmacs-evil)
 ;;; vmacs-evil.el ends here

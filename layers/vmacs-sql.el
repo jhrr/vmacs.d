@@ -9,18 +9,12 @@
   :mode-hydra
   (sql-mode
    ("Connect"
-    (("p" #'sql-postgres "postgres"))))
+    (("p" #'sql-postgres "postgres")
+     ("u" #'sqlup-capitalize-keywords-in-region "capitalize region keywords"))))
   :config
   (use-package sql-up-mode
-    :load-path lisp
-    :commands sqlup-mode
     :straight
-    (sql-up-mode
-     :type git
-     :host github
-     :repo "Trevoke/sqlup-mode.el")
-    :config
-    (bind-key "C-. u" #'sqlup-capitalize-keywords-in-region sql-mode-hook))
+    (sql-up-mode :type git :host github :repo "Trevoke/sqlup-mode.el"))
 
   (add-hook 'sql-mode-hook #'sqlup-mode)
   (add-hook 'sql-interactive-mode-hook #'sqlup-mode)

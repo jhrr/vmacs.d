@@ -1,8 +1,6 @@
-;;; vmacs-edit.el --- Text editing. -*- lexical-binding:t -*-
+;;; vmacs-edit.el ---  Enhance the text editing experience. -*- lexical-binding:t -*-
 
 ;;; Commentary:
-
-;; Enhance the overall text editing experience.
 
 ;;; Code:
 
@@ -14,6 +12,12 @@
   (seq-do
    (lambda (mode) (add-to-list 'aggressive-indent-excluded-modes mode))
    '(org-mode)))
+
+(use-package dumb-jump
+  :straight t
+  :init
+  (setq dumb-jump-prefer-searcher 'rg)
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
 (use-package rainbow-mode
   :straight t

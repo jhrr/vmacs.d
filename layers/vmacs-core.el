@@ -4,17 +4,16 @@
 
 ;;; Code:
 
-;; TODO: dispatcher -> https://github.com/chrisbarrett/.emacs.d/blob/e1bf2e5d07a8ec1c643e6eafba13485e0a9b6bfe/config/config-hydras.el
 (use-package major-mode-hydra
   :straight t
   :demand t
   :general
-  (:states '(normal motion) "," #'major-mode-hydra)
+  (:states '(normal motion) "SPC" #'major-mode-hydra)
   :preface
   (autoload 'all-the-icons-icon-for-mode "all-the-icons")
 
   (defun init--major-mode-hydra-title-generator (mode)
-    (let* ((icon (all-the-icons-icon-for-mode mode :v-adjust -0.15))
+    (let* ((icon (all-the-icons-icon-for-mode mode))
            (mode-title (string-remove-suffix "-mode" (symbol-name mode)))
            (components
             (seq-filter #'stringp
@@ -24,6 +23,12 @@
   ((major-mode-hydra-invisible-quit-key "q")
    (major-mode-hydra-title-generator
     #'init--major-mode-hydra-title-generator)))
+
+;; TODO: This is in the wrong place.
+(use-package vterm
+  :straight t
+  :commands (vterm)
+  :custom (vterm-kill-buffer-on-exit t))
 
 (set-charset-priority 'unicode)
 (prefer-coding-system 'utf-8)
@@ -53,9 +58,12 @@
 (setq sentence-end-double-space nil)
 (setq disabled-command-function nil)
 (setq scroll-preserve-screen-position t)
-(setq compile-command "CC=clang make -k")
 (setq initial-major-mode 'fundamental-mode)
 (setq base16-theme-256-color-source "base16-shell")
+
+(setq compilation-scroll-output t)
+(setq compilation-scroll-output 'first-error)
+(setq compile-command "CC=clang make -k")
 
 (setq-default line-number-mode t)
 (setq-default column-number-mode t)
@@ -83,10 +91,6 @@
   "Add a FUNC to multiple MODE-HOOKS simultaneously."
   `(dolist (mode-hook ,mode-hooks)
      (add-hook mode-hook ,func)))
-
-(defvar ctrl-period-map)
-(define-prefix-command 'ctrl-period-map)
-(bind-key "C-." 'ctrl-period-map)
 
 (add-hook 'before-save-hook 'whitespace-cleanup)
 

@@ -123,6 +123,7 @@
 ;; (use-package slime :straight t)
 ;; (use-package sly :straight t)
 
+;; TODO: Move to lisp/commentary.el
 (defun uncomment-sexp (&optional n)
   "Uncomment a sexp, or N sexps, around point."
   (interactive "P")
@@ -208,9 +209,6 @@ With a prefix argument N, (un)comment that many sexps."
       (uncomment-sexp n)
     (dotimes (_ (or n 1))
       (comment-sexp--raw))))
-
-(bind-key* "C-. b" 'beginning-of-defun)
-(bind-key* "C-. c" 'comment-or-uncomment-sexp)
 
 (provide 'vmacs-lisp)
 ;;; vmacs-lisp.el ends here

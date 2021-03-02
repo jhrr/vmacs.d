@@ -10,12 +10,7 @@
   :config
   (use-package consult
     :straight t
-    :bind (("C-x b" . consult-buffer)
-           ("C-. b" . consult-buffer-other-window)
-           ("C-. g" . consult-ripgrep))
-    :init
-    (bind-key* "C-. C-z"  #'selectrum-repeat)
-
+    :config
     (setq register-preview-delay 0
           register-preview-function #'consult-register-preview)
 
@@ -31,8 +26,8 @@
                       (fit-window-to-buffer))))))
 
   (use-package consult-flycheck
-    :straight t
-    :bind ("C-. x" . consult-flycheck))
+    :bind ("C-c x" . consult-flycheck)
+    :straight t)
 
   (use-package selectrum-prescient
     :straight t
@@ -43,7 +38,7 @@
 
   (use-package embark
     :straight t
-    :bind ("C-. e" . embark-act))
+    :bind ("C-c e" . embark-act))
 
   (use-package embark-consult
     :straight t
@@ -53,7 +48,7 @@
 
   (use-package marginalia
     :straight t
-    :bind (:map minibuffer-local-map ("C-. m" . marginalia-cycle))
+    :bind (:map minibuffer-local-map ("C-c m" . marginalia-cycle))
     :init
     (marginalia-mode)
     (advice-add #'marginalia-cycle :after
@@ -68,35 +63,7 @@
 
   (setq selectrum-num-candidates-displayed 30)
   (setq selectrum-refine-candidates-function #'orderless-filter)
-  (setq selectrum-highlight-candidates-function #'orderless-highlight-matches)
-
-  (defun git-files ()
-    "Jump to a file in the git tree."
-    (interactive)
-    (if (under-vc-p)
-        (find-file
-         (f-expand
-          (let ((selectrum-should-sort-p nil))
-            (completing-read
-             "Open tracked file: "
-             (magit-git-lines "-C" (magit-git-dir) "ls-files" "--full-name"))
-            (vc-root-dir))))
-      (message "Not under vc: %s" buffer-file-name)))
-  (bind-key* "C-. j" 'git-files)
-
-  (defun git-modified-files ()
-    "Jump to a modified file in the git tree."
-    (interactive)
-    (if (under-vc-p)
-        (find-file
-         (f-expand
-          (let ((selectrum-should-sort-p nil))
-            (completing-read
-             "Open modified file: "
-             (magit-git-lines "ls-files" "--full-name" "-m"))
-            (vc-root-dir))))
-      (message "Not under vc: %s" buffer-file-name)))
-  (bind-key* "C-. f" 'git-modified-files))
+  (setq selectrum-highlight-candidates-function #'orderless-highlight-matches))
 
 (use-package mini-frame
   :straight t
@@ -129,8 +96,31 @@
   :init
   (which-key-mode))
 
-;; TODO: vterm other window.
-(use-package vterm :straight t :bind ("C-. t" . vterm))
+(defun git-files ()
+  "Jump to a file in the git tree."
+  (interactive)
+  (if (under-vc-p)
+      (find-file
+       (f-expand
+        (let ((selectrum-should-sort-p nil))
+          (completing-read
+           "Open tracked file: "
+           (magit-git-lines "-C" (magit-git-dir) "ls-files" "--full-name")))
+        (vc-root-dir)))
+    (message "Not under vc: %s" buffer-file-name)))
+
+(defun git-modified-files ()
+  "Jump to a modified file in the git tree."
+  (interactive)
+  (if (under-vc-p)
+      (find-file
+       (f-expand
+        (let ((selectrum-should-sort-p nil))
+          (completing-read
+           "Open modified file: "
+           (magit-git-lines "ls-files" "--full-name" "-m")))
+        (vc-root-dir)))
+    (message "Not under vc: %s" buffer-file-name)))
 
 (provide 'vmacs-menus)
 ;;; vmacs-menus.el ends here

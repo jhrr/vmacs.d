@@ -8,13 +8,16 @@
 (add-to-list 'frameset-filter-alist '(ns-appearance . :never))
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 
+(setq ring-bell-function #'ignore)
+(setq frame-resize-pixelwise t)
+(setq browse-url-browser-function (quote browse-url-generic))
+(setq browse-url-generic-program "open")
+(setq ns-use-proxy-icon nil)
+
 ;; Add fonts to list in order of preference.
 (set-face-attribute
  'default nil
- :font (font-candidate
-        '"Inconsolata LGC 11"
-        ;; '"Source Code Pro 11"
-        ))
+ :font (font-candidate '"Inconsolata LGC 14"))
 
 (use-package exec-path-from-shell
   :straight t
@@ -49,11 +52,11 @@
   (insert "#"))
 (global-set-key "\263" 'insert-hash)
 
-(setq ring-bell-function #'ignore)
-(setq frame-resize-pixelwise t)
-(setq browse-url-browser-function (quote browse-url-generic))
-(setq browse-url-generic-program "open")
-(setq ns-use-proxy-icon nil)
+(defun insert-euro ()
+  "Insert a euro character."
+  (interactive)
+  (insert "€"))
+(global-set-key "\262" 'insert-euro)
 
 (provide 'vmacs-darwin)
 ;;; vmacs-darwin.el ends here

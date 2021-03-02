@@ -80,6 +80,7 @@
 (use-package general :straight t)
 (use-package el-patch :straight t)
 (use-package anaphora :straight t)
+(use-package key-chord :straight t)
 (use-package all-the-icons :straight t)
 
 (defmacro use-feature (name &rest args)
