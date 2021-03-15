@@ -14,19 +14,20 @@
    ("Agenda"
     (("a" #'org-agenda "agenda"))
     "Browse"
-    (("i" #'org-jump-to-inbox "jump to inbox")
-     ("g" #'org-jump-to-gtd "jump to gtd"))
+    (("o" #'org-jump-to-inbox "jump to inbox")
+     ("g" #'org-jump-to-gtd "jump to gtd file")
+     ("r" #'org-roam-find-file "jump to org-roam file")
+     ("i" #'org-roam-find-index "jump to org-roam index"))
     "Capture"
-    (("q" #'org-quick-capture "quick capture")
-     ("c" #'org-capture "capture")
-     ("l" #'org-insert-link "insert link")
-     ("s" #'org-store-link "store link"))
+    (("c" #'org-capture "capture")
+     ("C" #'org-roam-capture "org-roam capture")
+     ("k" #'org-quick-capture "quick capture"))
+    "Links"
+    (("ls" #'org-store-link "store link")
+     ("li" #'org-insert-link "insert link")
+     ("lf" #'org-roam-insert "insert org-roam file link"))
     "Roam"
-    (("<tab>" #'org-roam-buffer-toggle-display "toggle backlinks")
-     ("rc" #'org-roam-capture "org-roam capture")
-     ("rf" #'org-roam-find-file "find org-roam file")
-     ("rh" #'org-roam-find-index "jump to org-roam index")
-     ("ri" #'org-roam-insert "insert file link"))
+    (("<tab>" #'org-roam-buffer-toggle-display "toggle backlinks"))
     "Journal"
     (("j" #'org-journal-new-entry "new entry"))))
   :init

@@ -155,19 +155,19 @@
    (("a" #'org-agenda "agenda"))
    "Browse"
    (("o" #'org-jump-to-inbox "jump to inbox")
-    ("O" #'org-jump-to-gtd "jump to gtd"))
+    ("g" #'org-jump-to-gtd "jump to gtd file")
+    ("r" #'org-roam-find-file "jump to org-roam file")
+    ("i" #'org-roam-find-index "jump to org-roam index"))
    "Capture"
    (("c" #'org-capture "capture")
-    ("k" #'org-quick-capture "quick capture")
-    ("i" #'org-insert-link "insert link")
-    ("s" #'org-store-link "store link"))
+    ("C" #'org-roam-capture "org-roam capture")
+    ("k" #'org-quick-capture "quick capture"))
+   "Links"
+   (("ls" #'org-store-link "store link")
+    ("li" #'org-insert-link "insert link")
+    ("lf" #'org-roam-insert "insert org-roam file link"))
    "Roam"
-   (("<tab>" #'org-roam-buffer-toggle-display "toggle backlinks")
-    ("rc" #'org-roam-capture "org-roam capture")
-    ("rf" #'org-roam-find-file "find org-roam file")
-    ("rh" #'org-roam-find-index "jump to org-roam index")
-    ("ri" #'org-roam-insert "insert file link")
-    ("rs" #'org-store-link "store link"))
+   (("<tab>" #'org-roam-buffer-toggle-display "toggle backlinks"))
    "Journal"
    (("j" #'org-journal-new-entry "new entry"))))
 
