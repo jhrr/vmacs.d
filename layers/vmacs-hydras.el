@@ -204,7 +204,7 @@
    (("!" #'shell-command "run shell command")
     (":" #'eval-expression "evaluate lisp")
     ("." #'eval-last-sexp "evaluate last sexp")
-    ("b" #'beginning-of-defun "beginning of defun")
+    ("B" #'beginning-of-defun "beginning of defun")
     ("d" #'dired "dired")
     ("D" #'dired-other-window "dired (other window)")
     ("u" #'universal-argument "universal argument")
