@@ -39,8 +39,8 @@
     (expand-file-name "dasein/" user-org-directory))
   (defvar org-work-directory
     (expand-file-name "work/" user-org-directory))
-  (defvar org-default-notes-file
-    (expand-file-name "gtd-inbox.org" user-org-directory))
+  (setq org-default-notes-file
+        (expand-file-name "gtd-inbox.org" user-org-directory))
 
   (setq org-capture-templates
         '(("q" "Quick" entry (file+headline org-default-notes-file "Quick")
