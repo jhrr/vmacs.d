@@ -36,8 +36,9 @@
 (pretty-hydra-define buffers
   (:hint nil :color teal :title (hydra-title-with-mat-icon "description" "Buffers"))
   ("Switch"
-   (("b" #'consult-buffer "switch to" :exit t)
-    ("l" #'evil-switch-to-windows-last-buffer "switch to last" :exit t)
+   (("b" #'consult-buffer "buffer" :exit t)
+    ("f" #'find-file "file")
+    ("l" #'evil-switch-to-windows-last-buffer "last buffer" :exit t)
     ("o" #'other-window "other buffer" :exit t)
     ("n" #'next-buffer "next" :exit nil)
     ("p" #'previous-buffer "previous" :exit nil))
@@ -180,7 +181,7 @@
     ("q" #'vr/query-replace "Regex query replace"))))
 
 (pretty-hydra-define main-dispatcher
-  (:hint nil :color teal :title (hydra-title-with-fileicon "emacs" "vmacs"))
+  (:hint nil :color teal :idle 0.5 :title (hydra-title-with-fileicon "emacs" "vmacs"))
   ("Menus"
    (("b" buffers/body "buffers...")
     ("c" comments/body "comments...")
@@ -196,10 +197,11 @@
    (("f" #'git-modified-files "modified files")
     ("j" #'git-files "tracked files")
     ("t" #'find-project-todo-file "project TODO")
-    ("I" #'jump-to-init "init")
+    ("E" #'jump-to-init "init")
+    ("F" #'find-file "file")
     ("L" #'jump-to-layer "layer")
-    ("O" #'org-jump-to-inbox "org-inbox")
-    ("R" #'org-roam-find-index "org-roam index"))
+    ("O" #'org-jump-to-inbox "inbox")
+    ("I" #'org-roam-find-index "index"))
    "Actions"
    (("!" #'shell-command "run shell command")
     (":" #'eval-expression "evaluate lisp")
