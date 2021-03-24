@@ -17,7 +17,8 @@
     (("o" #'org-jump-to-inbox "jump to inbox")
      ("g" #'org-jump-to-gtd "jump to gtd file")
      ("r" #'org-roam-find-file "jump to org-roam file")
-     ("i" #'org-roam-find-index "jump to org-roam index"))
+     ("i" #'org-roam-find-index "jump to org-roam index")
+     ("w" #'org-jump-to-work "jump to work file"))
     "Capture"
     (("c" #'org-capture "capture")
      ("C" #'org-roam-capture "org-roam capture")
@@ -68,6 +69,10 @@
   ;; (setq org-columns-default-format "%50ITEM(Task) %10CLOCKSUM %16TIMESTAMP_IA")
   ;; (setq org-refile-targets '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9)))
 
+  (defun directory-org (dir)
+    "Return all org files under a DIR."
+    (directory-files dir t "\.org$" nil))
+
   (defun org-quick-capture ()
     "Capture an item without going through template selection."
     (interactive)
@@ -78,16 +83,15 @@
     (interactive)
     (find-file org-default-notes-file))
 
-  (defun gtd ()
-    "List all files in the `org-gtd-directory'."
-    (seq-filter
-     (lambda (path) (not (string-prefix-p ".#" path)))
-     (directory-files org-gtd-directory t "\.org$" nil)))
-
   (defun org-jump-to-gtd ()
     "Jump to a selected file in the `org-gtd-directory'."
     (interactive)
-    (jump-to-file (filename-map (gtd))))
+    (jump-to-file (filename-map (directory-org org-gtd-directory))))
+
+  (defun org-jump-to-work ()
+    "Jump to a selected file in the `org-work-directory'."
+    (interactive)
+    (jump-to-file (filename-map (directory-org org-work-directory))))
 
   (add-hook 'org-mode-hook #'(lambda () (linum-mode -1)))
   (add-hook 'org-mode-hook #'org-roam-mode)

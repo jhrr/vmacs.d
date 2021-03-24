@@ -158,7 +158,8 @@
    (("o" #'org-jump-to-inbox "jump to inbox")
     ("g" #'org-jump-to-gtd "jump to gtd file")
     ("r" #'org-roam-find-file "jump to org-roam file")
-    ("i" #'org-roam-find-index "jump to org-roam index"))
+    ("i" #'org-roam-find-index "jump to org-roam index")
+    ("w" #'org-jump-to-work "jump to work file"))
    "Capture"
    (("c" #'org-capture "capture")
     ("C" #'org-roam-capture "org-roam capture")
