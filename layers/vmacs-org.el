@@ -149,7 +149,7 @@
      ("x" #'org-journal-save-entry-and-exit "save and exit"))))
   :init
   (setq org-journal-dir
-        (expand-file-name "journal/" org-archive-directory))
+        (expand-file-name "journal/" user-org-directory))
   :config
   (defun iso-week ()
     "Return the ISO week number, human readable and Monday indexed."

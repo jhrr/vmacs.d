@@ -11,7 +11,9 @@
   :config
   (setq key-chord-two-keys-delay 0.5)
   (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
-  (key-chord-mode 1))
+  (key-chord-mode 1)
+  ;; (define-key evil-normal-state-map ";" #'consult-buffer)
+  )
 
 (use-package evil-nerd-commenter
   :straight t
