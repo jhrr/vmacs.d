@@ -93,8 +93,27 @@
     (interactive)
     (jump-to-file (filename-map (directory-org org-work-directory))))
 
-  (add-hook 'org-mode-hook #'(lambda () (linum-mode -1)))
-  (add-hook 'org-mode-hook #'org-roam-mode)
+  (setq rg-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number . -e ARG OPTS")
+
+  ;; TODO: Merge this into one function and dispatch with prefix arg.
+  (defun grep-org ()
+    "Search through the org directory tree."
+    (interactive)
+    (let ((consult-ripgrep-command rg-command))
+      (consult-ripgrep user-org-directory)))
+
+  (defun grep-org-roam ()
+    "Search org-roam directory using consult-ripgrep. With live-preview."
+    (interactive)
+    (let ((consult-ripgrep-command rg-command))
+      (consult-ripgrep org-roam-directory)))
+
+  (add-hook 'org-mode-hook
+            #'(lambda () (progn
+                      (linum-mode -1)
+                      (org-roam-mode)
+                      (setq fill-column 70)
+                      (turn-on-auto-fill))))
   :config
   (require 'org-checklist)
 
