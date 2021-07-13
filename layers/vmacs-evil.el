@@ -15,6 +15,16 @@
   ;; (define-key evil-normal-state-map ";" #'consult-buffer)
   )
 
+(use-package evil-motion-trainer
+  :straight
+  (evil-motion-trainer
+   :type git
+   :host github
+   :repo "martinbaillie/evil-motion-trainer")
+  :after evil
+  :config
+  (global-evil-motion-trainer-mode 1))
+
 (use-package evil-nerd-commenter
   :straight t
   :defer t
