@@ -29,6 +29,7 @@
 (setq package-enable-at-startup nil
       read-process-output-max (* 1024 1024)
       gc-cons-threshold (* 1024 1024 20)
+      garbage-collection-messages t
       max-specpdl-size 10000 ;; Needed for stream.el
       message-log-max 16384)
 
