@@ -165,7 +165,7 @@
     (("t" #'journal-file-today "today")
      ("y" #'journal-file-yesterday "yesterday")
      ("l" #'journal-last-year  "last year")
-     ("p" #'get-previous-journal-entry "previous")
+     ("p" #'org-journal-previous-entry "previous")
      ("d" #'get-specific-journal-entry "by date"))
     "Save"
     (("s" #'org-journal-save-entry "save")
