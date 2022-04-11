@@ -40,3 +40,4 @@ straight/
 var/
 transient/
 org-roam.db
+eln-cache
