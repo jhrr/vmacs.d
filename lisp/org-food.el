@@ -40,6 +40,7 @@
 
 (require 'org)
 (eval-when-compile
+  ;; TODO: use-package -> cl-defstruct & cl-generic is all we need, at first.
   (require 'cl-lib))
 
 ;; Customisation group
