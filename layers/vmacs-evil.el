@@ -6,14 +6,14 @@
 
 (use-package evil
   :straight t
-  :hook
-  (after-init . evil-mode)
+  :init
+  (setq evil-want-C-i-jump nil)
   :config
   (setq key-chord-two-keys-delay 0.5)
   (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
   (key-chord-mode 1)
   ;; (define-key evil-normal-state-map ";" #'consult-buffer)
-  )
+  (evil-mode))
 
 (use-package evil-motion-trainer
   :straight

@@ -6,7 +6,8 @@
 
 ;;; Code:
 
-(use-package org-plus-contrib
+(use-package org
+  :straight org-contrib
   :mode
   ("\\.org\\'" . org-mode)
   :mode-hydra
@@ -117,9 +118,7 @@
   :config
   (require 'org-checklist)
 
-  (org-defkey org-mode-map (kbd "RET") #'(lambda () (interactive) (org-return nil)))
-  ;; (org-defkey org-mode-map (kbd "RET") #'org-return)
-  )
+  (org-defkey org-mode-map (kbd "RET") #'(lambda () (interactive) (org-return nil))))
 
 (use-package org-roam
   :straight t
