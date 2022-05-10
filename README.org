@@ -1,8 +1,12 @@
 #+AUTHOR: jhrr
 * vmacs.d
 
+My emacs config begun after returning from several years wandering in the vim
+wilderness. I doubt you want to use this as is, I'm still working it out and it
+contains a lot of old stuff from my old setup that needs to be thoroughly
+revisited and refactored. Feel free to nick as much lisp from it as you like
+though.
+
 Requires ~>=~ Emacs 26.
 
-After first launch, invoke:
-
-~M-x all-the-icons-install-fonts~
+After first launch, invoke: ~M-x all-the-icons-install-fonts~
