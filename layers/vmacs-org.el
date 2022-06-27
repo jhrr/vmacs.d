@@ -18,7 +18,7 @@
     (("o" #'org-jump-to-inbox "jump to inbox")
      ("g" #'org-jump-to-gtd "jump to gtd file")
      ("r" #'org-roam-find-file "jump to org-roam file")
-     ("i" #'org-roam-find-index "jump to org-roam index")
+     ("i" #'org-roam-jump-to-index "jump to org-roam index")
      ("w" #'org-jump-to-work "jump to work file"))
     "Capture"
     (("c" #'org-capture "capture")
@@ -112,7 +112,6 @@
   (add-hook 'org-mode-hook
             #'(lambda () (progn
                       (linum-mode -1)
-                      (org-roam-mode)
                       (setq fill-column 70)
                       (turn-on-auto-fill))))
   :config
@@ -124,12 +123,24 @@
 (use-package org-roam
   :straight t
   :commands
-  (org-roam-capture org-roam-find-file org-roam-jump-to-index org-roam-mode)
+  (org-roam-capture
+    org-roam-db-query
+    org-roam-find-file
+    org-roam-node-visit
+    org-roam-node-from-id)
   :init
   (setq org-roam-directory (expand-file-name "index/" user-org-directory))
   (defvar org-roam-index-file (expand-file-name "index.org" org-roam-directory))
   (defvar org-roam-matter-directory (expand-file-name "matter/" org-roam-directory))
   (defvar org-roam-reading-directory (expand-file-name "reading/" org-roam-directory))
+
+  (defun org-roam-jump-to-index ()
+    (interactive)
+    (org-roam-node-visit
+     (org-roam-node-from-id
+      (caar (or (org-roam-db-query
+                  [:select id :from nodes :where (= title "Index") :limit 1])
+                (user-error "No node with title Index"))))))
   :config
   (setq org-roam-node-display-template
     (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))

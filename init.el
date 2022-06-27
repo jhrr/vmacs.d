@@ -96,6 +96,7 @@ NAME and ARGS are as in `use-package'."
 (use-package vmacs-core)
 (use-package vmacs-darwin :if (equal system-type 'darwin))
 (use-package vmacs-linux :if (equal system-type 'gnu/linux))
+(use-package vmacs-org)  ;; Needs to be loaded early to avoid org-compat bug.
 (seq-doseq (feature
             (seq-reduce (lambda (acc it)
                           (let ((layer (file-name-base it))
@@ -103,7 +104,8 @@ NAME and ARGS are as in `use-package'."
                                  '("vmacs-core"
                                    "vmacs-paths"
                                    "vmacs-darwin"
-                                   "vmacs-linux")))
+                                   "vmacs-linux"
+                                   "vmacs-org")))
                             (if (not (member layer exclude-layers))
                                 (cons (intern layer) acc)
                               acc)))
