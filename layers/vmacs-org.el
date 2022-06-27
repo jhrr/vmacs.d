@@ -7,7 +7,7 @@
 ;;; Code:
 
 (use-package org
-  :straight org-contrib
+  :straight t
   :mode
   ("\\.org\\'" . org-mode)
   :mode-hydra
@@ -116,6 +116,7 @@
                       (setq fill-column 70)
                       (turn-on-auto-fill))))
   :config
+  (use-package org-contrib :straight t)
   (require 'org-checklist)
 
   (org-defkey org-mode-map (kbd "RET") #'(lambda () (interactive) (org-return nil))))
@@ -129,6 +130,10 @@
   (defvar org-roam-index-file (expand-file-name "index.org" org-roam-directory))
   (defvar org-roam-matter-directory (expand-file-name "matter/" org-roam-directory))
   (defvar org-roam-reading-directory (expand-file-name "reading/" org-roam-directory))
+  :config
+  (setq org-roam-node-display-template
+    (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+  (org-roam-db-autosync-mode)
 
   ;; (defconst org-roam-notes-file-template (string-trim-left "
   ;; #+title: ${title}
