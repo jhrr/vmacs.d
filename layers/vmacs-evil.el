@@ -16,6 +16,7 @@
   (evil-mode))
 
 (use-package evil-motion-trainer
+  :disabled t
   :straight
   (evil-motion-trainer
    :type git
