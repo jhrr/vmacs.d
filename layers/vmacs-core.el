@@ -128,10 +128,10 @@
                          (read-string "Google: "))))))
 (bind-key "C-c G" #'google)
 
-(defun insert-guid ()
-  "Insert a GUID at point."
+(defun insert-uuid ()
+  "Insert a UUID at point."
   (interactive "*")
-  (let ((uuid (s-trim (shell-command-to-string "uuidgen"))))
+  (let ((uuid (s-trim (org-id-uuid))))
     (insert uuid)))
 
 (defun nuke-all ()
