@@ -113,6 +113,7 @@
             #'(lambda () (progn
                       (linum-mode -1)
                       (setq fill-column 70)
+                      (setq evil-shift-width 2)
                       (turn-on-auto-fill))))
   :config
   (use-package org-contrib :straight t)
@@ -124,10 +125,10 @@
   :straight t
   :commands
   (org-roam-capture
-    org-roam-db-query
-    org-roam-find-file
-    org-roam-node-visit
-    org-roam-node-from-id)
+   org-roam-db-query
+   org-roam-find-file
+   org-roam-node-visit
+   org-roam-node-from-id)
   :init
   (setq org-roam-directory (expand-file-name "index/" user-org-directory))
   (defvar org-roam-index-file (expand-file-name "index.org" org-roam-directory))
@@ -139,24 +140,16 @@
     (org-roam-node-visit
      (org-roam-node-from-id
       (caar (or (org-roam-db-query
-                  [:select id :from nodes :where (= title "Index") :limit 1])
+                 [:select id :from nodes :where (= title "Index") :limit 1])
                 (user-error "No node with title Index"))))))
   :config
   (setq org-roam-node-display-template
-    (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+        (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   (org-roam-db-autosync-mode)
 
-  ;; (defconst org-roam-notes-file-template (string-trim-left "
-  ;; #+title: ${title}
-  ;; #+roam_key: cite:${=key=}
-  ;; #+category: ${=key=}
-  ;; #+roam_tags:
-  ;; - keywords ::
-  ;; * %s
-  ;; :PROPERTIES:
-  ;; :CUSTOM_ID: ${=key=}
-  ;; :END:"))
+  ;; TODO: Bind org-roam-node-insert
 
+  ;; TODO: This is busted.
   (setq org-roam-capture-templates
         '(("m" "matter" plain (function org-roam-capture--get-point)
            "* %?"
@@ -168,6 +161,9 @@
            :file-name "reading/%<%Y%m%d%H%M%S>-${slug}"
            :head "#+title: ${title}\n\n"
            :unnarrowed t))))
+
+;; TODO: https://github.com/nobiot/org-transclusion
+; (use-packge org-transclusion :straight t)
 
 (use-package org-journal
   :straight t
