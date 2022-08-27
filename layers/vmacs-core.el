@@ -45,8 +45,8 @@
      (frame-parameter nil 'font)
      'japanese-jisx0208 '("VL Gothic" . "unicode-bmp")))
 
-(setq tabs-width 4)
-(setq standard-indent 4)
+(setq tabs-width 2)
+(setq standard-indent 2)
 (setq use-dialog-box nil)
 (setq create-lockfiles nil)
 (setq vc-follow-symlinks t)

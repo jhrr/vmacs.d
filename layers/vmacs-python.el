@@ -112,25 +112,6 @@
         (pyvenv-activate env)
         (message "Using pyvenv at %s" (f-abbrev env))))))
 
-(use-package py-yapf
-  :straight t
-  :defer t
-  :after python
-  :hook (python-mode . python-auto-format-mode)
-  :preface
-  (progn
-    (defvar python-auto-format-buffer t)
-
-    (defun python-auto-format-maybe ()
-      (when (and python-auto-format-buffer (executable-find "yapf"))
-        (py-yapf-buffer)))
-
-    (define-minor-mode python-auto-format-mode
-      nil nil nil nil
-      (if python-auto-format-mode
-          (add-hook 'before-save-hook 'python-auto-format-maybe nil t)
-        (remove-hook 'before-save-hook 'python-auto-format-maybe t)))))
-
 (use-package tox
   :straight t
   :defer t
