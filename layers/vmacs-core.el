@@ -49,7 +49,6 @@
 (setq standard-indent 2)
 (setq use-dialog-box nil)
 (setq create-lockfiles nil)
-(setq vc-follow-symlinks t)
 (setq mouse-yank-at-point t)
 (setq transient-mark-mode t)
 (setq inhibit-default-init t)
@@ -57,13 +56,18 @@
       doc-view-resolution 300)
 (setq sentence-end-double-space nil)
 (setq disabled-command-function nil)
-(setq scroll-preserve-screen-position t)
 (setq initial-major-mode 'fundamental-mode)
 (setq base16-theme-256-color-source "base16-shell")
-
 (setq compilation-scroll-output t)
 (setq compilation-scroll-output 'first-error)
 (setq compile-command "CC=clang make -k")
+(setq recentf-max-menu-items 25)
+(setq recentf-max-saved-items 25)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+(setq scroll-conservatively most-positive-fixnum)
+(setq scroll-preserve-screen-position t)
+(setf vc-handled-backends nil)
+(setf vc-follow-symlinks t)
 
 (setq-default line-number-mode t)
 (setq-default column-number-mode t)
@@ -82,9 +86,6 @@
 (mouse-avoidance-mode 'jump)
 
 (recentf-mode)
-(setq recentf-max-menu-items 25)
-(setq recentf-max-saved-items 25)
-
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (defmacro hook-into-modes (func mode-hooks)
