@@ -44,6 +44,8 @@
   (setq org-default-notes-file
         (expand-file-name "gtd-inbox.org" user-org-directory))
 
+  (setq org-fold-core-style 'overlays)
+
   (setq org-capture-templates
         '(("q" "Quick" entry (file+headline org-default-notes-file "Quick")
            "* %?"
@@ -54,17 +56,16 @@
         '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
           (sequence "BLOCKED(b@/!)" "|" "CANCELLED(c@/!)")))
 
-  ;; (setq org-todo-keyword-faces
-  ;;       '(("TODO" :foreground "#f76050" :weight bold)
-  ;;         ("NEXT" :foreground "#ffc900" :weight bold)
-  ;;         ("DONE" :foreground "#89a97d" :weight bold)
-  ;;         ("BLOCKED" :foreground "#e39f89" :weight bold)
-  ;;         ("CANCELLED" :foreground "#dadfe0" :weight bold)))
+  (setq org-todo-keyword-faces
+        '(("TODO" :foreground "#f76050" :weight bold)
+          ("NEXT" :foreground "#ffc900" :weight bold)
+          ("DONE" :foreground "#89a97d" :weight bold)
+          ("BLOCKED" :foreground "#e39f89" :weight bold)
+          ("CANCELLED" :foreground "#dadfe0" :weight bold)))
 
   (setq org-adapt-indentation nil)
   (setq org-agenda-span 'day)
   (setq org-agenda-sticky t)
-  ;; (setq org-ellipsis " …")
   (setq org-ellipsis " ...")
   (setq org-startup-folded t)
   ;; Activate org-columns with C-c C-x C-c while on a top-level heading.
@@ -112,10 +113,10 @@
 
   (add-hook 'org-mode-hook
             #'(lambda () (progn
-                      (linum-mode -1)
-                      (setq fill-column 70)
-                      (setq evil-shift-width 2)
-                      (turn-on-auto-fill))))
+                           (linum-mode -1)
+                           (setq fill-column 70)
+                           (setq evil-shift-width 2)
+                           (turn-on-auto-fill))))
   :config
   (use-package org-contrib :straight t)
   (require 'org-checklist)

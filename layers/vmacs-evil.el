@@ -26,13 +26,11 @@
   :config
   (global-evil-motion-trainer-mode 1))
 
-(use-package evil-nerd-commenter
+(use-package evil-commentary
   :straight t
-  :defer t
   :after evil
-  :commands
-  (evilnc-comment-or-uncomment-lines
-   evilnc-comment-or-uncomment-paragraphs))
+  :config
+  (evil-commentary-mode))
 
 (provide 'vmacs-evil)
 ;;; vmacs-evil.el ends here
