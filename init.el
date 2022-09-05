@@ -28,8 +28,9 @@
 
 (setq package-enable-at-startup nil
       read-process-output-max (* 1024 1024)
-      gc-cons-threshold (* 1024 1024 20)
-      garbage-collection-messages t
+      gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 0.7
+      garbage-collection-messages nil
       max-specpdl-size 10000 ;; Needed for stream.el
       message-log-max 16384)
 
@@ -117,6 +118,19 @@ NAME and ARGS are as in `use-package'."
   (when (member (expand-file-name "~/.emacs.d") load-path)
     (setq load-path (remove (expand-file-name "~/.emacs.d") load-path)))
   (setq load-path (delete-dups load-path)))
+
+(defvar config-default-gc-threshold (* 1024 1024 100))
+
+(defun config--inhibit-gc ()
+  (setq gc-cons-threshold most-positive-fixnum))
+
+(defun config--enable-gc ()
+  (setq gc-cons-threshold config-default-gc-threshold
+        garbage-collection-messages t))
+
+(add-hook 'minibuffer-setup-hook #'config--inhibit-gc)
+(add-hook 'minibuffer-exit-hook #'config--enable-gc)
+(add-hook 'after-init-hook #'config--enable-gc)
 
 (when window-system
   (let ((elapsed (float-time (time-subtract
