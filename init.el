@@ -75,8 +75,10 @@
 (eval-when-compile
   (require 'seq)
   (require 'subr-x)
-  (require 'cl-lib)
-  (require 'bind-key))
+  (require 'bind-key)
+  (with-no-warnings
+    (require 'cl-lib)))
+
 (use-package f :straight t)
 (use-package s :straight t)
 (use-package general :straight t)
