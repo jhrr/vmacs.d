@@ -5,7 +5,6 @@
 ;; "Capture a little wave."
 
 ;;; Code:
-
 (use-package org
   :straight t
   :mode
@@ -17,21 +16,21 @@
     "Browse"
     (("o" #'org-jump-to-inbox "jump to inbox")
      ("g" #'org-jump-to-gtd "jump to gtd file")
-     ("r" #'org-roam-find-file "jump to org-roam file")
      ("i" #'org-roam-jump-to-index "jump to org-roam index")
      ("w" #'org-jump-to-work "jump to work file"))
     "Capture"
     (("c" #'org-capture "capture")
-     ("C" #'org-roam-capture "org-roam capture")
      ("k" #'org-quick-capture "quick capture"))
+    "Journal"
+    (("j" #'org-journal-new-entry "new entry"))
     "Links"
     (("ls" #'org-store-link "store link")
-     ("li" #'org-insert-link "insert link")
-     ("lf" #'org-roam-insert "insert org-roam file link"))
+     ("li" #'org-insert-link "insert link"))
     "Roam"
-    (("<tab>" #'org-roam-buffer-toggle-display "toggle backlinks"))
-    "Journal"
-    (("j" #'org-journal-new-entry "new entry"))))
+    (("rb" #'org-roam-buffer-toggle "toggle org-roam buffer")
+     ("rl" #'org-roam-node-insert "insert a link to an org-roam node")
+     ("rf" #'org-roam-node-find "jump to org-roam file")
+     ("rc" #'org-roam-capture "org-roam capture"))))
   :init
   (defvar user-org-directory
     (expand-file-name "org/" user-dropbox-directory))
@@ -113,10 +112,10 @@
 
   (add-hook 'org-mode-hook
             #'(lambda () (progn
-                           (linum-mode -1)
-                           (setq fill-column 70)
-                           (setq evil-shift-width 2)
-                           (turn-on-auto-fill))))
+                      (linum-mode -1)
+                      (setq fill-column 70)
+                      (setq evil-shift-width 2)
+                      (turn-on-auto-fill))))
   :config
   (use-package org-contrib :straight t)
   (require 'org-checklist)
@@ -128,9 +127,7 @@
   :commands
   (org-roam-capture
    org-roam-db-query
-   org-roam-find-file
-   org-roam-node-visit
-   org-roam-node-from-id)
+   org-roam-node-insert)
   :init
   (setq org-roam-directory (expand-file-name "index/" user-org-directory))
   (defvar org-roam-index-file (expand-file-name "index.org" org-roam-directory))
@@ -149,7 +146,7 @@
         (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   (org-roam-db-autosync-mode)
 
-  ;; TODO: Bind org-roam-node-insert
+  ;; TODO: https://github.com/org-roam/org-roam-ui
 
   ;; TODO: This is busted.
   (setq org-roam-capture-templates
