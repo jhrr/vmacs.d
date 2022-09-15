@@ -16,5 +16,7 @@
           #'magit-display-buffer-fullframe-status-v1)
     (setq magit-completing-read-function #'selectrum-completing-read)))
 
+(use-package git-auto-commit-mode :straight t)
+
 (provide 'vmacs-git)
 ;;; vmacs-git.el ends here

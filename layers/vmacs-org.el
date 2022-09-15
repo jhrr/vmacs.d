@@ -21,8 +21,6 @@
     "Capture"
     (("c" #'org-capture "capture")
      ("k" #'org-quick-capture "quick capture"))
-    "Journal"
-    (("j" #'org-journal-new-entry "new entry"))
     "Links"
     (("ls" #'org-store-link "store link")
      ("li" #'org-insert-link "insert link"))
@@ -30,7 +28,9 @@
     (("rb" #'org-roam-buffer-toggle "toggle org-roam buffer")
      ("rl" #'org-roam-node-insert "insert a link to an org-roam node")
      ("rf" #'org-roam-node-find "jump to org-roam file")
-     ("rc" #'org-roam-capture "org-roam capture"))))
+     ("rc" #'org-roam-capture "org-roam capture"))
+    "Journal"
+    (("j" #'org-journal-new-entry "new entry"))))
   :init
   (defvar user-org-directory
     (expand-file-name "org/" user-dropbox-directory))
@@ -112,10 +112,10 @@
 
   (add-hook 'org-mode-hook
             #'(lambda () (progn
-                      (linum-mode -1)
-                      (setq fill-column 70)
-                      (setq evil-shift-width 2)
-                      (turn-on-auto-fill))))
+                           (linum-mode -1)
+                           (setq fill-column 70)
+                           (setq evil-shift-width 2)
+                           (turn-on-auto-fill))))
   :config
   (use-package org-contrib :straight t)
   (require 'org-checklist)
