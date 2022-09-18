@@ -66,10 +66,8 @@
   (setq org-agenda-span 'day)
   (setq org-agenda-sticky t)
   (setq org-ellipsis " ...")
+  (setq org-property-format "%s %s") ;; Don't tab/align property values.
   (setq org-startup-folded t)
-  ;; Activate org-columns with C-c C-x C-c while on a top-level heading.
-  ;; (setq org-columns-default-format "%50ITEM(Task) %10CLOCKSUM %16TIMESTAMP_IA")
-  ;; (setq org-refile-targets '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9)))
 
   (defun directory-org (dir)
     "Return all org files under a DIR."
