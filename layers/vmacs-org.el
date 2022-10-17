@@ -110,10 +110,9 @@
 
   (add-hook 'org-mode-hook
             #'(lambda () (progn
-                           (linum-mode -1)
-                           (setq fill-column 70)
-                           (setq evil-shift-width 2)
-                           (turn-on-auto-fill))))
+                      (setq fill-column 70)
+                      (setq evil-shift-width 2)
+                      (turn-on-auto-fill))))
   :config
   (use-package org-contrib :straight t)
   (require 'org-checklist)
