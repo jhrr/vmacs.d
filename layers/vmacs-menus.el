@@ -69,7 +69,8 @@
   :straight t
   :init
   ;; Workaround bug#44080, should be fixed in version 27.2 and above.
-  (define-advice fit-frame-to-buffer (:around (f &rest args) dont-skip-ws-for-mini-frame)
+  (define-advice fit-frame-to-buffer
+      (:around (f &rest args) dont-skip-ws-for-mini-frame)
     (cl-letf* ((orig (symbol-function #'window-text-pixel-size))
                ((symbol-function #'window-text-pixel-size)
                 (lambda (win from to &rest args)

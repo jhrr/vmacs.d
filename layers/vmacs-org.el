@@ -124,7 +124,8 @@
   :commands
   (org-roam-capture
    org-roam-db-query
-   org-roam-node-insert)
+   org-roam-node-insert
+   org-roam-node-visit)
   :init
   (setq org-roam-directory (expand-file-name "index/" user-org-directory))
   (defvar org-roam-index-file (expand-file-name "index.org" org-roam-directory))
