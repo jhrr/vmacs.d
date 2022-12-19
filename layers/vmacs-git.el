@@ -1,6 +1,6 @@
-;;; vmacs-git.el -*- lexical-binding:t -*-
+;;; vmacs-git.el --- Configure git and vcs utilties.
 
-;;; Commentary: Configure git utilties.
+;;; Commentary:
 
 ;;; Code:
 

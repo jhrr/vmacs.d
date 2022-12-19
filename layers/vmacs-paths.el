@@ -1,6 +1,6 @@
-;;; vmacs-paths.el -*- lexical-binding:t -*-
+;;; vmacs-paths.el --- Directory and load path configuration.
 
-;;; Commentary: Directory and load path configuration.
+;;; Commentary:
 
 ;;; Code:
 

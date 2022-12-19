@@ -1,4 +1,4 @@
-;;; vmacs-theme.el --- Colours, appearance, faces. -*- lexical-binding:t -*-
+;;; vmacs-theme.el --- Colours, appearance, faces.
 
 ;;; Commentary:
 

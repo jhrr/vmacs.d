@@ -1,4 +1,4 @@
-;; vmacs-lisp.el -*- lexical-binding:t -*-
+;; vmacs-lisp.el
 
 ;; Commentary: Lisp mode configuration.
 

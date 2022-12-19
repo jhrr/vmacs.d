@@ -1,4 +1,4 @@
-;;; vmacs-evil.el --- Vim emulation. -*- lexical-binding:t -*-
+;;; vmacs-evil.el --- Vim emulation.
 
 ;;; Commentary:
 

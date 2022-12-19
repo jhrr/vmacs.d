@@ -1,4 +1,4 @@
-;;; vmacs-core.el -- Core configuration. -*- lexical-binding:t -*-
+;;; vmacs-core.el -- Core configuration.
 
 ;;; Commentary:
 

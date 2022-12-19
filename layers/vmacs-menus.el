@@ -1,4 +1,4 @@
-;;; vmacs-menus.el -- Menus and navigation -*- lexical-binding:t -*-
+;;; vmacs-menus.el -- Menus and navigation
 
 ;;; Commentary:
 

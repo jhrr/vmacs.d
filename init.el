@@ -1,4 +1,4 @@
-;;; init.el -- Initialize Emacs. -*- lexical-binding:t -*-
+;;; init.el -- Initialize Emacs.
 
 ;; This file is not part of GNU Emacs.
 

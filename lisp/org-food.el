@@ -1,4 +1,4 @@
-;;; org-food.el --- Let org-mode feed you. -*- lexical-binding:t -*-
+;;; org-food.el --- Let org-mode feed you.
 
 ;; Copyright (C) 2014 Free Software Foundation, Inc.
 

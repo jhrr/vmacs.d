@@ -1,4 +1,4 @@
-;;; vmacs-org.el -- Configure org-mode. -*- lexical-binding:t -*-
+;;; vmacs-org.el -- Configure org-mode.
 
 ;;; Commentary:
 

@@ -1,4 +1,4 @@
-;;; vmacs-python.el --- Python mode. -*- lexical-binding:t -*-
+;;; vmacs-python.el --- Configure Python.
 
 ;;; Commentary:
 

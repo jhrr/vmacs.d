@@ -1,4 +1,4 @@
-;;; vmacs-linux.el -*- lexical-binding:t -*-
+;;; vmacs-linux.el
 
 ;;; Commentary: Linux configuration.
 

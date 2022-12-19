@@ -1,4 +1,4 @@
-;;; vmacs-org.el -- Global hydras. -*- lexical-binding:t -*-
+;;; vmacs-org.el -- Global hydras.
 
 ;;; Commentary:
 

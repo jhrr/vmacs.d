@@ -1,4 +1,4 @@
-;;; vmacs-js.el -- Configure JavaScript. -*- lexical-binding:t -*-
+;;; vmacs-js.el -- Configure JavaScript.
 
 ;;; Commentary:
 

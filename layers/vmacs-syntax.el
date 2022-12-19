@@ -1,4 +1,4 @@
-;;; vmacs-syntax.el -- Syntax checking. -*- lexical-binding:t -*-
+;;; vmacs-syntax.el -- Syntax checking.
 
 ;;; Commentary:
 

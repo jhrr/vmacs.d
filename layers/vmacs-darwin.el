@@ -1,4 +1,4 @@
-;;; vmacs-darwin.el -- macOS configuration -*- lexical-binding:t -*-
+;;; vmacs-darwin.el -- Darwin/macOS configuration.
 
 ;;; Commentary:
 

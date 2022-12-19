@@ -1,4 +1,4 @@
-;;; vmacs-edit.el ---  Enhance the text editing experience. -*- lexical-binding:t -*-
+;;; vmacs-edit.el ---  Enhance the text editing experience.
 
 ;;; Commentary:
 
