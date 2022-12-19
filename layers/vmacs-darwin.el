@@ -17,7 +17,7 @@
 ;; Add fonts to list in order of preference.
 (set-face-attribute
  'default nil
- :font (font-candidate '"Inconsolata LGC 14"))
+ :font (font-candidate '"Inconsolata LGC 12"))
 
 (use-package exec-path-from-shell
   :straight t
