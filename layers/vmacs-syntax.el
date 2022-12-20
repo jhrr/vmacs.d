@@ -1,8 +1,6 @@
-;;; vmacs-syntax.el -- Syntax checking.
+;;; vmacs-syntax.el --- Syntax checking.
 
 ;;; Commentary:
-
-;; On-the-fly code linting and prose policing.
 
 ;;; Code:
 

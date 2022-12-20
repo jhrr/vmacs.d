@@ -153,10 +153,10 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
 (custom-theme-set-faces
  'vmacs-labburn
 
- ;; -- custom faces
+ ;; --- custom faces
  `(dim-parens-face ((t (:foreground ,vmacs-dim-parens))))
 
- ;; -- basic
+ ;; --- basic
  `(border ((t (:background ,vmacs-bg :foreground ,vmacs-labburn-fg))))
  `(border-color ((t (:background ,vmacs-bg))))
  `(button ((t (:foreground ,vmacs-labburn-yellow :underline t))))
@@ -181,7 +181,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(warning ((t (:foreground ,vmacs-labburn-orange))))
  `(widget-field ((t (:foreground ,vmacs-labburn-fg :background ,vmacs-labburn-bg+3))))
 
- ;; -- font lock
+ ;; --- font lock
  `(font-lock-builtin-face ((t (:foreground ,vmacs-labburn-fg+1))))
  `(font-lock-comment-face ((t (:foreground ,vmacs-labburn-green))))
  `(font-lock-comment-delimiter-face ((t (:foreground ,vmacs-labburn-green-2))))
@@ -199,13 +199,13 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(font-lock-warning-face ((t (:foreground ,vmacs-labburn-yellow-2))))
  `(c-annotation-face ((t (:inherit font-lock-constant-face))))
 
- ;; -- mode-line
+ ;; --- mode-line
  `(mode-line ((t (:foreground ,vmacs-black :background ,vmacs-mode-line :box nil))))
  `(mode-line-buffer-id ((t (:foreground ,vmacs-black))))
  `(show-paren-mismatch ((t (:foreground ,vmacs-labburn-red))))
  `(show-paren-match ((t (:foreground ,vmacs-bold))))
 
- ;; -- compilation
+ ;; --- compilation
  `(compilation-column-face ((t (:foreground ,vmacs-labburn-yellow))))
  `(compilation-enter-directory-face ((t (:foreground ,vmacs-labburn-green))))
  `(compilation-error-face ((t (:foreground ,vmacs-labburn-red-1 :underline t))))
@@ -222,31 +222,31 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(compilation-mode-line-fail ((t (:foreground ,vmacs-labburn-red))))
  `(compilation-mode-line-run ((t (:foreground ,vmacs-labburn-yellow))))
 
- ;; -- custom
+ ;; --- custom
  `(custom-face-tag ((t (:foreground ,vmacs-labburn-blue))))
  `(custom-group-tag ((t (:foreground ,vmacs-labburn-blue))))
  `(custom-link ((t (:foreground ,vmacs-labburn-yellow :underline t))))
  `(custom-variable-tag ((t (:foreground ,vmacs-labburn-blue))))
  `(custom-state ((t (:foreground ,vmacs-labburn-green))))
 
- ;; -- completions
+ ;; --- completions
  `(completions-annotations ((t (:foreground ,vmacs-labburn-fg-1))))
 
- ;; -- display-fill-column-indicator
+ ;; --- display-fill-column-indicator
  `(fill-column-indicator ((,vmacs-labburn-class :foreground ,vmacs-labburn-bg-05 :weight semilight)))
 
- ;; -- eww
+ ;; --- eww
  '(eww-invalid-certificate ((t (:inherit error))))
  '(eww-valid-certificate   ((t (:inherit success))))
 
- ;; -- grep
+ ;; --- grep
  `(grep-context-face ((t (:foreground ,vmacs-labburn-fg))))
  `(grep-error-face ((t (:foreground ,vmacs-labburn-red-1 :underline t))))
  `(grep-hit-face ((t (:foreground ,vmacs-labburn-blue))))
  `(grep-match-face ((t (:foreground ,vmacs-labburn-orange))))
  `(match ((t (:background ,vmacs-labburn-bg-1 :foreground ,vmacs-labburn-orange))))
 
- ;; -- hi-lock
+ ;; --- hi-lock
  `(hi-blue    ((t (:background ,vmacs-labburn-cyan    :foreground ,vmacs-labburn-bg-1))))
  `(hi-green   ((t (:background ,vmacs-labburn-green+4 :foreground ,vmacs-labburn-bg-1))))
  `(hi-pink    ((t (:background ,vmacs-labburn-magenta :foreground ,vmacs-labburn-bg-1))))
@@ -255,35 +255,35 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(hi-green-b ((t (:foreground ,vmacs-labburn-green+2))))
  `(hi-red-b   ((t (:foreground ,vmacs-labburn-red))))
 
- ;; -- info
+ ;; --- info
  `(Info-quoted ((t (:inherit font-lock-constant-face))))
 
- ;; -- isearch
+ ;; --- isearch
  `(isearch ((t (:foreground ,vmacs-labburn-highlight))))
  `(isearch-fail ((t (:foreground ,vmacs-labburn-fg :background ,vmacs-labburn-red-4))))
  `(lazy-highlight ((t (:foreground ,vmacs-labburn-yellow-2 :background ,vmacs-labburn-bg-05))))
 
- ;; -- man
+ ;; --- man
  '(Man-overstrike ((t (:inherit font-lock-keyword-face))))
  '(Man-underline  ((t (:inherit (font-lock-string-face underline)))))
 
- ;; -- woman
+ ;; --- woman
  '(woman-bold   ((t (:inherit font-lock-keyword-face))))
  '(woman-italic ((t (:inherit (font-lock-string-face italic)))))
 
  ;;; Third-party
- ;; -- ace-jump
+ ;; --- ace-jump
  `(ace-jump-face-background
    ((t (:inverse-video nil))))
  `(ace-jump-face-foreground
    ((t (:foreground ,vmacs-labburn-highlight))))
 
- ;; -- ace-window
+ ;; --- ace-window
  `(aw-background-face
    ((t (:foreground ,vmacs-labburn-fg-1 :background ,vmacs-bg :inverse-video nil))))
  `(aw-leading-char-face ((t (:inherit aw-mode-line-face))))
 
- ;; -- auto-complete
+ ;; --- auto-complete
  `(ac-candidate-face ((t (:background ,vmacs-labburn-bg+3 :foreground ,vmacs-labburn-bg-2))))
  `(ac-selection-face ((t (:background ,vmacs-labburn-blue-4 :foreground ,vmacs-labburn-fg))))
  `(popup-tip-face ((t (:background ,vmacs-labburn-yellow-2 :foreground ,vmacs-labburn-bg-2))))
@@ -293,7 +293,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(popup-scroll-bar-background-face ((t (:background ,vmacs-labburn-bg-1))))
  `(popup-isearch-match ((t (:background ,vmacs-bg :foreground ,vmacs-labburn-fg))))
 
- ;; -- avy
+ ;; --- avy
  `(avy-background-face
    ((t (:foreground ,vmacs-labburn-fg-3 :background ,vmacs-bg :inverse-video nil))))
  `(avy-lead-face-0
@@ -305,7 +305,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(avy-lead-face
    ((t (:foreground ,vmacs-labburn-highlight :background ,vmacs-bg :inverse-video nil))))
 
- ;; -- auctex
+ ;; --- auctex
  `(font-latex-bold-face ((t (:inherit bold))))
  `(font-latex-warning-face ((t (:foreground nil :inherit font-lock-warning-face))))
  `(font-latex-sectioning-5-face ((t (:foreground ,vmacs-labburn-red ))))
@@ -317,20 +317,20 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(TeX-fold-folded-face ((t (:foreground ,vmacs-labburn-orange))))
  `(TeX-fold-unfolded-face ((t (:background ,vmacs-labburn-bg+2))))
 
- ;; -- magic-latex
+ ;; --- magic-latex
  `(ml/subsection ((t (:foreground ,vmacs-labburn-red :height 1.2))))
  `(ml/section ((t (:foreground ,vmacs-labburn-red :height 1.6))))
  `(ml/chapter ((t (:foreground ,vmacs-labburn-red :height 1.8))))
  `(ml/title ((t (:foreground ,vmacs-labburn-red :height 2.0))))
  `(jg/tex-header ((t (:foreground ,vmacs-labburn-red))))
 
- ;; -- bm
+ ;; --- bm
  `(bm-face ((t (:background ,vmacs-labburn-yellow-1 :foreground ,vmacs-bg))))
  `(bm-fringe-face ((t (:background ,vmacs-labburn-yellow-1 :foreground ,vmacs-bg))))
  `(bm-fringe-persistent-face ((t (:background ,vmacs-labburn-green-2 :foreground ,vmacs-bg))))
  `(bm-persistent-face ((t (:background ,vmacs-labburn-green-2 :foreground ,vmacs-bg))))
 
- ;; -- centaur-tabs
+ ;; --- centaur-tabs
  `(centaur-tabs-default ((t (:background ,vmacs-bg :foreground ,vmacs-labburn-fg :box nil))))
  `(centaur-tabs-selected ((t (:background ,vmacs-bg :foreground ,vmacs-labburn-fg+2 :box nil))))
  `(centaur-tabs-unselected ((t (:background ,vmacs-labburn-bg-1 :foreground ,vmacs-labburn-fg-05 :box nil))))
@@ -340,7 +340,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(centaur-tabs-modified-marker-selected ((t (:inherit 'centaur-tabs-selected-modified :foreground ,vmacs-labburn-yellow :box nil))))
  `(centaur-tabs-modified-marker-unselected ((t (:inherit 'centaur-tabs-unselected-modified :foreground ,vmacs-labburn-yellow :box nil))))
 
- ;; -- calfw
+ ;; --- calfw
  `(cfw:face-annotation ((t (:foreground ,vmacs-labburn-red :inherit cfw:face-day-title))))
  `(cfw:face-day-title ((t nil)))
  `(cfw:face-default-content ((t (:foreground ,vmacs-labburn-green))))
@@ -360,7 +360,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(cfw:face-toolbar-button-off ((t (:underline nil :inherit link))))
  `(cfw:face-toolbar-button-on ((t (:underline nil :inherit link-visited))))
 
- ;; -- cider
+ ;; --- cider
  `(cider-result-overlay-face ((t (:background unspecified))))
  `(cider-enlightened-face ((t (:box (:color ,vmacs-labburn-orange :line-width -1)))))
  `(cider-enlightened-local-face ((t (:weight bold :foreground ,vmacs-labburn-green+1))))
@@ -372,7 +372,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(cider-test-success-face ((t (:background ,vmacs-labburn-green-2))))
  `(cider-fringe-good-face ((t (:foreground ,vmacs-labburn-green+4))))
 
- ;; -- company-mode
+ ;; --- company-mode
  `(company-tooltip ((t (:foreground ,vmacs-labburn-fg :background ,vmacs-labburn-bg+1 :weight normal))))
  `(company-tooltip-selection ((t (:background ,vmacs-labburn-bg+2 :weight normal))))
  `(company-tooltip-mouse ((t (:background ,vmacs-labburn-bg-1 :weight normal))))
@@ -387,11 +387,11 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(company-preview-search ((t (:foreground ,vmacs-labburn-yellow))))
  `(company-template-field ((t (:background ,vmacs-labburn-bg-1))))
 
- ;; -- company-quickhelp
+ ;; --- company-quickhelp
  `(company-quickhelp-color-background ,vmacs-labburn-bg+1)
  `(company-quickhelp-color-foreground ,vmacs-labburn-fg)
 
- ;; -- context-coloring
+ ;; --- context-coloring
  `(context-coloring-level-0-face ((t :foreground ,vmacs-labburn-fg)))
  `(context-coloring-level-1-face ((t :foreground ,vmacs-labburn-cyan)))
  `(context-coloring-level-2-face ((t :foreground ,vmacs-labburn-green+4)))
@@ -403,14 +403,14 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(context-coloring-level-8-face ((t :foreground ,vmacs-labburn-yellow-2)))
  `(context-coloring-level-9-face ((t :foreground ,vmacs-labburn-red+1)))
 
- ;; -- coq
+ ;; --- coq
  `(coq-solve-tactics-face ((t (:foreground nil :inherit font-lock-constant-face))))
- ;; -- ctable
+ ;; --- ctable
  `(ctbl:face-cell-select ((t (:background ,vmacs-labburn-blue :foreground ,vmacs-bg))))
  `(ctbl:face-continue-bar ((t (:background ,vmacs-labburn-bg-05 :foreground ,vmacs-bg))))
  `(ctbl:face-row-select ((t (:background ,vmacs-labburn-cyan :foreground ,vmacs-bg))))
 
- ;; -- debbugs
+ ;; --- debbugs
  `(debbugs-gnu-done ((t (:foreground ,vmacs-labburn-fg-1))))
  `(debbugs-gnu-handled ((t (:foreground ,vmacs-labburn-green))))
  `(debbugs-gnu-new ((t (:foreground ,vmacs-labburn-red))))
@@ -418,7 +418,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(debbugs-gnu-stale ((t (:foreground ,vmacs-labburn-orange))))
  `(debbugs-gnu-tagged ((t (:foreground ,vmacs-labburn-red))))
 
- ;; -- diff
+ ;; --- diff
  `(diff-added          ((t (:background "#335533" :foreground ,vmacs-labburn-green))))
  `(diff-changed        ((t (:background "#555511" :foreground ,vmacs-labburn-yellow-1))))
  `(diff-removed        ((t (:background "#553333" :foreground ,vmacs-labburn-red-2))))
@@ -431,19 +431,19 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
    ((,vmacs-labburn-class (:background ,vmacs-labburn-bg+2 :foreground ,vmacs-labburn-fg :weight bold))
     (t (:background ,vmacs-labburn-fg :foreground ,vmacs-bg :weight bold))))
 
- ;; -- diff-hl
+ ;; --- diff-hl
  `(diff-hl-change ((,vmacs-labburn-class (:foreground ,vmacs-labburn-blue :background ,vmacs-labburn-blue-2))))
  `(diff-hl-delete ((,vmacs-labburn-class (:foreground ,vmacs-labburn-red+1 :background ,vmacs-labburn-red-1))))
  `(diff-hl-insert ((,vmacs-labburn-class (:foreground ,vmacs-labburn-green+1 :background ,vmacs-labburn-green-2))))
 
- ;; -- dired
+ ;; --- dired
  `(dired-header ((t (:foreground ,vmacs-labburn-orange))))
  `(dired-directory ((t (:foreground ,vmacs-labburn-orange))))
  `(dired-marked ((t (:foreground ,vmacs-labburn-highlight))))
  `(dired-mark ((t (:foreground ,vmacs-labburn-highlight))))
  `(dired-perm-write ((t (:foreground ,vmacs-labburn-red+2))))
 
- ;; -- dired+
+ ;; --- dired+
  `(diredp-display-msg ((t (:foreground ,vmacs-labburn-blue))))
  `(diredp-compressed-file-suffix ((t (:foreground ,vmacs-labburn-orange))))
  `(diredp-date-time ((t (:foreground ,vmacs-labburn-fg-2))))
@@ -470,7 +470,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(diredp-symlink ((t (:foreground ,vmacs-labburn-yellow))))
  `(diredp-write-priv ((t (:foreground ,vmacs-labburn-magenta-2))))
 
- ;; -- diredfl
+ ;; --- diredfl
  `(diredfl-compressed-file-suffix ((t (:foreground ,vmacs-labburn-orange))))
  `(diredfl-date-time ((t (:foreground ,vmacs-labburn-magenta))))
  `(diredfl-deletion ((t (:foreground ,vmacs-labburn-yellow))))
@@ -493,16 +493,16 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(diredfl-symlink ((t (:foreground ,vmacs-labburn-yellow))))
  `(diredfl-write-priv ((t (:foreground ,vmacs-labburn-magenta))))
 
- ;; -- dired-async
+ ;; --- dired-async
  `(dired-async-failures ((t (:foreground ,vmacs-labburn-red))))
  `(dired-async-message ((t (:foreground ,vmacs-labburn-yellow))))
  `(dired-async-mode-message ((t (:foreground ,vmacs-labburn-yellow))))
 
- ;; -- edebug
+ ;; --- edebug
  `(hi-edebug-x-debug-line ((t (:foreground ,vmacs-labburn-highlight))))
  `(hi-edebug-x-stop ((t (:background ,vmacs-labburn-blue-5))))
 
- ;; -- ediff
+ ;; --- ediff
  `(ediff-current-diff-A ((t (:foreground ,vmacs-labburn-fg :background ,vmacs-labburn-red-4))))
  `(ediff-current-diff-Ancestor ((t (:foreground ,vmacs-labburn-fg :background ,vmacs-labburn-red-4))))
  `(ediff-current-diff-B ((t (:foreground ,vmacs-labburn-fg :background ,vmacs-labburn-green-2))))
@@ -520,7 +520,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(ediff-odd-diff-B ((t (:background ,vmacs-labburn-bg+2))))
  `(ediff-odd-diff-C ((t (:background ,vmacs-labburn-bg+2))))
 
- ;; -- elfeed
+ ;; --- elfeed
  `(elfeed-log-error-level-face ((t (:foreground ,vmacs-labburn-red))))
  `(elfeed-log-info-level-face ((t (:foreground ,vmacs-labburn-blue))))
  `(elfeed-log-warn-level-face ((t (:foreground ,vmacs-labburn-yellow))))
@@ -530,7 +530,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(elfeed-search-unread-title-face ((t (:foreground ,vmacs-labburn-fg+2))))
  `(elfeed-search-title-face ((t (:foreground ,vmacs-labburn-fg-1))))
 
- ;; -- erc
+ ;; --- erc
  `(erc-action-face ((t (:inherit erc-default-face))))
  `(erc-bold-face ((t (:weight bold))))
  `(erc-current-nick-face ((t (:foreground ,vmacs-labburn-blue))))
@@ -551,10 +551,10 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(erc-timestamp-face ((t (:foreground ,vmacs-labburn-green+4))))
  `(erc-underline-face ((t (:underline t))))
 
- ;; -- eros
+ ;; --- eros
  `(eros-result-overlay-face ((t (:background unspecified))))
 
- ;; -- eshell
+ ;; --- eshell
  `(eshell-prompt ((t (:foreground ,vmacs-labburn-yellow))))
  `(eshell-ls-archive ((t (:foreground ,vmacs-labburn-red-1))))
  `(eshell-ls-backup ((t (:inherit font-lock-comment-face))))
@@ -567,14 +567,14 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(eshell-ls-special ((t (:foreground ,vmacs-labburn-yellow))))
  `(eshell-ls-symlink ((t (:foreground ,vmacs-labburn-cyan))))
 
- ;; -- eval-sexp-fu-flash
+ ;; --- eval-sexp-fu-flash
  `(eval-sexp-fu-flash ((t (:foreground ,vmacs-labburn-highlight))))
  `(eval-sexp-fu-flash-error ((t (:foreground "red"))))
 
- ;; -- flx
+ ;; --- flx
  `(flx-highlight-face ((t (:foreground ,vmacs-labburn-green+2))))
 
- ;; -- flycheck
+ ;; --- flycheck
  `(flycheck-error
    ((((supports :underline (:style wave)))
      (:underline (:style wave :color ,vmacs-labburn-red-1) :inherit unspecified))
@@ -591,7 +591,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(flycheck-fringe-warning ((t (:foreground ,vmacs-labburn-yellow))))
  `(flycheck-fringe-info ((t (:foreground ,vmacs-labburn-cyan))))
 
- ;; -- flyspell
+ ;; --- flyspell
  `(flyspell-duplicate
    ((((supports :underline (:style wave)))
      (:underline (:style wave :color ,vmacs-labburn-orange) :inherit unspecified))
@@ -601,13 +601,13 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
      (:underline (:style wave :color ,vmacs-labburn-red) :inherit unspecified))
     (t (:foreground ,vmacs-labburn-red-1 :underline t))))
 
- ;; -- geben
+ ;; --- geben
  `(geben-backtrace-fileuri ((t (:foreground ,vmacs-labburn-green+1))))
 
- ;; -- git-annex
+ ;; --- git-annex
  '(git-annex-dired-annexed-available ((t (:inherit success :weight normal))))
  '(git-annex-dired-annexed-unavailable ((t (:inherit error :weight normal))))
- ;; -- git-commit
+ ;; --- git-commit
  `(git-commit-comment-action ((,vmacs-labburn-class (:foreground ,vmacs-labburn-green+1))))
  `(git-commit-comment-branch  ((,vmacs-labburn-class (:foreground ,vmacs-labburn-blue+1)))) ; obsolete
  `(git-commit-comment-branch-local  ((,vmacs-labburn-class (:foreground ,vmacs-labburn-blue+1))))
@@ -615,10 +615,10 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(git-commit-summary ((,vmacs-labburn-class (:foreground ,vmacs-labburn-orange))))
  `(git-commit-comment-heading ((,vmacs-labburn-class (:foreground ,vmacs-labburn-yellow))))
 
- ;; -- git-rebase
+ ;; --- git-rebase
  `(git-rebase-hash ((t (:foreground ,vmacs-labburn-orange))))
 
- ;; -- gnus
+ ;; --- gnus
  `(gnus-group-mail-1 ((t (:weight bold :inherit gnus-group-mail-1-empty))))
  `(gnus-group-mail-1-empty ((t (:inherit gnus-group-news-1-empty))))
  `(gnus-group-mail-2 ((t (:weight bold :inherit gnus-group-mail-2-empty))))
@@ -686,15 +686,15 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(gnus-x ((t (:background ,vmacs-labburn-fg :foreground ,vmacs-bg))))
  `(mm-uu-extract ((t (:background ,vmacs-labburn-bg-05 :foreground ,vmacs-labburn-green+1))))
 
- ;; -- go-guru
+ ;; --- go-guru
  `(go-guru-hl-identifier-face ((t (:foreground ,vmacs-labburn-bg-1 :background ,vmacs-labburn-green+1))))
 
- ;; -- guide-key
+ ;; --- guide-key
  `(guide-key/highlight-command-face ((t (:foreground ,vmacs-labburn-blue))))
  `(guide-key/key-face ((t (:foreground ,vmacs-labburn-green))))
  `(guide-key/prefix-command-face ((t (:foreground ,vmacs-labburn-green+1))))
 
- ;; -- helm
+ ;; --- helm
  `(helm-header
    ((t (:foreground ,vmacs-labburn-green :background ,vmacs-bg :underline nil :box nil :extend t))))
  `(helm-selection ((t (:background ,vmacs-labburn-bg+1 :underline nil))))
@@ -736,31 +736,31 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(helm-swoop-target-line-face ((t (:background ,vmacs-labburn-bg+1))))
  `(helm-swoop-target-word-face ((t (:foreground ,vmacs-labburn-highlight))))
 
- ;; -- helm-lxc
+ ;; --- helm-lxc
  `(helm-lxc-face-frozen ((t (:foreground ,vmacs-labburn-blue :background ,vmacs-bg))))
  `(helm-lxc-face-running ((t (:foreground ,vmacs-labburn-green :background ,vmacs-bg))))
  `(helm-lxc-face-stopped ((t (:foreground ,vmacs-labburn-red :background ,vmacs-bg))))
 
- ;; -- highlight-symbol
+ ;; --- highlight-symbol
  `(highlight-symbol-face ((t (:background ,vmacs-labburn-bg+2))))
 
- ;; -- highlight-thing
+ ;; --- highlight-thing
  `(highlight-thing ((t (:background ,vmacs-labburn-bg+2))))
 
- ;; -- hl-line-mode
+ ;; --- hl-line-mode
  `(hl-line-face ((,vmacs-labburn-class (:background ,vmacs-labburn-bg-05))
                  (t :weight bold)))
  `(hl-line ((,vmacs-labburn-class (:background ,vmacs-labburn-bg-05 :extend t)) ; old emacsen
             (t :weight bold)))
 
- ;; -- hydra
+ ;; --- hydra
  `(hydra-face-red ((t (:foreground ,vmacs-labburn-red-1 :background ,vmacs-bg))))
  `(hydra-face-amaranth ((t (:foreground ,vmacs-labburn-red-3 :background ,vmacs-bg))))
  `(hydra-face-blue ((t (:foreground ,vmacs-labburn-blue :background ,vmacs-bg))))
  `(hydra-face-pink ((t (:foreground ,vmacs-labburn-magenta :background ,vmacs-bg))))
  `(hydra-face-teal ((t (:foreground ,vmacs-labburn-cyan :background ,vmacs-bg))))
 
- ;; -- info+
+ ;; --- info+
  `(info-command-ref-item ((t (:background ,vmacs-labburn-bg-1 :foreground ,vmacs-labburn-orange))))
  `(info-constant-ref-item ((t (:background ,vmacs-labburn-bg-1 :foreground ,vmacs-labburn-magenta))))
  `(info-double-quoted-name ((t (:inherit font-lock-comment-face))))
@@ -777,10 +777,10 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(info-user-option-ref-item ((t (:background ,vmacs-labburn-bg-1 :foreground ,vmacs-labburn-red))))
  `(info-variable-ref-item ((t (:background ,vmacs-labburn-bg-1 :foreground ,vmacs-labburn-orange))))
 
- ;; -- iedit-mode
+ ;; --- iedit-mode
  `(iedit-occurrence ((t (:background ,vmacs-labburn-bg+2))))
 
- ;; -- irfc
+ ;; --- irfc
  `(irfc-head-name-face ((t (:foreground ,vmacs-labburn-red))))
  `(irfc-head-number-face ((t (:foreground ,vmacs-labburn-red))))
  `(irfc-reference-face ((t (:foreground ,vmacs-labburn-blue-1))))
@@ -791,7 +791,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(irfc-table-item-face ((t (:foreground ,vmacs-labburn-green+3))))
  `(irfc-title-face ((t (:foreground ,vmacs-labburn-yellow :underline t))))
 
- ;; -- ivy
+ ;; --- ivy
  `(ivy-confirm-face ((t (:foreground ,vmacs-labburn-green :background ,vmacs-bg))))
  `(ivy-current-match ((t (:background ,vmacs-labburn-bg+1))))
  `(ivy-cursor ((t (:foreground ,vmacs-bg :background ,vmacs-labburn-fg))))
@@ -803,7 +803,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(ivy-remote ((t (:foreground ,vmacs-labburn-blue :background ,vmacs-bg))))
  `(ivy-subdir ((t (:foreground ,vmacs-labburn-yellow :background ,vmacs-bg))))
 
- ;; -- js2-mode
+ ;; --- js2-mode
  `(js2-warning ((t (:underline (:style wave :color ,vmacs-labburn-orange)))))
  `(js2-error ((t (:underline (:style wave :color ,vmacs-labburn-red)))))
  `(js2-jsdoc-tag ((t (:inherit font-lock-doc-face))))
@@ -814,7 +814,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(js2-jsdoc-html-tag-delimiter ((t (:inherit web-mode-html-tag-face))))
  `(js2-jsdoc-html-tag-name ((t (:inherit web-mode-html-tag-face))))
 
- ;; -- additional js2 mode attributes for better syntax highlighting
+ ;; --- additional js2 mode attributes for better syntax highlighting
  `(js2-instance-member ((t (:foreground ,vmacs-labburn-green-2))))
  `(js2-jsdoc-html-tag-delimiter ((t (:foreground ,vmacs-labburn-orange))))
  `(js2-jsdoc-html-tag-name ((t (:foreground ,vmacs-labburn-red-1))))
@@ -825,7 +825,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(js2-private-member ((t (:foreground ,vmacs-labburn-blue-1))))
  `(js2-keywords ((t (:foreground ,vmacs-labburn-magenta))))
 
- ;; -- ledger-mode
+ ;; --- ledger-mode
  `(ledger-font-payee-uncleared-face ((t (:foreground ,vmacs-labburn-red-1))))
  `(ledger-font-payee-cleared-face ((t (:foreground ,vmacs-labburn-fg))))
  `(ledger-font-payee-pending-face ((t (:foreground ,vmacs-labburn-red))))
@@ -847,16 +847,16 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(ledger-font-reconciler-pending-face ((t (:foreground ,vmacs-labburn-orange))))
  `(ledger-font-report-clickable-face ((t (:foreground ,vmacs-labburn-orange))))
 
- ;; -- linum-mode
+ ;; --- linum-mode
  `(linum ((t (:foreground ,vmacs-labburn-bg+3 :background ,vmacs-bg))))
  `(linum-relative-current-face ((t (:inherit linum))))
 
- ;; -- lispy
+ ;; --- lispy
  `(lispy-command-name-face ((t (:background ,vmacs-labburn-bg-05 :inherit font-lock-function-name-face))))
  `(lispy-cursor-face ((t (:foreground ,vmacs-bg :background ,vmacs-labburn-fg))))
  `(lispy-face-hint ((t (:inherit highlight :foreground ,vmacs-labburn-yellow))))
 
- ;; -- ruler-mode
+ ;; --- ruler-mode
  `(ruler-mode-column-number ((t (:inherit 'ruler-mode-default :foreground ,vmacs-labburn-fg))))
  `(ruler-mode-fill-column ((t (:inherit 'ruler-mode-default :foreground ,vmacs-labburn-yellow))))
  `(ruler-mode-goal-column ((t (:inherit 'ruler-mode-fill-column))))
@@ -865,7 +865,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(ruler-mode-current-column ((t (:foreground ,vmacs-labburn-yellow :box t))))
  `(ruler-mode-default ((t (:foreground ,vmacs-labburn-green+2 :background ,vmacs-bg))))
 
- ;; -- magit
+ ;; --- magit
  `(magit-section-highlight ((t (:background ,vmacs-labburn-bg+05))))
  `(magit-section-heading ((t (:foreground ,vmacs-labburn-yellow))))
  `(magit-section-heading-selection ((t (:foreground ,vmacs-labburn-orange))))
@@ -940,7 +940,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(magit-reflog-remote ((t (:foreground ,vmacs-labburn-cyan))))
  `(magit-reflog-other ((t (:foreground ,vmacs-labburn-cyan))))
 
- ;; -- markup-faces
+ ;; --- markup-faces
  `(markup-anchor-face ((t (:foreground ,vmacs-labburn-blue+1))))
  `(markup-code-face ((t (:inherit font-lock-constant-face))))
  `(markup-command-face ((t (:foreground ,vmacs-labburn-yellow))))
@@ -959,7 +959,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(markup-verbatim-face ((t (:inherit font-lock-constant-face))))
  `(markup-value-face ((t (:foreground ,vmacs-labburn-yellow))))
 
- ;; -- message-mode
+ ;; --- message-mode
  `(message-cited-text ((t (:inherit font-lock-comment-face))))
  `(message-header-name ((t (:foreground ,vmacs-labburn-green+1))))
  `(message-header-other ((t (:foreground ,vmacs-labburn-green))))
@@ -971,7 +971,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(message-mml ((t (:foreground ,vmacs-labburn-yellow))))
  `(message-separator ((t (:inherit font-lock-comment-face))))
 
- ;; -- mingus
+ ;; --- mingus
  `(mingus-directory-face ((t (:foreground ,vmacs-labburn-blue))))
  `(mingus-pausing-face ((t (:foreground ,vmacs-labburn-magenta))))
  `(mingus-playing-face ((t (:foreground ,vmacs-labburn-cyan))))
@@ -983,10 +983,10 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(mingus-album-stale-face ((t (:foreground ,vmacs-labburn-red+1))))
  `(mingus-stopped-face ((t (:foreground ,vmacs-labburn-red))))
 
- ;; -- mini-header-line
+ ;; --- mini-header-line
  `(mini-header-line-active ((t (:background ,vmacs-labburn-bg-2))))
 
- ;; -- merlin
+ ;; --- merlin
  `(merlin-type-face ((t (:inherit highlight))))
  `(merlin-compilation-warning-face
    ((((supports :underline (:style wave)))
@@ -999,11 +999,11 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
     (t
      (:underline ,vmacs-labburn-red))))
 
- ;; -- mu4e
+ ;; --- mu4e
  `(mu4e-header-key-face ((t (:foreground ,vmacs-labburn-yellow))))
  `(mu4e-header-value-face ((t (:foreground ,vmacs-labburn-orange))))
 
- ;; -- org-mode
+ ;; --- org-mode
  `(org-agenda-date-today ((t (:foreground ,vmacs-labburn-fg+1 :slant italic))) t)
  `(org-agenda-structure ((t (:inherit font-lock-comment-face))))
  `(org-archived ((t (:foreground ,vmacs-labburn-fg))))
@@ -1053,14 +1053,14 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(org-habit-alert-future-face ((t :background ,vmacs-labburn-yellow-2 :foreground ,vmacs-bg)))
  `(org-habit-overdue-future-face ((t :background ,vmacs-labburn-red-4)))
 
- ;; -- org-ref
+ ;; --- org-ref
  `(org-ref-ref-face ((t :underline t)))
  `(org-ref-label-face ((t :underline t)))
  `(org-ref-cite-face ((t :underline t)))
  `(org-ref-glossary-face ((t :underline t)))
  `(org-ref-acronym-face ((t :underline t)))
 
- ;; -- outline
+ ;; --- outline
  `(outline-1 ((t (:foreground ,vmacs-labburn-orange))))
  `(outline-2 ((t (:foreground ,vmacs-labburn-green+4))))
  `(outline-3 ((t (:foreground ,vmacs-labburn-blue-1))))
@@ -1070,21 +1070,21 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(outline-7 ((t (:foreground ,vmacs-labburn-red-4))))
  `(outline-8 ((t (:foreground ,vmacs-labburn-blue-4))))
 
- ;; -- c/perl
+ ;; --- c/perl
  `(cperl-nonoverridable-face ((t (:foreground ,vmacs-labburn-magenta))))
  `(cperl-array-face ((t (:foreground ,vmacs-labburn-yellow, :backgorund ,vmacs-bg))))
  `(cperl-hash-face ((t (:foreground ,vmacs-labburn-yellow-1, :background ,vmacs-bg))))
 
- ;; -- paren-face
+ ;; --- paren-face
  `(parenthesis ((t (:foreground ,vmacs-labburn-fg-1))))
 
- ;; -- pdf-tools
+ ;; --- pdf-tools
  `(pdf-view-midnight-colors '(,vmacs-labburn-fg . ,vmacs-labburn-bg-05))
 
- ;; -- perspective
+ ;; --- perspective
  `(persp-selected-face ((t (:foreground ,vmacs-labburn-yellow-2))))
 
- ;; -- rainbow-delimiters
+ ;; --- rainbow-delimiters
  `(rainbow-delimiters-depth-1-face ((t (:foreground ,vmacs-labburn-fg))))
  `(rainbow-delimiters-depth-2-face ((t (:foreground ,vmacs-labburn-green+4))))
  `(rainbow-delimiters-depth-3-face ((t (:foreground ,vmacs-labburn-yellow-2))))
@@ -1099,16 +1099,16 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(rainbow-delimiters-depth-12-face ((t (:foreground ,vmacs-labburn-blue-5))))
  `(rainbow-delimiters-unmatched-face ((t (:foreground "red"))))
 
- ;; -- re-builder
+ ;; --- re-builder
  `(reb-match-0 ((t (:foreground ,vmacs-bg :background ,vmacs-labburn-magenta))))
  `(reb-match-1 ((t (:foreground ,vmacs-bg :background ,vmacs-labburn-blue))))
  `(reb-match-2 ((t (:foreground ,vmacs-bg :background ,vmacs-labburn-orange))))
  `(reb-match-3 ((t (:foreground ,vmacs-bg :background ,vmacs-labburn-red))))
 
- ;; -- regex-tool
+ ;; --- regex-tool
  `(regex-tool-matched-face ((t (:background ,vmacs-labburn-blue-4))))
 
- ;; -- realgud
+ ;; --- realgud
  `(realgud-overlay-arrow1 ((t (:foreground ,vmacs-labburn-green))))
  `(realgud-overlay-arrow2 ((t (:foreground ,vmacs-labburn-yellow))))
  `(realgud-overlay-arrow3 ((t (:foreground ,vmacs-labburn-orange))))
@@ -1120,41 +1120,41 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(realgud-line-number ((t (:foreground ,vmacs-labburn-yellow))))
  `(realgud-backtrace-number ((t (:foreground ,vmacs-labburn-yellow))))
 
- ;; -- rtags
+ ;; --- rtags
  `(rtags-errline ((t (:underline (:color "red" :style wave)))))
  `(rtags-fixitline ((t (:underline (:color "#93E0E3" :style wave)))))
  `(rtags-warnline ((t (:underline (:color "orange" :style wave)))))
 
- ;; -- ruby
+ ;; --- ruby
  `(enh-ruby-op-face ((t (:inherit default))))
  `(enh-ruby-string-delimiter-face ((t (:inherit font-lock-string-face))))
  `(erm-syn-errline ((t (:underline (:color "red" :style wave)))))
  `(erm-syn-warnline ((t (:underline (:color "orange" :style wave)))))
 
- ;; -- sh-mode
+ ;; --- sh-mode
  `(sh-heredoc     ((t (:foreground ,vmacs-labburn-yellow :weight bold))))
  `(sh-quoted-exec ((t (:foreground ,vmacs-labburn-red))))
 
- ;; -- smartparens
+ ;; --- smartparens
  `(sp-show-pair-enclosing-face ((t (:foreground ,vmacs-labburn-highlight))))
  `(sp-show-pair-match-face ((t (:foreground ,vmacs-labburn-highlight))))
  `(sp-show-pair-mismatch-face ((t (:foreground ,vmacs-labburn-red))))
 
- ;; -- sml-mode-line
+ ;; --- sml-mode-line
  '(sml-modeline-end-face ((t :inherit default :width condensed)))
 
- ;; -- solaire
+ ;; --- solaire
  `(solaire-default-face ((t (:inherit default :background ,vmacs-labburn-bg-05))))
  `(solaire-minibuffer-face ((t (:inherit default :background ,vmacs-labburn-bg-05))))
  `(solaire-hl-line-face ((t (:inherit hl-line :background ,vmacs-bg))))
  `(solaire-org-hide-face ((t (:inherit org-hide :background ,vmacs-labburn-bg-05))))
 
- ;; -- selectrum
+ ;; --- selectrum
  `(selectrum-current-candidate ((t (:foreground ,vmacs-labburn-yellow :weight bold :underline t))))
  `(selectrum-primary-highlight ((t (:background ,vmacs-labburn-green-2))))
  `(selectrum-secondary-highlight ((t (:background ,vmacs-labburn-green))))
 
- ;; -- SLIME
+ ;; --- SLIME
  `(slime-repl-output-face ((t (:foreground ,vmacs-labburn-red))))
  `(slime-repl-inputed-output-face ((t (:foreground ,vmacs-labburn-green))))
  `(slime-error-face
@@ -1179,7 +1179,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
      (:underline ,vmacs-labburn-green))))
  `(slime-highlight-face ((t (:inherit highlight))))
 
- ;; -- sx
+ ;; --- sx
  `(sx-custom-button
    ((t (:background ,vmacs-labburn-fg :foreground ,vmacs-labburn-bg-1
                     :box (:line-width 3 :style released-button) :height 0.9))))
@@ -1194,11 +1194,11 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
    ((t (:box (:color ,vmacs-labburn-bg-1 :line-width 3 :style released-button)
              :height 0.9))))
 
- ;; -- swiper
+ ;; --- swiper
  `(swiper-isearch-current-match ((t (:foreground ,vmacs-bg :background ,vmacs-labburn-blue-1))))
  `(swiper-line-face ((t (nil))))
 
- ;; -- term
+ ;; --- term
  `(term-color-black ((t (:foreground ,vmacs-bg :background ,vmacs-labburn-bg-1))))
  `(term-color-red ((t (:foreground ,vmacs-labburn-red-2 :background ,vmacs-labburn-red-4))))
  `(term-color-green ((t (:foreground ,vmacs-labburn-green :background ,vmacs-labburn-green+2))))
@@ -1210,18 +1210,18 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  '(term-default-fg-color ((t (:inherit term-color-white))))
  '(term-default-bg-color ((t (:inherit term-color-black))))
 
- ;; -- ts
+ ;; --- ts
  `(ts-block-face ((t (:inherit font-lock-keyword-face))) t)
  `(ts-html-face ((t (:foreground ,vmacs-labburn-red))))
 
- ;; -- undo-tree
+ ;; --- undo-tree
  `(undo-tree-visualizer-active-branch-face ((t (:foreground ,vmacs-labburn-fg+1))))
  `(undo-tree-visualizer-current-face ((t (:foreground ,vmacs-labburn-red-1))))
  `(undo-tree-visualizer-default-face ((t (:foreground ,vmacs-labburn-fg))))
  `(undo-tree-visualizer-register-face ((t (:foreground ,vmacs-labburn-yellow))))
  `(undo-tree-visualizer-unmodified-face ((t (:foreground ,vmacs-labburn-cyan))))
 
- ;; -- visual-regexp
+ ;; --- visual-regexp
  `(vr/group-0 ((t (:foreground ,vmacs-bg :background ,vmacs-labburn-green))))
  `(vr/group-1 ((t (:foreground ,vmacs-bg :background ,vmacs-labburn-orange))))
  `(vr/group-2 ((t (:foreground ,vmacs-bg :background ,vmacs-labburn-blue))))
@@ -1229,10 +1229,10 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(vr/match-1 ((t (:foreground ,vmacs-labburn-yellow-2 :background ,vmacs-labburn-bg-1))))
  `(vr/match-separator-face ((t (:foreground ,vmacs-labburn-red))))
 
- ;; -- volatile-highlights
+ ;; --- volatile-highlights
  `(vhl/default-face ((t (:inherit highlight))))
 
- ;; -- web-mode
+ ;; --- web-mode
  `(web-mode-builtin-face ((t (:inherit ,font-lock-builtin-face))))
  `(web-mode-comment-face ((t (:inherit ,font-lock-comment-face))))
  `(web-mode-constant-face ((t (:inherit ,font-lock-constant-face))))
@@ -1259,7 +1259,7 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(web-mode-whitespaces-face ((t (:background ,vmacs-labburn-red))))
  `(web-mode-function-call-face ((t (:inherit default))))
 
- ;; -- whitespace-mode
+ ;; --- whitespace-mode
  `(whitespace-space ((t (:background ,vmacs-labburn-bg+1 :foreground ,vmacs-labburn-bg+1))))
  `(whitespace-hspace ((t (:background ,vmacs-labburn-bg+1 :foreground ,vmacs-labburn-bg+1))))
  `(whitespace-tab ((t (:background ,vmacs-labburn-red-1))))
@@ -1271,10 +1271,10 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(whitespace-empty ((t (:background ,vmacs-labburn-yellow))))
  `(whitespace-space-after-tab ((t (:background ,vmacs-labburn-yellow :foreground ,vmacs-labburn-red))))
 
- ;; -- which-func-mode
+ ;; --- which-func-mode
  `(which-func ((t (:foreground ,vmacs-labburn-green+4))))
 
- ;; -- xcscope
+ ;; --- xcscope
  `(cscope-file-face ((t (:foreground ,vmacs-labburn-yellow))))
  `(cscope-function-face ((t (:foreground ,vmacs-labburn-cyan))))
  `(cscope-line-number-face ((t (:foreground ,vmacs-labburn-red))))

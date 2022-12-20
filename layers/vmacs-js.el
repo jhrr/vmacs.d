@@ -1,4 +1,4 @@
-;;; vmacs-js.el -- Configure JavaScript.
+;;; vmacs-js.el --- Configure JavaScript.
 
 ;;; Commentary:
 

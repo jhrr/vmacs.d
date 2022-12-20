@@ -1,4 +1,4 @@
-;;; vmacs-core.el -- Core configuration.
+;;; vmacs-core.el --- Core configuration.
 
 ;;; Commentary:
 

@@ -1,4 +1,4 @@
-;;; vmacs-org.el -- Configure org-mode.
+;;; vmacs-org.el --- Configure org-mode.
 
 ;;; Commentary:
 

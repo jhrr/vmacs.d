@@ -1,4 +1,4 @@
-;;; vmacs-menus.el -- Menus and navigation
+;;; vmacs-menus.el --- Menus and navigation
 
 ;;; Commentary:
 

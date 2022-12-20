@@ -1,4 +1,4 @@
-;;; vmacs-edit.el ---  Enhance the text editing experience.
+;;; vmacs-edit.el --- Enhance the text editing experience.
 
 ;;; Commentary:
 

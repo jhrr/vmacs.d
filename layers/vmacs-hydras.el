@@ -1,4 +1,4 @@
-;;; vmacs-org.el -- Global hydras.
+;;; vmacs-org.el --- Global hydras.
 
 ;;; Commentary:
 

@@ -10,9 +10,10 @@
   (setq evil-want-C-i-jump nil)
   :config
   (setq key-chord-two-keys-delay 0.5)
+  (setq-default cursor-in-non-selected-windows nil)
+  (define-key evil-normal-state-map ";" #'consult-buffer)
   (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
   (key-chord-mode 1)
-  ;; (define-key evil-normal-state-map ";" #'consult-buffer)
   (evil-mode))
 
 (use-package evil-motion-trainer

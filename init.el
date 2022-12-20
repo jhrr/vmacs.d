@@ -1,4 +1,4 @@
-;;; init.el -- Initialize Emacs.
+;;; init.el --- Initialize Emacs.
 
 ;; This file is not part of GNU Emacs.
 
@@ -24,7 +24,7 @@
 (defconst emacs-start-time (current-time))
 
 (when (version< emacs-version "26")
-  (error (concat "Emacs 26 is required. Currently running: " emacs-version)))
+  (error (concat "At least emacs 26 is required. Currently running: " emacs-version)))
 
 (setq package-enable-at-startup nil
       read-process-output-max (* 1024 1024)

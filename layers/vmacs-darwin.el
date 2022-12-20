@@ -1,4 +1,4 @@
-;;; vmacs-darwin.el -- Darwin/macOS configuration.
+;;; vmacs-darwin.el --- Darwin/macOS configuration.
 
 ;;; Commentary:
 
