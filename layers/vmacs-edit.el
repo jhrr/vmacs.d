@@ -19,6 +19,11 @@
   (setq dumb-jump-prefer-searcher 'rg)
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
+(use-package markdown-mode
+  :straight t
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init (setq markdown-command "multimarkdown"))
+
 (use-package rainbow-mode
   :straight t
   :config
