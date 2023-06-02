@@ -144,7 +144,23 @@
         (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   (org-roam-db-autosync-mode)
 
-  ;; TODO: https://github.com/org-roam/org-roam-ui
+  (defun org-roam-matter-property-template ()
+    (interactive)
+    (insert ":PROPERTIES:"
+            (concat "\n:ID: " (org-id-uuid))
+            "\n:ROAM_ALIASES:"
+            "\n:END:"
+            "\n#+TITLE: "))
+
+  (defun org-roam-work-property-template ()
+    (interactive)
+    (insert ":PROPERTIES:"
+            (concat "\n:ID: " (org-id-uuid))
+            "\n:Project:"
+            "\n:Key:"
+            "\n:Started:"
+            "\n:END:"
+            "\n#+TITLE: "))
 
   ;; TODO: This is busted.
   (setq org-roam-capture-templates
