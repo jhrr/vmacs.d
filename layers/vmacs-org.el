@@ -10,6 +10,7 @@
   :mode
   ("\\.org\\'" . org-mode)
   :mode-hydra
+  ;; TODO: Can't we use the one defined in vmacs-hydras?
   (org-mode
    ("Agenda"
     (("a" #'org-agenda "agenda"))
@@ -17,17 +18,16 @@
     (("o" #'org-jump-to-inbox "jump to inbox")
      ("g" #'org-jump-to-gtd "jump to gtd file")
      ("i" #'org-roam-jump-to-index "jump to org-roam index")
-     ("w" #'org-jump-to-work "jump to work file"))
+     ("k" #'org-roam-node-find "jump to org-roam file"))
     "Capture"
     (("c" #'org-capture "capture")
-     ("k" #'org-quick-capture "quick capture"))
+     ("q" #'org-quick-capture "quick capture"))
     "Links"
     (("ls" #'org-store-link "store link")
      ("li" #'org-insert-link "insert link"))
     "Roam"
     (("rb" #'org-roam-buffer-toggle "toggle org-roam buffer")
-     ("rl" #'org-roam-node-insert "insert a link to an org-roam node")
-     ("rf" #'org-roam-node-find "jump to org-roam file")
+     ("ri" #'org-roam-node-insert "insert a link to an org-roam node")
      ("rc" #'org-roam-capture "org-roam capture"))
     "Journal"
     (("j" #'org-journal-new-entry "new entry"))))
@@ -38,8 +38,6 @@
     (expand-file-name "archive/" user-org-directory))
   (defvar org-gtd-directory
     (expand-file-name "dasein/" user-org-directory))
-  (defvar org-work-directory
-    (expand-file-name "work/" user-org-directory))
   (setq org-default-notes-file
         (expand-file-name "gtd-inbox.org" user-org-directory))
 
@@ -55,12 +53,16 @@
         '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
           (sequence "BLOCKED(b@/!)" "|" "CANCELLED(c@/!)")))
 
+  ;; (setq org-todo-keyword-faces
+  ;;       '(("TODO" :foreground "#89a97d" :weight bold)
+  ;;         ("NEXT" :foreground "#ffc900" :weight bold)
+  ;;         ("DONE" :foreground "#f76050" :weight bold)
+  ;;         ("BLOCKED" :foreground "#e39f89" :weight bold)
+  ;;         ("CANCELLED" :foreground "#dadfe0" :weight bold)))
+
   (setq org-todo-keyword-faces
-        '(("TODO" :foreground "#f76050" :weight bold)
-          ("NEXT" :foreground "#ffc900" :weight bold)
-          ("DONE" :foreground "#89a97d" :weight bold)
-          ("BLOCKED" :foreground "#e39f89" :weight bold)
-          ("CANCELLED" :foreground "#dadfe0" :weight bold)))
+        '(("BLOCKED" :foreground "#f76050" :weight bold)
+          ("NEXT" :foreground "#ffc900" :weight bold)))
 
   (setq org-adapt-indentation nil)
   (setq org-agenda-span 'day)
@@ -88,14 +90,50 @@
     (interactive)
     (jump-to-file (filename-map (directory-org org-gtd-directory))))
 
-  (defun org-jump-to-work ()
-    "Jump to a selected file in the `org-work-directory'."
+  ;; Decouple template from (insert), just pass in a reference.
+  (defun org-file-property-template ()
     (interactive)
-    (jump-to-file (filename-map (directory-org org-work-directory))))
+    (insert ":PROPERTIES:"
+            (concat "\n:ID: " (org-id-uuid))
+            "\n:CATEGORY:"
+            "\n:END:"
+            "\n#+TITLE: "))
+
+  (defun org-file-matter-property-template ()
+    (interactive)
+    (insert ":PROPERTIES:"
+            (concat "\n:ID: " (org-id-uuid))
+            "\n:CATEGORY: matter"
+            "\n:ROAM_ALIASES:"
+            "\n:END:"
+            "\n#+TITLE: "))
+
+  (defun org-file-reading-property-template ()
+    (interactive)
+    (insert ":PROPERTIES:"
+            (concat "\n:ID: " (org-id-uuid))
+            "\n:CATEGORY: reading"
+            "\n:Title:"
+            "\n:Authors:"
+            "\n:Date:"
+            "\n:END:"
+            "\n#+TITLE: "))
+
+  (defun org-file-work-property-template ()
+    (interactive)
+    (insert ":PROPERTIES:"
+            (concat "\n:ID: " (org-id-uuid))
+            "\n:CATEGORY: work.???"
+            "\n:Project:"
+            "\n:Key:" ;; Directories on disk should share this name/key.
+            "\n:ROAM_ALIASES:"
+            "\n:END:"
+            "\n#+TITLE: "))
 
   (setq rg-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number . -e ARG OPTS")
 
   ;; TODO: Merge this into one function and dispatch with prefix arg.
+  ;; TODO: Are these on hydras anywhere?
   (defun grep-org ()
     "Search through the org directory tree."
     (interactive)
@@ -110,11 +148,13 @@
 
   (add-hook 'org-mode-hook
             #'(lambda () (progn
-                      (setq fill-column 70)
-                      (setq evil-shift-width 2)
-                      (turn-on-auto-fill))))
+                           (lambda () (push '("--" . ?—) prettify-symbols-alist))
+                           (setq fill-column 70)
+                           (setq evil-shift-width 2)
+                           (turn-on-auto-fill))))
   :config
   (use-package org-contrib :straight t)
+  (use-package org-transclusion :straight t)
   (require 'org-checklist)
 
   (org-defkey org-mode-map (kbd "RET") #'(lambda () (interactive) (org-return nil))))
@@ -127,10 +167,24 @@
    org-roam-node-insert
    org-roam-node-visit)
   :init
+  (setq org-roam-node-display-template
+        (concat "${title:*} "
+                (propertize "${tags:10}" 'face 'org-tag)))
+
   (setq org-roam-directory (expand-file-name "index/" user-org-directory))
   (defvar org-roam-index-file (expand-file-name "index.org" org-roam-directory))
   (defvar org-roam-matter-directory (expand-file-name "matter/" org-roam-directory))
   (defvar org-roam-reading-directory (expand-file-name "reading/" org-roam-directory))
+  (defvar org-roam-work-directory (expand-file-name "work/" org-roam-directory))
+
+  ;; TODO: Jump to matter, work, reading files.
+  ;; TODO: We want to feed the list into the vertical select.
+  (defun org-roam-get-files-with-property (property)
+    (-flatten (org-roam-db-query
+               [:select [id]
+                        :from nodes
+                        :where (like properties $r1)]
+               (format "%%%s%%" property))))
 
   (defun org-roam-jump-to-index ()
     (interactive)
@@ -139,44 +193,9 @@
       (caar (or (org-roam-db-query
                  [:select id :from nodes :where (= title "Index") :limit 1])
                 (user-error "No node with title Index"))))))
+
   :config
-  (setq org-roam-node-display-template
-        (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-  (org-roam-db-autosync-mode)
-
-  (defun org-roam-matter-property-template ()
-    (interactive)
-    (insert ":PROPERTIES:"
-            (concat "\n:ID: " (org-id-uuid))
-            "\n:ROAM_ALIASES:"
-            "\n:END:"
-            "\n#+TITLE: "))
-
-  (defun org-roam-work-property-template ()
-    (interactive)
-    (insert ":PROPERTIES:"
-            (concat "\n:ID: " (org-id-uuid))
-            "\n:Project:"
-            "\n:Key:"
-            "\n:Started:"
-            "\n:END:"
-            "\n#+TITLE: "))
-
-  ;; TODO: This is busted.
-  (setq org-roam-capture-templates
-        '(("m" "matter" plain (function org-roam-capture--get-point)
-           "* %?"
-           :file-name "matter/${title}"
-           :head "#+title: ${title}\n#+roam_alias: \"${alias}\"\n\n"
-           :unnarrowed t)
-          ("r" "reading" plain (function org-roam-capture--get-point)
-           "* %?"
-           :file-name "reading/%<%Y%m%d%H%M%S>-${slug}"
-           :head "#+title: ${title}\n\n"
-           :unnarrowed t))))
-
-;; TODO: https://github.com/nobiot/org-transclusion
-; (use-packge org-transclusion :straight t)
+  (org-roam-db-autosync-mode))
 
 (use-package org-journal
   :straight t

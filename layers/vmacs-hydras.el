@@ -1,4 +1,4 @@
-;;; vmacs-org.el --- Global hydras.
+;;; vmacs-hydras.el --- Global hydras.
 
 ;;; Commentary:
 
@@ -159,17 +159,16 @@
    (("o" #'org-jump-to-inbox "jump to inbox")
     ("g" #'org-jump-to-gtd "jump to gtd file")
     ("i" #'org-roam-jump-to-index "jump to org-roam index")
-    ("w" #'org-jump-to-work "jump to work file"))
+    ("k" #'org-roam-node-find "jump to org-roam file"))
    "Capture"
    (("c" #'org-capture "capture")
-    ("k" #'org-quick-capture "quick capture"))
+    ("q" #'org-quick-capture "quick capture"))
    "Links"
    (("ls" #'org-store-link "store link")
     ("li" #'org-insert-link "insert link"))
    "Roam"
    (("rb" #'org-roam-buffer-toggle "toggle org-roam buffer")
-    ("rl" #'org-roam-node-insert "insert a link to an org-roam node")
-    ("rf" #'org-roam-node-find "jump to org-roam file")
+    ("ri" #'org-roam-node-insert "insert a link to an org-roam node")
     ("rc" #'org-roam-capture "org-roam capture"))
    "Journal"
    (("j" #'org-journal-new-entry "new entry"))))

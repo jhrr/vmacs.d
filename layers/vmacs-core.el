@@ -192,17 +192,16 @@
       (setq arg (if (plusp arg) (1- arg) (1+ arg))))))
 (bind-key "C-x 4" #'win-swap)
 
-;; TODO: Replace all this with Evil & Hydras.
-(bind-key* "<C-return>" #'other-window)
-(bind-key* "<C-right>" #'next-buffer)
-(bind-key* "<C-left>" #'previous-buffer)
+(defadvice kill-line (before kill-line-autoreindent activate)
+  "Kill excess whitespace when joining lines.
+If the next line is joined to the current line, kill the extra indent
+whitespace in front of the next line."
+  (when (and (eolp) (not (bolp)))
+    (save-excursion
+      (forward-char 1)
+      (just-one-space 1))))
 
-(bind-key "C-c !" #'shell-command)
-(bind-key "C-c &" #'async-shell-command)
-(bind-key "C-x C-b" #'ibuffer)
-(bind-key "C-x C-k" #'kill-region) ;; We lose edit-kbd-macro with this.
-(bind-key "C-c C-k" #'kill-region) ;; Catch typos.
-(bind-key "<s-return>" #'toggle-frame-fullscreen)
+(bind-key* "<C-return>" #'other-window)
 
 (provide 'vmacs-core)
 ;;; vmacs-core.el ends here
