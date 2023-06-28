@@ -44,25 +44,19 @@
   (setq org-fold-core-style 'overlays)
 
   (setq org-capture-templates
-        '(("q" "Quick" entry (file+headline org-default-notes-file "Quick")
-           "* %?"
-           :clock-in t
-           :clock-resume t)))
+        '(("q" "Quick" entry (file+headline org-default-notes-file "CAPTURE")
+           "* %? ")))
+
+  (setq org-capture-bookmark nil)
 
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-          (sequence "BLOCKED(b@/!)" "|" "CANCELLED(c@/!)")))
-
-  ;; (setq org-todo-keyword-faces
-  ;;       '(("TODO" :foreground "#89a97d" :weight bold)
-  ;;         ("NEXT" :foreground "#ffc900" :weight bold)
-  ;;         ("DONE" :foreground "#f76050" :weight bold)
-  ;;         ("BLOCKED" :foreground "#e39f89" :weight bold)
-  ;;         ("CANCELLED" :foreground "#dadfe0" :weight bold)))
+        '((sequence "NEXT(n)" "|" "DONE(d)")
+          (sequence "BLOCKED(b@/!)")))
 
   (setq org-todo-keyword-faces
         '(("BLOCKED" :foreground "#f76050" :weight bold)
-          ("NEXT" :foreground "#ffc900" :weight bold)))
+          ("NEXT" :foreground "#ffc900" :weight bold)
+          ("DONE" :foreground "#89a976" :weight bold)))
 
   (setq org-adapt-indentation nil)
   (setq org-agenda-span 'day)
