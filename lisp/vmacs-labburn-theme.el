@@ -848,8 +848,8 @@ RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive."
  `(ledger-font-report-clickable-face ((t (:foreground ,vmacs-labburn-orange))))
 
  ;; --- linum-mode
- `(linum ((t (:foreground ,vmacs-labburn-bg+3 :background ,vmacs-bg))))
- `(linum-relative-current-face ((t (:inherit linum))))
+ ; `(linum ((t (:foreground ,vmacs-labburn-bg+3 :background ,vmacs-bg))))
+ ; `(linum-relative-current-face ((t (:inherit linum))))
 
  ;; --- lispy
  `(lispy-command-name-face ((t (:background ,vmacs-labburn-bg-05 :inherit font-lock-function-name-face))))

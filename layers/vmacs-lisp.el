@@ -4,6 +4,7 @@
 
 ;; Code:
 
+;; https://github.com/slime/slime
 ;; https://github.com/joaotavora/sly
 ;; https://github.com/abo-abo/lispy
 ;; macrostep
@@ -91,7 +92,7 @@
 ;;                   (method
 ;;                    (funcall method indent-point state)))))))))
 ;;   :custom
-;;   ((lisp-indent-function #'config-elisp--better-lisp-indent-function)))s
+;;   ((lisp-indent-function #'config-elisp--better-lisp-indent-function)))
 
 (defvar lisp-modes
   '(ielm-mode

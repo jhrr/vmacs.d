@@ -78,7 +78,7 @@
 (subword-mode t)
 (show-paren-mode t)
 (blink-cursor-mode t)
-(global-linum-mode t)
+(display-line-numbers-mode t)
 ; (global-hl-line-mode t)
 (auto-compression-mode t)
 (delete-selection-mode t) ;; overwrite marked text

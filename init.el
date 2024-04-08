@@ -70,12 +70,12 @@
   ;; (setq straight-use-package-by-default t)
   ;; (setq use-package-always-defer t)
 )
-(straight-use-package 'use-package)
 
 (eval-when-compile
+  (require 'use-package)
+  (require 'bind-key)
   (require 'seq)
   (require 'subr-x)
-  (require 'bind-key)
   (with-no-warnings
     (require 'cl-lib)))
 
