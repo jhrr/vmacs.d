@@ -1,14 +1,20 @@
-;; vmacs-lisp.el
+;;; vmacs-lisp.el --- Configure lisps. -*- lexical-binding: t; -*-
 
-;; Commentary: Lisp mode configuration.
+;;; Commentary:
 
-;; Code:
+;;; Code:
 
+;; Packages TODO:
 ;; https://github.com/slime/slime
 ;; https://github.com/joaotavora/sly
 ;; https://github.com/abo-abo/lispy
-;; macrostep
-;; Hyperspec available via homebrew.
+;; https://github.com/tdrhq/slite/
+;; https://github.com/moderninterpreters/markup
+;; https://github.com/joaotavora/sly-quicklisp
+;; https://github.com/joaotavora/sly-named-readtables
+;; https://github.com/joaotavora/sly-macrostep
+;; https://github.com/joaotavora/sly-stepper
+;; Hyperspec available via homebrew now (nix would be better).
 
 ;; (defvar lisp-find-map)
 ;; (define-prefix-command #'lisp-find-map)
@@ -24,18 +30,31 @@
 ;; (bind-key "C-h e v" #'find-variable)
 ;; (bind-key "C-h e V" #'apropos-value)
 
-;; (eval-after-load "slime"
-;;   '(progn
-;;      (setq common-lisp-hyperspec-root
-;;            "/usr/local/share/doc/hyperspec/HyperSpec/")
-;;      (setq common-lisp-hyperspec-symbol-table
-;;            (concat common-lisp-hyperspec-root "Data/Map_Sym.txt"))
-;;      (setq common-lisp-hyperspec-issuex-table
-;;            (concat common-lisp-hyperspec-root "Data/Map_IssX.txt"))))
+(defvar lisp-modes
+  '(ielm-mode
+    lisp-mode
+    emacs-lisp-mode
+    inferior-lisp-mode
+    inferior-emacs-lisp-mode
+    lisp-interaction-mode))
 
-;; (advice-add 'slime-display-or-scroll-completions :around
-;;              (defun my--slime-completion-in-region (_ completions start end)
-;;                (completion-in-region start end completions)))
+(defvar lisp-mode-hooks
+  (seq-map
+   (lambda (mode) (intern (concat (symbol-name mode) "-hook")))
+   lisp-modes))
+
+(seq-do (lambda (mode)
+          (font-lock-add-keywords
+           mode
+           '(("(\\(lambda\\)\\>"
+              (0 (ignore
+                  (compose-region (match-beginning 1)
+                                  (match-end 1) ?λ))))
+             ("(\\|)" . 'dim-parens-face)
+             ("(\\(ert-deftest\\)\\>[ '(]*\\(setf[ ]+\\sw+\\|\\sw+\\)?"
+              (1 font-lock-keyword-face)
+              (2 font-lock-function-name-face nil t)))))
+        lisp-modes)
 
 ;; (use-package lisp-mode
 ;;   :preface
@@ -59,7 +78,7 @@
 ;;             (parse-partial-sexp (point) calculate-lisp-indent-last-sexp 0 t))
 
 ;;           ;; Indent under the list or under the first sexp on the same
-;;           ;; line as calculate-lisp-indent-last-sexp.  Note that first
+;;           ;; line as calculate-lisp-indent-last-sexp. Note that first
 ;;           ;; thing on that line has to be complete sexp since we are
 ;;           ;; inside the innermost containing sexp.
 ;;           (backward-prefix-chars)
@@ -94,37 +113,21 @@
 ;;   :custom
 ;;   ((lisp-indent-function #'config-elisp--better-lisp-indent-function)))
 
-(defvar lisp-modes
-  '(ielm-mode
-    lisp-mode
-    emacs-lisp-mode
-    slime-repl-mode
-    inferior-lisp-mode
-    inferior-emacs-lisp-mode
-    lisp-interaction-mode))
+;; TODO: http://joaotavora.github.io/sly/#Loading-Slynk-faster
+(use-package sly
+  :straight t
+  :init
+  (require 'sly-autoloads)
+  (setq inferior-lisp-program "sbcl")
+  (add-to-list 'sly-contribs 'sly-fancy)
+  :config
+  (setq sly-net-coding-system 'utf-8-unix))
 
-(defvar lisp-mode-hooks
-  (seq-map
-   (lambda (mode) (intern (concat (symbol-name mode) "-hook")))
-   lisp-modes))
+(use-package sly-repl-ansi-color
+  :straight t
+  :init
+  (add-to-list 'sly-contribs 'sly-repl-ansi-color))
 
-(seq-do (lambda (mode)
-          (font-lock-add-keywords
-           mode
-           '(("(\\(lambda\\)\\>"
-              (0 (ignore
-                  (compose-region (match-beginning 1)
-                                  (match-end 1) ?λ))))
-             ("(\\|)" . 'dim-parens-face)
-             ("(\\(ert-deftest\\)\\>[ '(]*\\(setf[ ]+\\sw+\\|\\sw+\\)?"
-              (1 font-lock-keyword-face)
-              (2 font-lock-function-name-face nil t)))))
-        lisp-modes)
-
-;; (use-package slime :straight t)
-;; (use-package sly :straight t)
-
-;; TODO: Move to lisp/commentary.el
 (defun uncomment-sexp (&optional n)
   "Uncomment a sexp, or N sexps, around point."
   (interactive "P")
@@ -210,6 +213,21 @@ With a prefix argument N, (un)comment that many sexps."
       (uncomment-sexp n)
     (dotimes (_ (or n 1))
       (comment-sexp--raw))))
+
+;; TODO: hyperspec is available in homebrew but we also want to nix it
+;; eventually, I guess as part of nix managed emacs itself.
+;; (eval-after-load "slime"
+;;   '(progn
+;;      (setq common-lisp-hyperspec-root
+;;            "/usr/local/share/doc/hyperspec/HyperSpec/")
+;;      (setq common-lisp-hyperspec-symbol-table
+;;            (concat common-lisp-hyperspec-root "Data/Map_Sym.txt"))
+;;      (setq common-lisp-hyperspec-issuex-table
+;;            (concat common-lisp-hyperspec-root "Data/Map_IssX.txt"))))
+
+;; (advice-add 'slime-display-or-scroll-completions :around
+;;              (defun my--slime-completion-in-region (_ completions start end)
+;;                (completion-in-region start end completions)))
 
 (provide 'vmacs-lisp)
 ;;; vmacs-lisp.el ends here

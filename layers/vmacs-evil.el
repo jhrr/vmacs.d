@@ -1,4 +1,4 @@
-;;; vmacs-evil.el --- Vim emulation.
+;;; vmacs-evil.el --- Vim emulation. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
@@ -7,7 +7,8 @@
 (use-package evil
   :straight t
   :init
-  (setq evil-want-C-i-jump nil)
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
   :config
   (setq key-chord-two-keys-delay 0.5)
   (setq-default cursor-in-non-selected-windows nil)
@@ -26,6 +27,12 @@
   :after evil
   :config
   (global-evil-motion-trainer-mode 1))
+
+(use-package evil-collection
+  :straight t
+  :after evil
+  :config
+  (evil-collection-init))
 
 (use-package evil-commentary
   :straight t
