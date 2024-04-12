@@ -142,10 +142,10 @@
 
   (add-hook 'org-mode-hook
             #'(lambda () (progn
-                           (lambda () (push '("--" . ?—) prettify-symbols-alist))
-                           (setq fill-column 70)
-                           (setq evil-shift-width 2)
-                           (turn-on-auto-fill))))
+                      (lambda () (push '("--" . ?—) prettify-symbols-alist))
+                      (setq fill-column 70)
+                      (setq evil-shift-width 2)
+                      (turn-on-auto-fill))))
   :config
   (use-package org-contrib :straight t)
   (use-package org-transclusion :straight t)
