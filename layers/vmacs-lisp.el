@@ -120,16 +120,16 @@
   :init
   (require 'sly-autoloads)
   (setq inferior-lisp-program "sbcl")
-  :config
-  (use-package sly-macrostep :straight t)
-  (use-package sly-repl-ansi-color :straight t)
-  (setq sly-net-coding-system 'utf-8-unix)
   (setq sly-contribs '(sly-fancy
                        sly-fancy-inspector
                        sly-macrostep
                        sly-mrepl
                        sly-repl-ansi-color
-                       sly-scratch)))
+                       sly-scratch))
+  :config
+  (use-package sly-macrostep :straight t)
+  (use-package sly-repl-ansi-color :straight t)
+  (setq sly-net-coding-system 'utf-8-unix))
 
 
 (defun uncomment-sexp (&optional n)
