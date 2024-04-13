@@ -31,12 +31,13 @@
 ;; (bind-key "C-h e V" #'apropos-value)
 
 (defvar lisp-modes
-  '(ielm-mode
-    lisp-mode
-    emacs-lisp-mode
+  '(emacs-lisp-mode
+    ielm-mode
     inferior-lisp-mode
     inferior-emacs-lisp-mode
-    lisp-interaction-mode))
+    lisp-interaction-mode
+    lisp-mode
+    sly-mode))
 
 (defvar lisp-mode-hooks
   (seq-map

@@ -36,8 +36,6 @@
     (expand-file-name "org/" user-dropbox-directory))
   (defvar org-archive-directory
     (expand-file-name "archive/" user-org-directory))
-  (defvar org-gtd-directory
-    (expand-file-name "dasein/" user-org-directory))
   (setq org-default-notes-file
         (expand-file-name "gtd-inbox.org" user-org-directory))
 
@@ -84,7 +82,7 @@
     (interactive)
     (jump-to-file (filename-map (directory-org org-gtd-directory))))
 
-  ;; Decouple template from (insert), just pass in a reference.
+  ;; TODO: Decouple template from (insert), just pass in a reference.
   (defun org-file-property-template ()
     (interactive)
     (insert ":PROPERTIES:"
@@ -169,9 +167,19 @@
 
   (setq org-roam-directory (expand-file-name "index/" user-org-directory))
   (defvar org-roam-index-file (expand-file-name "index.org" org-roam-directory))
-  (defvar org-roam-matter-directory (expand-file-name "matter/" org-roam-directory))
-  (defvar org-roam-reading-directory (expand-file-name "reading/" org-roam-directory))
-  (defvar org-roam-work-directory (expand-file-name "work/" org-roam-directory))
+
+  (defmacro def-org-roam-subdirectory (name)
+    "Register subdirectories with org-roam."
+    (let ((binding (intern (concat "org-roam-" name "-directory"))))
+      `(defvar ,binding (expand-file-name (concat ,name "/") org-roam-directory))))
+
+  (seq-do
+   (lambda (subdir) (eval `(def-org-roam-subdirectory ,subdir)))
+   '("life"
+     "matter"
+     "reading"
+     "work"
+     "writing"))
 
   ;; TODO: Jump to matter, work, reading files.
   ;; TODO: We want to feed the list into the vertical select.
