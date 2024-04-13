@@ -119,14 +119,17 @@
   :init
   (require 'sly-autoloads)
   (setq inferior-lisp-program "sbcl")
-  (add-to-list 'sly-contribs 'sly-fancy)
   :config
-  (setq sly-net-coding-system 'utf-8-unix))
+  (use-package sly-macrostep :straight t)
+  (use-package sly-repl-ansi-color :straight t)
+  (setq sly-net-coding-system 'utf-8-unix)
+  (setq sly-contribs '(sly-fancy
+                       sly-fancy-inspector
+                       sly-macrostep
+                       sly-mrepl
+                       sly-repl-ansi-color
+                       sly-scratch)))
 
-(use-package sly-repl-ansi-color
-  :straight t
-  :init
-  (add-to-list 'sly-contribs 'sly-repl-ansi-color))
 
 (defun uncomment-sexp (&optional n)
   "Uncomment a sexp, or N sexps, around point."

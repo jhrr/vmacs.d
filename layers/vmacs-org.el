@@ -160,6 +160,8 @@
    org-roam-db-query
    org-roam-node-insert
    org-roam-node-visit)
+  :custom
+  (org-roam-database-connector 'sqlite-builtin)
   :init
   (setq org-roam-node-display-template
         (concat "${title:*} "
