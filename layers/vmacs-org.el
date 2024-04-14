@@ -48,11 +48,12 @@
   (setq org-capture-bookmark nil)
 
   (setq org-todo-keywords
-        '((sequence "NEXT(n)" "|" "DONE(d)")
+        '((sequence "TODAY(t)" "|" "NEXT(n)" "|" "DONE(d)")
           (sequence "BLOCKED(b@/!)")))
 
   (setq org-todo-keyword-faces
         '(("BLOCKED" :foreground "#f76050" :weight bold)
+          ("TODAY" :foreground "#ff6300" :weight bold)
           ("NEXT" :foreground "#ffc900" :weight bold)
           ("DONE" :foreground "#89a976" :weight bold)))
 
@@ -140,10 +141,10 @@
 
   (add-hook 'org-mode-hook
             #'(lambda () (progn
-                      (lambda () (push '("--" . ?—) prettify-symbols-alist))
-                      (setq fill-column 70)
-                      (setq evil-shift-width 2)
-                      (turn-on-auto-fill))))
+                           (lambda () (push '("--" . ?—) prettify-symbols-alist))
+                           (setq fill-column 70)
+                           (setq evil-shift-width 2)
+                           (turn-on-auto-fill))))
   :config
   (use-package org-contrib :straight t)
   (use-package org-transclusion :straight t)
