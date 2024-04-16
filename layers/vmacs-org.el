@@ -39,13 +39,18 @@
   (setq org-default-notes-file
         (expand-file-name "gtd-inbox.org" user-org-directory))
 
-  (setq org-fold-core-style 'overlays)
-
+  (setq org-capture-bookmark nil)
   (setq org-capture-templates
         '(("q" "Quick" entry (file+headline org-default-notes-file "CAPTURE")
            "* %? ")))
 
-  (setq org-capture-bookmark nil)
+  (setq org-adapt-indentation nil)
+  (setq org-agenda-span 'day)
+  (setq org-agenda-sticky t)
+  (setq org-ellipsis " ...")
+  (setq org-fold-core-style 'overlays)
+  (setq org-property-format "%s %s") ;; Don't tab/align property values.
+  (setq org-startup-folded t)
 
   (setq org-todo-keywords
         '((sequence "TODAY(t)" "|" "NEXT(n)" "|" "DONE(d)")
@@ -56,13 +61,6 @@
           ("TODAY" :foreground "#ff6300" :weight bold)
           ("NEXT" :foreground "#ffc900" :weight bold)
           ("DONE" :foreground "#89a976" :weight bold)))
-
-  (setq org-adapt-indentation nil)
-  (setq org-agenda-span 'day)
-  (setq org-agenda-sticky t)
-  (setq org-ellipsis " ...")
-  (setq org-property-format "%s %s") ;; Don't tab/align property values.
-  (setq org-startup-folded t)
 
   (defun directory-org (dir)
     "Return all org files under a DIR."
