@@ -1,4 +1,4 @@
-;;; vmacs-python.el --- Configure Python.
+;;; vmacs-python.el --- Configure Python. -*- lexical-binding: t -*-
 
 ;;; Commentary:
 
@@ -36,9 +36,7 @@
   (use-package pytest
     :straight t
     :defer t
-    :after python
-    :config
-    (add-to-list 'pytest-project-root-files "setup.cfg"))
+    :after python)
 
 (provide 'vmacs-python)
 ;;; vmacs-python.el ends here
