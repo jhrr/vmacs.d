@@ -31,7 +31,8 @@
 
 (use-package evil-collection
   :straight t
-  :after evil
+  :after
+  (evil sly)
   :config
   (evil-collection-init))
 

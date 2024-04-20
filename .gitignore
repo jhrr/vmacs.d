@@ -16,6 +16,7 @@ elpa
 eshell/
 flycheck-*
 flycheck_*
+history
 ido.last
 image-dired
 .mc-lists.el

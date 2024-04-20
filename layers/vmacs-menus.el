@@ -4,113 +4,119 @@
 
 ;;; Code:
 
-;; TODO: https://github.com/minad/vertico
-;; https://github.com/minad/vertico/wiki/Migrating-from-Selectrum-to-Vertico
-(use-package selectrum
+(use-package mini-frame
   :straight t
   :init
-  (selectrum-mode)
+  (mini-frame-mode)
+  :custom
+  (add-to-list 'mini-frame-ignore-commands "vr/*")
+  (mini-frame-show-parameters '((top . 70)
+                                (width . 0.7)
+                                (left . 0.5))))
+
+;; TODO:
+;; (setq selectrum-refine-candidates-function #'orderless-filter)
+;; (setq selectrum-highlight-candidates-function #'orderless-highlight-matches)
+(use-package vertico
+  :straight
+  (:files (:defaults "extensions/*"))
+  :init
+  (vertico-mode)
+  (setq vertico-count 30))
+
+(use-package vertico-prescient
+  :straight t
+  :after
+  (vertico)
+  :init
+  (vertico-prescient-mode)
+  (prescient-persist-mode)
+
+  (use-package emacs
+    :init
+    ;; Add prompt indicator to `completing-read-multiple'.
+    ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
+    (defun crm-indicator (args)
+      (cons (format "[CRM%s] %s"
+                    (replace-regexp-in-string
+                     "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                     crm-separator)
+                    (car args))
+            (cdr args)))
+    (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+
+    (setq prescient-history-length 1000)
+    (setq enable-recursive-minibuffers t)
+    (setq read-extended-command-predicate #'command-completion-default-include-p)
+    (setq minibuffer-prompt-properties
+          '(read-only t cursor-intangible t face minibuffer-prompt))
+    (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)))
+
+(use-package orderless
+  :straight t
+  :init
+  (setq completion-styles '(orderless basic)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
+
+(use-package consult
+  :straight t
   :config
-  (setq selectrum-num-candidates-displayed 30)
-  (setq selectrum-refine-candidates-function #'orderless-filter)
-  (setq selectrum-highlight-candidates-function #'orderless-highlight-matches)
+  (setq consult-async-min-input 3)
+  (setq register-preview-delay 0)
+  (setq register-preview-function #'consult-register-preview)
 
-  ;; TODO: vertico - https://github.com/radian-software/prescient.el
-  (use-package selectrum-prescient
-    :straight t
-    :init
-    (selectrum-prescient-mode)
-    (prescient-persist-mode)
-    (setq prescient-history-length 1000))
+  (advice-add #'register-preview :around
+              (lambda (fun buffer &optional show-empty)
+                (let ((register-alist
+                       (seq-sort #'car-less-than-car register-alist)))
+                  (funcall fun buffer show-empty))
+                (when-let (win (get-buffer-window buffer))
+                  (with-selected-window win
+                    (setq-local mode-line-format nil)
+                    (setq-local window-min-height 1)
+                    (fit-window-to-buffer))))))
 
-  (use-package consult
-    :straight t
-    :config
-    (setq register-preview-delay 0
-          register-preview-function #'consult-register-preview)
+(use-package consult-flycheck
+  :bind ("C-c x" . consult-flycheck)
+  :straight t)
 
-    (advice-add #'register-preview :around
-                (lambda (fun buffer &optional show-empty)
-                  (let ((register-alist
-                         (seq-sort #'car-less-than-car register-alist)))
-                    (funcall fun buffer show-empty))
-                  (when-let (win (get-buffer-window buffer))
-                    (with-selected-window win
-                      (setq-local mode-line-format nil)
-                      (setq-local window-min-height 1)
-                      (fit-window-to-buffer))))))
+(use-package embark
+  :straight t
+  :bind ("C-c e" . embark-act))
 
-  (use-package consult-flycheck
-    :bind ("C-c x" . consult-flycheck)
-    :straight t)
+(use-package embark-consult
+  :straight t
+  :after
+  (embark consult)
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
-  (use-package mini-frame
-    :straight t
-    :init
-    (mini-frame-mode)
-    :custom
-    (add-to-list 'mini-frame-ignore-commands "vr/*")
-    (mini-frame-show-parameters '((top . 70)
-                                  (width . 0.7)
-                                  (left . 0.5))))
+(use-package marginalia
+  :straight t
+  :bind
+  (:map minibuffer-local-map ("C-c m" . marginalia-cycle))
+  :init
+  (marginalia-mode)
+  (advice-add #'marginalia-cycle :after
+              (lambda () (when (bound-and-true-p vertico-mode) (vertico--exhibit))))
+  (setq marginalia-annotators
+        '(marginalia-annotators-heavy marginalia-annotators-light nil)))
 
-  (use-package embark
-    :straight t
-    :bind ("C-c e" . embark-act))
-
-  (use-package embark-consult
-    :straight t
-    :after
-    (embark consult)
-    :hook
-    (embark-collect-mode . consult-preview-at-point-mode))
-
-  (use-package marginalia
-    :straight t
-    :bind
-    (:map minibuffer-local-map ("C-c m" . marginalia-cycle))
-    :init
-    (marginalia-mode)
-    (advice-add #'marginalia-cycle :after
-                (lambda () (when (bound-and-true-p selectrum-mode) (selectrum-exhibit))))
-    (setq marginalia-annotators
-          '(marginalia-annotators-heavy marginalia-annotators-light nil)))
-
-  (use-package orderless
-    :straight t
-    :init (icomplete-mode)
-    :custom (completion-styles '(orderless))))
+(use-package orderless
+  :straight t
+  :init (icomplete-mode)
+  :custom (completion-styles '(orderless)))
 
 (use-package which-key
   :straight t
   :init
   (which-key-mode))
 
-(defun git-files ()
-  "Jump to a file in the git tree."
-  (interactive)
-  (if (under-vc-p)
-      (find-file
-       (f-expand
-        (let ((selectrum-should-sort-p nil))
-          (completing-read
-           "Open tracked file: "
-           (magit-git-lines "-C" (magit-git-dir) "ls-files" "--full-name")))
-        (vc-root-dir)))
-    (message "Not under vc: %s" buffer-file-name)))
-
-(defun git-modified-files ()
-  "Jump to a modified file in the git tree."
-  (interactive)
-  (if (under-vc-p)
-      (find-file
-       (f-expand
-        (let ((selectrum-should-sort-p nil))
-          (completing-read
-           "Open modified file: "
-           (magit-git-lines "ls-files" "--full-name" "-m")))
-        (vc-root-dir)))
-    (message "Not under vc: %s" buffer-file-name)))
+(use-package savehist
+  :straight t
+  :init
+  (savehist-mode))
 
 (provide 'vmacs-menus)
 ;;; vmacs-menus.el ends here

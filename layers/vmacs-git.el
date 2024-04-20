@@ -1,4 +1,4 @@
-;;; vmacs-git.el --- Configure git and vcs utilties.
+;;; vmacs-git.el --- Configure git and vcs utilties. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
@@ -6,17 +6,40 @@
 
 (use-package magit
   :straight t
-  :custom
-  (magit-git-executable "/usr/local/bin/git")
-  :commands
-  (magit-git-lines magit-git-dir magit-git-repo-p)
+  :preface
+  (defun under-vc-p ()
+    "Determine if we are currently under version control."
+    (magit-git-repo-p (or (vc-root-dir) "")))
+
+  (defun git-files ()
+    "Jump to a file in the git tree."
+    (interactive)
+    (if (under-vc-p)
+        (find-file
+         (f-expand
+          (let ((vertico-should-sort-p nil))
+            completing-read)
+          (vc-root-dir)))
+      (message "Not under vc: %s" buffer-file-name)))
+
+  (defun git-modified-files ()
+    "Jump to a modified file in the git tree."
+    (interactive)
+    (if (under-vc-p)
+        (find-file
+         (f-expand
+          (completing-read
+           "Open modified file: "
+           (magit-git-lines "ls-files" "--full-name" "-m"))
+          (vc-root-dir)))
+      (message "Not under vc: %s" buffer-file-name)))
   :bind
   (("C-c g" . magit-status)
    ("C-c l" . magit-log))
   :config
+  ;; (setq magit-completing-read-function #'completing-read)
   (setq magit-display-buffer-function
-        #'magit-display-buffer-fullframe-status-v1)
-  (setq magit-completing-read-function #'selectrum-completing-read))
+        #'magit-display-buffer-fullframe-status-v1))
 
 (use-package git-auto-commit-mode :straight t)
 

@@ -47,6 +47,15 @@
         lisp-modes)
 
 (use-package lisp-mode
+  :mode-hydra
+  ((lisp-mode emacs-lisp-mode)
+   ("Sexpr"
+    (("c" #'comment-or-uncomment-sexp "comment")
+     ("k" #'kill-sexp' "kill")
+     ("f" #'paredit-forward-barf-sexp "barf forwards")
+     ("b" #'paredit-backward-barf-sexp "barf backwards"))
+    "REPL"
+    (("s" #'sly "sly"))))
   :preface
   (defun uncomment-sexp (&optional n)
     "Uncomment a sexp, or N sexps, around point."
@@ -139,7 +148,6 @@
 
 (use-package paredit
   :straight t
-  :defer t
   :init
   (seq-map
    (lambda (hook) (add-hook hook 'paredit-mode))
@@ -148,7 +156,8 @@
 ;; TODO: http://joaotavora.github.io/sly/#Loading-Slynk-faster
 (use-package sly
   :straight t
-  :defer t
+  :commands
+  (sly)
   :init
   (require 'sly-autoloads)
   (setq inferior-lisp-program "sbcl")

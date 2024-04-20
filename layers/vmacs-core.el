@@ -167,10 +167,6 @@
     (if (memq current-mode lisp-modes)
         (funcall current-mode))))
 
-(defun under-vc-p ()
-  "Determine if we are currently under version control."
-  (magit-git-repo-p (or (vc-root-dir) "")))
-
 (defun what-face (pos)
   "Get the font-face at cursor POS."
   (interactive "d")

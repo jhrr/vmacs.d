@@ -121,28 +121,28 @@
             "\n:END:"
             "\n#+TITLE: "))
 
-  (setq rg-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number . -e ARG OPTS")
+  (setq rg-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number -e -uuu")
 
   ;; TODO: Merge this into one function and dispatch with prefix arg.
   ;; TODO: Are these on hydras anywhere?
   (defun grep-org ()
     "Search through the org directory tree."
     (interactive)
-    (let ((consult-ripgrep-command rg-command))
+    (let ((consult-ripgrep-args rg-command))
       (consult-ripgrep user-org-directory)))
 
   (defun grep-org-roam ()
     "Search org-roam directory using consult-ripgrep. With live-preview."
     (interactive)
-    (let ((consult-ripgrep-command rg-command))
+    (let ((consult-ripgrep-args rg-command))
       (consult-ripgrep org-roam-directory)))
 
   (add-hook 'org-mode-hook
             #'(lambda () (progn
-                           (lambda () (push '("--" . ?—) prettify-symbols-alist))
-                           (setq fill-column 70)
-                           (setq evil-shift-width 2)
-                           (turn-on-auto-fill))))
+                      (lambda () (push '("--" . ?—) prettify-symbols-alist))
+                      (setq fill-column 70)
+                      (setq evil-shift-width 2)
+                      (turn-on-auto-fill))))
   :config
   (use-package org-contrib :straight t)
   (use-package org-transclusion :straight t)
