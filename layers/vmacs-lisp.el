@@ -48,10 +48,10 @@
 
 (use-package lisp-mode
   :mode-hydra
-  ((lisp-mode emacs-lisp-mode)
+  (lisp-modes
    ("Sexpr"
     (("c" #'comment-or-uncomment-sexp "comment")
-     ("k" #'kill-sexp' "kill")
+     ("k" #'kill-sexp "kill")
      ("f" #'paredit-forward-barf-sexp "barf forwards")
      ("b" #'paredit-backward-barf-sexp "barf backwards"))
     "REPL"
@@ -146,11 +146,16 @@
   :custom
   (setq lisp-indent-function 'common-lisp-indent-function))
 
+(use-package evil-paredit :straight t)
+
 (use-package paredit
   :straight t
+  :after evil-paredit
   :init
   (seq-map
-   (lambda (hook) (add-hook hook 'paredit-mode))
+   (lambda (hook) (progn
+               (add-hook hook 'paredit-mode)
+               (add-hook hook 'evil-paredit-mode)))
    lisp-mode-hooks))
 
 ;; TODO: http://joaotavora.github.io/sly/#Loading-Slynk-faster
