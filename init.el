@@ -91,9 +91,7 @@
   "Like `use-package', but with `straight-use-package-by-default' disabled.
 NAME and ARGS are as in `use-package'."
   (declare (indent defun))
-  `(use-package ,name
-     :straight nil
-     ,@args))
+  `(use-package ,name :straight nil ,@args))
 
 (use-package vmacs-paths :load-path "layers")
 (use-package vmacs-core)
@@ -124,9 +122,11 @@ NAME and ARGS are as in `use-package'."
 (defvar config-default-gc-threshold (* 1024 1024 100))
 
 (defun config--inhibit-gc ()
+  "Inhibit garbage collection."
   (setq gc-cons-threshold most-positive-fixnum))
 
 (defun config--enable-gc ()
+  "Enable garbage collection."
   (setq gc-cons-threshold config-default-gc-threshold
         garbage-collection-messages t))
 

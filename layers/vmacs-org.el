@@ -31,37 +31,7 @@
      ("rc" #'org-roam-capture "org-roam capture"))
     "Journal"
     (("j" #'org-journal-new-entry "new entry"))))
-  :init
-  (defvar user-org-directory
-    (expand-file-name "org/" user-dropbox-directory))
-  (defvar org-archive-directory
-    (expand-file-name "archive/" user-org-directory))
-  (setq org-default-notes-file
-        (expand-file-name "gtd-inbox.org" user-org-directory))
-
-  (setq org-capture-bookmark nil)
-  (setq org-capture-templates
-        '(("q" "Quick" entry (file+headline org-default-notes-file "CAPTURE")
-           "* %? ")))
-
-  (setq org-adapt-indentation nil)
-  (setq org-agenda-span 'day)
-  (setq org-agenda-sticky t)
-  (setq org-ellipsis " ...")
-  (setq org-fold-core-style 'overlays)
-  (setq org-property-format "%s %s") ;; Don't tab/align property values.
-  (setq org-startup-folded t)
-
-  (setq org-todo-keywords
-        '((sequence "TODAY(t)" "|" "NEXT(n)" "|" "DONE(d)")
-          (sequence "BLOCKED(b@/!)")))
-
-  (setq org-todo-keyword-faces
-        '(("BLOCKED" :foreground "#f76050" :weight bold)
-          ("TODAY" :foreground "#ff6300" :weight bold)
-          ("NEXT" :foreground "#ffc900" :weight bold)
-          ("DONE" :foreground "#89a976" :weight bold)))
-
+  :preface
   (defun directory-org (dir)
     "Return all org files under a DIR."
     (directory-files dir t "\.org$" nil))
@@ -123,8 +93,6 @@
 
   (setq rg-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number -e -uuu")
 
-  ;; TODO: Merge this into one function and dispatch with prefix arg.
-  ;; TODO: Are these on hydras anywhere?
   (defun grep-org ()
     "Search through the org directory tree."
     (interactive)
@@ -136,6 +104,37 @@
     (interactive)
     (let ((consult-ripgrep-args rg-command))
       (consult-ripgrep org-roam-directory)))
+
+  :init
+  (defvar user-org-directory
+    (expand-file-name "org/" user-dropbox-directory))
+  (defvar org-archive-directory
+    (expand-file-name "archive/" user-org-directory))
+  (setq org-default-notes-file
+        (expand-file-name "gtd-inbox.org" user-org-directory))
+
+  (setq org-capture-bookmark nil)
+  (setq org-capture-templates
+        '(("q" "Quick" entry (file+headline org-default-notes-file "CAPTURE")
+           "* %? ")))
+
+  (setq org-adapt-indentation nil)
+  (setq org-agenda-span 'day)
+  (setq org-agenda-sticky t)
+  (setq org-ellipsis " ...")
+  (setq org-fold-core-style 'overlays)
+  (setq org-property-format "%s %s") ;; Don't tab/align property values.
+  (setq org-startup-folded t)
+
+  (setq org-todo-keywords
+        '((sequence "TODAY(t)" "|" "NEXT(n)" "|" "DONE(d)")
+          (sequence "BLOCKED(b@/!)")))
+
+  (setq org-todo-keyword-faces
+        '(("BLOCKED" :foreground "#f76050" :weight bold)
+          ("TODAY" :foreground "#ff6300" :weight bold)
+          ("NEXT" :foreground "#ffc900" :weight bold)
+          ("DONE" :foreground "#89a976" :weight bold)))
 
   (add-hook 'org-mode-hook
             #'(lambda () (progn
@@ -159,29 +158,12 @@
    org-roam-node-visit)
   :custom
   (org-roam-database-connector 'sqlite-builtin)
-  :init
-  (setq org-roam-node-display-template
-        (concat "${title:*} "
-                (propertize "${tags:10}" 'face 'org-tag)))
-
-  (setq org-roam-directory (expand-file-name "index/" user-org-directory))
-  (defvar org-roam-index-file (expand-file-name "index.org" org-roam-directory))
-
+  :preface
   (defmacro def-org-roam-subdirectory (name)
     "Register subdirectories with org-roam."
     (let ((binding (intern (concat "org-roam-" name "-directory"))))
       `(defvar ,binding (expand-file-name (concat ,name "/") org-roam-directory))))
 
-  (seq-do
-   (lambda (subdir) (eval `(def-org-roam-subdirectory ,subdir)))
-   '("life"
-     "matter"
-     "reading"
-     "work"
-     "writing"))
-
-  ;; TODO: Jump to matter, work, reading files.
-  ;; TODO: We want to feed the list into the vertical select.
   (defun org-roam-get-files-with-property (property)
     (-flatten (org-roam-db-query
                [:select [id]
@@ -196,6 +178,22 @@
       (caar (or (org-roam-db-query
                  [:select id :from nodes :where (= title "Index") :limit 1])
                 (user-error "No node with title Index"))))))
+
+  :init
+  (setq org-roam-node-display-template
+        (concat "${title:*} "
+                (propertize "${tags:10}" 'face 'org-tag)))
+
+  (setq org-roam-directory (expand-file-name "index/" user-org-directory))
+  (defvar org-roam-index-file (expand-file-name "index.org" org-roam-directory))
+
+  (seq-do
+   (lambda (subdir) (eval `(def-org-roam-subdirectory ,subdir)))
+   '("life"
+     "matter"
+     "reading"
+     "work"
+     "writing"))
 
   :config
   (org-roam-db-autosync-mode))

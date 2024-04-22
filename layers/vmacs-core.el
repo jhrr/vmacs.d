@@ -24,12 +24,12 @@
    (major-mode-hydra-title-generator
     #'init--major-mode-hydra-title-generator)))
 
-;; TODO: This is in the wrong place.
 (use-package vterm
   :straight t
   :commands (vterm)
   :custom (vterm-kill-buffer-on-exit t))
 
+;; TODO: use-package emacs here.
 (set-charset-priority 'unicode)
 (prefer-coding-system 'utf-8)
 (set-language-environment 'utf-8)

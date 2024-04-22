@@ -10,6 +10,7 @@
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
   (setq evil-search-module 'evil-search)
+  (evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle)
   :config
   (setq key-chord-two-keys-delay 0.5)
   (setq-default cursor-in-non-selected-windows nil)
