@@ -146,11 +146,8 @@
   :custom
   (setq lisp-indent-function 'common-lisp-indent-function))
 
-(use-package evil-paredit :straight t)
-
 (use-package paredit
   :straight t
-  :after evil-paredit
   :init
   (seq-map
    (lambda (hook) (progn
@@ -158,7 +155,6 @@
                (add-hook hook 'evil-paredit-mode)))
    lisp-mode-hooks))
 
-;; TODO: http://joaotavora.github.io/sly/#Loading-Slynk-faster
 (use-package sly
   :straight t
   :commands
