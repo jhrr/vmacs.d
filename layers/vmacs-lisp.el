@@ -48,7 +48,7 @@
 
 (use-package lisp-mode
   :mode-hydra
-  (lisp-modes
+  (lisp-modes  ;; TODO: This doesn't work as is... macro?
    ("Sexpr"
     (("c" #'comment-or-uncomment-sexp "comment")
      ("k" #'kill-sexp "kill")

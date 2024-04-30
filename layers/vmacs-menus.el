@@ -61,6 +61,8 @@
 
 (use-package consult
   :straight t
+  :after
+  (embark-consult)
   :config
   (setq consult-async-min-input 3)
   (setq register-preview-delay 0)
@@ -83,14 +85,37 @@
 
 (use-package embark
   :straight t
-  :bind ("C-c e" . embark-act))
-
-(use-package embark-consult
-  :straight t
   :after
-  (embark consult)
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
+  (embark-consult)
+  :config
+  (defvar embark-completing-read-prompter-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "<tab>") 'abort-recursive-edit)
+      map))
+
+  (defun embark-act-with-completing-read (&optional arg)
+    (interactive "P")
+    (let* ((embark-prompter 'embark-completing-read-prompter)
+           (act (propertize "Act" 'face 'highlight))
+           (embark-indicator (lambda (_keymap targets) nil)))
+      (embark-act arg)))
+
+  (defun with-minibuffer-keymap (keymap)
+    (lambda (fn &rest args)
+      (minibuffer-with-setup-hook
+          (lambda ()
+            (use-local-map
+             (make-composed-keymap keymap (current-local-map))))
+        (apply fn args))))
+
+  (advice-add 'embark-completing-read-prompter :around
+              (with-minibuffer-keymap embark-completing-read-prompter-map))
+  (define-key vertico-map (kbd "<tab>") 'embark-act-with-completing-read)
+
+  (bind-key* "C-c e" 'embark-act)
+  (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode))
+
+(use-package embark-consult :straight t)
 
 (use-package marginalia
   :straight t
