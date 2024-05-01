@@ -4,29 +4,31 @@
 
 ;;; Code:
 
-(defvar lisp-find-map)
-(define-prefix-command #'lisp-find-map)
+(eval-when-compile
+  (defvar lisp-find-map)
+  (define-prefix-command #'lisp-find-map)
 
-(bind-key "C-h e" #'lisp-find-map)
-(bind-key "C-h e c" #'finder-commentary)
-(bind-key "C-h e e" #'view-echo-area-messages)
-(bind-key "C-h e f" #'find-function)
-(bind-key "C-h e F" #'find-face-definition)
-(bind-key "C-h e i" #'info-apropos)
-(bind-key "C-h e k" #'find-function-on-key)
-(bind-key "C-h e l" #'find-library)
-(bind-key "C-h e s" #'scratch)
-(bind-key "C-h e v" #'find-variable)
-(bind-key "C-h e V" #'apropos-value)
+  (bind-key "C-h e" #'lisp-find-map)
+  (bind-key "C-h e c" #'finder-commentary)
+  (bind-key "C-h e e" #'view-echo-area-messages)
+  (bind-key "C-h e f" #'find-function)
+  (bind-key "C-h e F" #'find-face-definition)
+  (bind-key "C-h e i" #'info-apropos)
+  (bind-key "C-h e k" #'find-function-on-key)
+  (bind-key "C-h e l" #'find-library)
+  (bind-key "C-h e s" #'scratch)
+  (bind-key "C-h e v" #'find-variable)
+  (bind-key "C-h e V" #'apropos-value)
 
-(defvar lisp-modes
-  '(emacs-lisp-mode
-    ielm-mode
-    inferior-lisp-mode
-    inferior-emacs-lisp-mode
-    lisp-interaction-mode
-    lisp-mode
-    sly-mode))
+  (defvar lisp-modes
+    '(emacs-lisp-mode
+      ielm-mode
+      inferior-lisp-mode
+      inferior-emacs-lisp-mode
+      lisp-interaction-mode
+      lisp-mode
+      sly-mode
+      sly-mrepl-mode)))
 
 (defvar lisp-mode-hooks
   (seq-map
@@ -48,15 +50,56 @@
 
 (use-package lisp-mode
   :mode-hydra
-  (lisp-modes  ;; TODO: This doesn't work as is... macro?
-   ("Sexpr"
+  ((lisp-mode emacs-lisp-mode sly-mode sly-mrepl-mode)
+   ("Sexp"
     (("c" #'comment-or-uncomment-sexp "comment")
-     ("k" #'kill-sexp "kill")
-     ("f" #'paredit-forward-barf-sexp "barf forwards")
-     ("b" #'paredit-backward-barf-sexp "barf backwards"))
+     ("m" #'mark-sexp "mark")
+     ("x" #'eval-last-sexp "eval last")
+     ("D" #'kill-sexp "kill"))
+    "Paredit"
+    (("d" #'paredit-kill "kill")
+     ("h" #'paredit-backward-up "backward up")
+     ("j" #'paredit-forward "forward")
+     ("k" #'paredit-backward "backward")
+     ("l" #'paredit-forward-up "forward up")
+     ("n" #'paredit-newline "newline")
+     ("o" #'paredit-split-sexp "split")
+     ("p" #'paredit-splice-sexp "splice")
+     ("v" #'paredit-convolute-sexp "convolute")
+     ("w" #'paredit-wrap-round "wrap")
+     ("J" #'paredit-join-sexps "join")
+     ("R" #'paredit-raise-sexp "raise")
+     ("bb" #'paredit-backward-barf-sexp "barf backwards")
+     ("bf" #'paredit-forward-barf-sexp "barf forwards")
+     ("sb" #'paredit-backward-slurp-sexp "slurp backwards")
+     ("sf" #'paredit-forward-slurp-sexp "slurp forwards"))
     "REPL"
-    (("s" #'sly "sly"))))
+    (("J" #'sly "sly")
+     (":" #'eval-expression "eval lisp expression"))
+    "Find"
+    (("ec" #'finder-commentary "finder-commentary")
+     ("ef" #'find-function "find-function")
+     ("eF" #'find-face-definition "find-face-definition")
+     ("ei" #'info-apropos "info-apropos")
+     ("ek" #'find-function-on-key "find-function-on-key")
+     ("el" #'find-library "find-library")
+     ("es" #'scratch "scratch")
+     ("ev" #'find-variable "find-variable")
+     ("eV" #'apropos-value "apropos-value"))))
   :preface
+  (defun scratch ()
+    "Jump to the scratch buffer."
+    (interactive)
+    (let ((current-mode major-mode))
+      (switch-to-buffer-other-window (get-buffer-create "*scratch*"))
+      (goto-char (point-min))
+      (when (looking-at ";")
+        (forward-line 4)
+        (delete-region (point-min) (point)))
+      (goto-char (point-max))
+      (if (memq current-mode lisp-modes)
+          (funcall current-mode))))
+
   (defun uncomment-sexp (&optional n)
     "Uncomment a sexp, or N sexps, around point."
     (interactive "P")
@@ -129,8 +172,8 @@
 
   (defun comment-or-uncomment-sexp (&optional n)
     "Comment the sexp at point and move past it.
-    If already inside (or before) a comment, uncomment instead.
-    With a prefix argument N, (un)comment that many sexps."
+If already inside (or before) a comment, uncomment instead.
+With a prefix argument N, (un)comment that many sexps."
     (interactive "P")
     (if (or (elt (syntax-ppss) 4)
             (< (save-excursion
@@ -158,7 +201,7 @@
 (use-package sly
   :straight t
   :commands
-  (sly)
+  (sly sly-mrepl)
   :init
   (require 'sly-autoloads)
   (setq inferior-lisp-program "sbcl")

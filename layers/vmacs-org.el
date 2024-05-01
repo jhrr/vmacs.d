@@ -1,16 +1,17 @@
-;;; vmacs-org.el --- Configure org-mode.
+;;; vmacs-org.el --- Configure org-mode. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
 ;; "Capture a little wave."
 
 ;;; Code:
+
 (use-package org
   :straight t
   :mode
   ("\\.org\\'" . org-mode)
   :mode-hydra
-  ;; TODO: Can't we use the one defined in vmacs-hydras?
+  ;; TODO: Can't we use the same one defined in vmacs-hydras?
   (org-mode
    ("Agenda"
     (("a" #'org-agenda "agenda"))
