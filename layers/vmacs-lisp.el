@@ -55,7 +55,8 @@
     (("c" #'comment-or-uncomment-sexp "comment")
      ("m" #'mark-sexp "mark")
      ("x" #'eval-last-sexp "eval last")
-     ("D" #'kill-sexp "kill"))
+     ("D" #'kill-sexp "kill")
+     ("X" #'macrostep-expand "macrostep expand"))
     "Paredit"
     (("d" #'paredit-kill "kill")
      ("h" #'paredit-backward-up "backward up")
@@ -189,6 +190,11 @@ With a prefix argument N, (un)comment that many sexps."
   :custom
   (setq lisp-indent-function 'common-lisp-indent-function))
 
+(use-package macrostep
+  :straight t
+  :commands
+  (macrostep-expand))
+
 (use-package paredit
   :straight t
   :init
@@ -201,7 +207,7 @@ With a prefix argument N, (un)comment that many sexps."
 (use-package sly
   :straight t
   :commands
-  (sly sly-mrepl)
+  (sly)
   :init
   (require 'sly-autoloads)
   (setq inferior-lisp-program "sbcl")
