@@ -49,7 +49,6 @@
       ("p" #'consult-project-imenu "imenu project")
       ("k" #'consult-kmacro "kmacro")
       ("l" #'consult-line "line")
-      ("s" #'consult-isearch "isearch")
       ("x" #'consult-flycheck "flycheck"))
      "Mark"
      (("mm" #'consult-mark "mark")
@@ -61,33 +60,33 @@
       ("rs" #'consult-register-store "register store")
       ("rw" #'consult-register-window "register wondow"))
      "Yank"
-     (("yy" #'consult-yank "yank")
+     (("yk" #'consult-yank-from-kill-ring "yank from kill ring")
       ("yp" #'consult-yank-pop "yank pop")
       ("yr" #'consult-yank-replace "yank replace"))))
 
   (pretty-hydra-define errors
     (:hint nil :color teal :title (hydra-title-with-mat-icon "error_outline" "Errors"))
     ("Navigation"
-     (("n" flycheck-next-error "next" :color vmacs-red)
-      ("p" flycheck-previous-error "previous" :color vmacs-red))
+     (("n" #'flycheck-next-error "next" :color vmacs-red)
+      ("p" #'flycheck-previous-error "previous" :color vmacs-red))
      "Actions"
-     (("r" flycheck-buffer "run checks")
-      ("c" flycheck-clear "clear")
-      ("e" flycheck-list-errors "list"))
+     (("r" #'flycheck-buffer "run checks")
+      ("c" #'flycheck-clear "clear")
+      ("e" #'flycheck-list-errors "list"))
      "Checkers"
-     (("h" flycheck-describe-checker "describe...")
-      ("s" flycheck-select-checker "select...")
-      ("v" flycheck-verify-setup "verify"))))
+     (("h" #'flycheck-describe-checker "describe...")
+      ("s" #'flycheck-select-checker "select...")
+      ("v" #'flycheck-verify-setup "verify"))))
 
   (pretty-hydra-define git
     (:hint nil :color teal :title (hydra-title-with-aicon "git" "Git"))
     ("Git"
-     (("s" magit-status "status")
-      ("l" magit-log "log...")
-      ("L" magit-log-buffer-file "log buffer")
-      ("b" magit-blame "blame...")
-      ("w" magit-worktree-status "worktree status")
-      ("W" magit-worktree "worktree..."))))
+     (("s" #'magit-status "status")
+      ("l" #'magit-log "log...")
+      ("L" #'magit-log-buffer-file "log buffer")
+      ("b" #'magit-blame "blame...")
+      ("w" #'magit-worktree-status "worktree status")
+      ("W" #'magit-worktree "worktree..."))))
 
   (pretty-hydra-define help
     (:hint nil :color teal :title (hydra-title-with-mat-icon "help" "Help"))
