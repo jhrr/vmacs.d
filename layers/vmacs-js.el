@@ -5,11 +5,18 @@
 ;;; Code:
 
 (use-package js
-  :mode
-  ("\\.[cm]?jsx?\\'" . js-mode)
-  :custom
-  (js-indent-level 2)
-  (js-switch-indent-offset 2))
+  :preface
+  (defun configure-js ()
+    (setopt js-indent-level 2)
+    (setopt js-switch-indent-offset 2))
+  :hook
+  ((js-mode . configure-js)
+   (js-mode . js2-minor-mode)))
+
+(use-package js2-mode
+  :straight t
+  :commands
+  (js2-minor-mode))
 
 (use-package css-mode
   :defer t

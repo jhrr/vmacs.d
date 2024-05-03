@@ -6,6 +6,9 @@
 
 (use-package magit
   :straight t
+  :bind
+  (("C-c g" . magit-status)
+   ("C-c l" . magit-log))
   :preface
   (defun under-vc-p ()
     "Determine if we are currently under version control."
@@ -33,13 +36,10 @@
            (magit-git-lines "ls-files" "--full-name" "-m"))
           (vc-root-dir)))
       (message "Not under vc: %s" buffer-file-name)))
-  :bind
-  (("C-c g" . magit-status)
-   ("C-c l" . magit-log))
+
   :config
   ;; (setq magit-completing-read-function #'completing-read)
-  (setq magit-display-buffer-function
-        #'magit-display-buffer-fullframe-status-v1))
+  (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1))
 
 (use-package git-auto-commit-mode :straight t)
 

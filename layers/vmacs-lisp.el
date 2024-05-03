@@ -49,6 +49,7 @@
         lisp-modes)
 
 (use-package lisp-mode
+  :defer t
   :mode-hydra
   ((lisp-mode emacs-lisp-mode sly-mode sly-mrepl-mode)
    ("Sexp"
@@ -76,6 +77,7 @@
      ("sf" #'paredit-forward-slurp-sexp "slurp forwards"))
     "REPL"
     (("J" #'sly "sly")
+     ("S" #'sly-scratch "sly scratch")
      (":" #'eval-expression "eval lisp expression"))
     "Find"
     (("ec" #'finder-commentary "finder-commentary")
@@ -141,7 +143,7 @@
         ;; Re-comment everything before it...
         (ignore-errors
           (comment-region beg p))
-        ;; ... and everything after it.
+        ;; ...and everything after it.
         (goto-char p)
         (forward-sexp (or n 1))
         (skip-chars-forward "\r\n[:blank:]")
@@ -185,10 +187,7 @@ With a prefix argument N, (un)comment that many sexps."
                  (point))))
         (uncomment-sexp n)
       (dotimes (_ (or n 1))
-        (comment-sexp--raw))))
-
-  :custom
-  (setq lisp-indent-function 'common-lisp-indent-function))
+        (comment-sexp--raw)))))
 
 (use-package macrostep
   :straight t
@@ -197,6 +196,8 @@ With a prefix argument N, (un)comment that many sexps."
 
 (use-package paredit
   :straight t
+  :commands
+  (paredit-mode)
   :init
   (seq-map
    (lambda (hook) (progn
@@ -207,7 +208,7 @@ With a prefix argument N, (un)comment that many sexps."
 (use-package sly
   :straight t
   :commands
-  (sly)
+  (sly sly-scratch)
   :init
   (require 'sly-autoloads)
   (setq inferior-lisp-program "sbcl")

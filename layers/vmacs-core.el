@@ -182,16 +182,6 @@ whitespace in front of the next line."
   :general
   (:states '(normal motion) "SPC" #'major-mode-hydra)
   :preface
-  (autoload 'all-the-icons-icon-for-mode "all-the-icons")
-
-  (defun init--major-mode-hydra-title-generator (mode)
-    (let* ((icon (all-the-icons-icon-for-mode mode))
-           (mode-title (string-remove-suffix "-mode" (symbol-name mode)))
-           (components
-            (seq-filter #'stringp
-                        (list icon (s-titleized-words mode-title) "Commands"))))
-      (string-join components " ")))
-
   (defun hydra-title-with-octicon (icon title)
     (concat (all-the-icons-octicon icon) " " title))
   (defun hydra-title-with-fileicon (icon title)
@@ -205,15 +195,25 @@ whitespace in front of the next line."
   (defun hydra-title-with-mat-icon (icon title)
     (concat (all-the-icons-material icon) " " title))
 
+  (defun init--major-mode-hydra-title-generator (mode)
+    (let* ((icon (all-the-icons-icon-for-mode mode))
+           (mode-title (string-remove-suffix "-mode" (symbol-name mode)))
+           (components
+            (seq-filter #'stringp
+                        (list icon (s-titleized-words mode-title) "Commands"))))
+      (string-join components " ")))
   :custom
   ((major-mode-hydra-invisible-quit-key "q")
-   (major-mode-hydra-title-generator
-    #'init--major-mode-hydra-title-generator)))
+   (major-mode-hydra-title-generator #'init--major-mode-hydra-title-generator))
+  :config
+  (autoload 'all-the-icons-icon-for-mode "all-the-icons"))
 
 (use-package vterm
   :straight t
-  :commands (vterm)
-  :custom (vterm-kill-buffer-on-exit t))
+  :commands
+  (vterm)
+  :custom
+  (vterm-kill-buffer-on-exit t))
 
 (provide 'vmacs-core)
 ;;; vmacs-core.el ends here

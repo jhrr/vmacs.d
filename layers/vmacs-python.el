@@ -31,6 +31,7 @@
 
 (use-package python
   :straight t
+  :interpreter ("python" . python-mode)
   :mode ("\\.py\\'" . python-mode)
   :mode-hydra
   (python-mode
@@ -51,14 +52,14 @@
     (setq-local tab-width 4)
     (setq-local evil-shift-width 4)
     (setq-local flycheck-checkers '(python-ruff))
+    (when (executable-find "ipython")
+      (setq-local python-shell-interpreter "ipython")
+      (setq-local python-shell-interpreter-args "--simple-prompt -i"))
     (setq python-indent-guess-indent-offset nil)
     (setq python-indent-offset 4)
     (setq python-fill-docstring-style 'pep-257)
     (setq python-shell-completion-native-enable nil)
     (prettify-symbols-mode nil)
-    (when (executable-find "ipython")
-      (setq-local python-shell-interpreter "ipython")
-      (setq-local python-shell-interpreter-args "--simple-prompt -i"))
     (add-function :after after-focus-change-function (lambda () (pyvenv-autoload)))
     (pyvenv-autoload))
   :hook

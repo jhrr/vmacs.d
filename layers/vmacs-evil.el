@@ -9,12 +9,12 @@
   :preface
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
-  :init
-  (evil-mode)
-  :config
   (setq evil-search-module 'evil-search)
   (setq key-chord-two-keys-delay 0.5)
   (setq-default cursor-in-non-selected-windows nil)
+  :init
+  (evil-mode)
+  :config
   (define-key evil-normal-state-map ";" #'consult-buffer)
   (evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle)
   (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
@@ -37,7 +37,6 @@
   :config
   (global-evil-motion-trainer-mode 1))
 
-
 (use-package evil-commentary
   :straight t
   :after evil
@@ -46,10 +45,9 @@
 
 (use-package evil-paredit
   :straight t
+  :after evil
   :commands
-  (evil-paredit-mode)
-  :after
-  (evil paredit))
+  (evil-paredit-mode))
 
 (provide 'vmacs-evil)
 ;;; vmacs-evil.el ends here
