@@ -110,7 +110,7 @@
 
   (advice-add 'embark-completing-read-prompter :around
               (with-minibuffer-keymap embark-completing-read-prompter-map))
-  (define-key vertico-map (kbd "<tab>") 'embark-act-with-completing-read)
+  (define-key vertico-map (kbd "<backtab>") 'embark-act-with-completing-read)
 
   (bind-key* "C-c e" 'embark-act)
   (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode))

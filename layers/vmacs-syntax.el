@@ -15,6 +15,15 @@
 
   (add-to-list 'flycheck-checkers 'proselint))
 
+(use-package reformatter
+  :straight t
+  :hook
+  (python-mode . ruff-format-on-save-mode)
+  :config
+  (reformatter-define ruff-format
+                      :program "ruff"
+                      :args `("format" "--stdin-filename" ,buffer-file-name "-")))
+
 (use-package artbollocks-mode
   :straight t
   :disabled t
