@@ -36,6 +36,7 @@
     (setq-local comment-inline-offset 2)
     (setq-local tab-width 4)
     (setq-local evil-shift-width 4)
+    (setq-local flycheck-checkers '(python-ruff))
     (setq python-indent-guess-indent-offset nil)
     (setq python-indent-offset 4)
     (setq python-fill-docstring-style 'pep-257)

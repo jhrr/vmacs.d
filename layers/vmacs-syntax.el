@@ -6,6 +6,27 @@
 
 (use-package flycheck
   :straight t
+  :preface
+  (flycheck-define-checker python-ruff
+    "A Python syntax and style checker using the ruff utility.
+To override the path to the ruff executable, set
+`flycheck-python-ruff-executable'."
+    :command ("ruff"
+              "check"
+              "--output-format=text"
+              (eval (when buffer-file-name (concat "--stdin-filename=" buffer-file-name)))
+              "-")
+    :modes python-mode
+    :standard-input t
+    :error-filter (lambda (errors)
+                    (let ((errors (flycheck-sanitize-errors errors)))
+                      (seq-map #'flycheck-flake8-fix-error-level errors)))
+    :error-patterns
+    ((warning line-start
+              (file-name) ":" line ":" (optional column ":") " "
+              (id (one-or-more (any alpha)) (one-or-more digit)) " "
+              (message (one-or-more not-newline))
+              line-end)))
   :custom
   (flycheck-emacs-lisp-initialize-packages t)
   (flycheck-display-errors-delay 0.1)
