@@ -6,6 +6,8 @@
 
 (use-package emacs
   :preface
+  (declare-function font-candidate "vmacs-core")
+
   (defun insert-hash ()
     "Insert a hash character."
     (interactive)
@@ -36,29 +38,27 @@
 (use-package exec-path-from-shell
   :straight t
   :if window-system
-  :preface
-  (declare-function exec-path-from-shell-initialize "vmacs-darwin")
   :init
-  (progn
-    (defvar exec-path-from-shell-arguments '("-l"))
-    (defconst exec-path-from-shell-variables
-      '("PATH"
-        "MANPATH"
-        "SSH_AGENT_PID"
-        "GPG_TTY"
-        "TEXINPUTS"
-        "RUST_SRC_PATH"))
-    (exec-path-from-shell-initialize)
-    (when-let* ((gls (executable-find "gls")))
-      (setq insert-directory-program gls))))
+  (setq exec-path-from-shell-arguments nil)
+  (defconst exec-path-from-shell-variables
+    '("PATH"
+      "MANPATH"
+      "PYTHONPATH"
+      "SSH_AGENT_PID"
+      "GPG_TTY"
+      "TEXINPUTS"
+      "RUST_SRC_PATH"))
+  (exec-path-from-shell-initialize)
+  (when-let* ((gls (executable-find "gls")))
+    (setq insert-directory-program gls)))
 
 (use-package osx-trash
   :straight t
-  :preface (autoload 'osx-trash-setup "osx-trash")
+  :preface
+  (autoload 'osx-trash-setup "osx-trash")
   :config
-  (progn
-    (osx-trash-setup)
-    (setq delete-by-moving-to-trash t)))
+  (osx-trash-setup)
+  (setq delete-by-moving-to-trash t))
 
 (provide 'vmacs-darwin)
 ;;; vmacs-darwin.el ends here

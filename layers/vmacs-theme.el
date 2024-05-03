@@ -1,4 +1,4 @@
-;;; vmacs-theme.el --- Colours, appearance, faces.
+;;; vmacs-theme.el --- Colours, appearance, faces. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
@@ -8,7 +8,7 @@
 (fringe-mode 10)
 
 (use-package vmacs-labburn-theme
-  :load-path lisp
+  :load-path vmacs-lisp
   :config
   (enable-theme 'vmacs-labburn))
 

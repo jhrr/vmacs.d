@@ -5,9 +5,7 @@
 ;;; Code:
 
 (use-package emacs
-  :init
-  (defalias 'file-as-dir 'file-name-as-directory)
-
+  :preface
   (defun add-to-load-path (path &optional dir)
     (setq load-path
           (cons
@@ -27,33 +25,6 @@ ADD-PATH is non-nil."
          (when ,add-path (add-to-load-path dir))
          dir)))
 
-  (defconst user-home-directory (getenv "HOME"))
-  (defconst user-dropbox-directory
-    (concat (file-as-dir user-home-directory) "Dropbox/"))
-  (defpath layers "layers" nil t)
-  (defpath lisp "lisp" nil t)
-  (defpath caches ".caches")
-  (defpath autosaves "auto-save-list" (file-as-dir caches))
-  (defpath backups "backups" (file-as-dir caches))
-
-  (setq auto-save-list-file-prefix (concat (file-as-dir autosaves) ".auto-save-")
-        auto-save-file-name-transforms `((".*" ,autosaves t))
-        backup-directory-alist '(("." . "~/.emacs.d/.caches/backups"))
-        backup-by-copying t
-        delete-old-versions t
-        kept-new-versions 5
-        kept-old-versions 2
-        version-control t)
-
-  (let ((custom-path (expand-file-name "custom.el" user-emacs-directory)))
-    (unless (file-exists-p custom-path)
-      (message "Creating %s because it doesn't exist..." custom-path)
-      (shell-command (concat "touch " (shell-quote-argument custom-path))))
-    (setq custom-file custom-path)
-    (load custom-file))
-
-  (add-to-list 'custom-theme-load-path layers)
-
   (defun hash-keys (hash)
     "Return all the keys in a HASH."
     (let ((keys ()))
@@ -71,7 +42,7 @@ ADD-PATH is non-nil."
       filename-hash))
 
   (defun directory-el (dir)
-    "Return all elisp files under a DIR."
+    "Return all evmacs-lisp files under a DIR."
     (seq-filter
      (lambda (filename) (not (string-prefix-p ".#" filename)))
      (directory-files dir t "\.el$" nil)))
@@ -85,16 +56,45 @@ ADD-PATH is non-nil."
     "Edit the `user-init-file', in another window."
     (interactive)
     (find-file user-init-file))
-  (bind-key* "C-c I" 'jump-to-init)
+
+  :init
+  (defconst user-home-directory (getenv "HOME"))
+  (defconst user-dropbox-directory
+    (concat (file-name-as-directory user-home-directory) "Dropbox/"))
+  (defpath vmacs-layers "layers" nil t)
+  (defpath vmacs-lisp "lisp" nil t)
+  (defpath vmacs-caches ".caches")
+  (defpath vmacs-autosaves "auto-save-list" (file-name-as-directory vmacs-caches))
+  (defpath vmacs-backups "backups" (file-name-as-directory vmacs-caches))
+
+  (setq auto-save-list-file-prefix (concat (file-name-as-directory vmacs-autosaves) ".auto-save-")
+        auto-save-file-name-transforms `((".*" ,vmacs-autosaves t))
+        backup-directory-alist '(("." . "~/.emacs.d/.vmacs-caches/backups"))
+        backup-by-copying t
+        delete-old-versions t
+        kept-new-versions 5
+        kept-old-versions 2
+        version-control t)
+
+  (let ((custom-path (expand-file-name "custom.el" user-emacs-directory)))
+    (unless (file-exists-p custom-path)
+      (message "Creating %s because it doesn't exist..." custom-path)
+      (shell-command (concat "touch " (shell-quote-argument custom-path))))
+    (setq custom-file custom-path)
+    (load custom-file))
+
+  (add-to-list 'custom-theme-load-path vmacs-layers)
 
   (defun jump-to-layer ()
     "Jump to a selected layer file."
     (interactive)
-    (jump-to-file (filename-map (directory-el layers))))
+    (jump-to-file (filename-map (directory-el vmacs-layers))))
+
+  (bind-key* "C-c I" 'jump-to-init)
   (bind-key* "C-c L" 'jump-to-layer)
 
   (defconst vmacs-features
-    (seq-concatenate 'list (directory-el layers) (directory-el lisp))))
+    (seq-concatenate 'list (directory-el vmacs-layers) (directory-el vmacs-lisp))))
 
 (provide 'vmacs-paths)
 ;;; vmacs-paths.el ends here
