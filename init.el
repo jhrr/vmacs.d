@@ -102,7 +102,7 @@
                             (if (not (member layer exclude-layers))
                                 (cons (intern layer) acc)
                               acc)))
-                        vmacs-features nil))
+                        (directory-el vmacs-layers) nil))
   (eval `(use-package ,feature)))
 
 ;;; --- Post-init

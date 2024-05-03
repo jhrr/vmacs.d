@@ -91,10 +91,7 @@ ADD-PATH is non-nil."
     (jump-to-file (filename-map (directory-el vmacs-layers))))
 
   (bind-key* "C-c I" 'jump-to-init)
-  (bind-key* "C-c L" 'jump-to-layer)
-
-  (defconst vmacs-features
-    (seq-concatenate 'list (directory-el vmacs-layers) (directory-el vmacs-lisp))))
+  (bind-key* "C-c L" 'jump-to-layer))
 
 (provide 'vmacs-paths)
 ;;; vmacs-paths.el ends here
