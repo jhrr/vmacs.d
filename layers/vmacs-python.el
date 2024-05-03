@@ -59,12 +59,15 @@
     (when (executable-find "ipython")
       (setq-local python-shell-interpreter "ipython")
       (setq-local python-shell-interpreter-args "--simple-prompt -i"))
-    (add-function :after after-focus-change-function (lambda () (pyvenv-autoload))))
+    (add-function :after after-focus-change-function (lambda () (pyvenv-autoload)))
+    (pyvenv-autoload))
   :hook
-  (python-mode . configure-python)
-  :config
-  (use-package pytest :straight t)
-  (pyvenv-autoload))
+  (python-mode . configure-python))
+
+(use-package pytest
+  :straight t
+  :commands
+  (pytest-all pytest-one pytest-module pytest-suite))
 
 (provide 'vmacs-python)
 ;;; vmacs-python.el ends here

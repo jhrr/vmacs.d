@@ -9,18 +9,15 @@
   :mode-hydra
   (sql-mode
    ("Connect"
-    (("p" #'sql-postgres "postgres")
-     ("u" #'sqlup-capitalize-keywords-in-region "capitalize region keywords"))))
-  :init
-  (add-hook 'sql-mode-hook #'sqlind-minor-mode)
-  (add-hook 'sql-interactive-mode-hook #'sqlind-minor-mode)
-  (add-hook 'sql-mode-hook #'sqlup-mode)
-  (add-hook 'sql-interactive-mode-hook #'sqlup-mode)
-  :config
-  (sql-set-product-feature
-   'postgres :prompt-regexp "^[-[:alnum:]_]*=[#>] ")
-  (sql-set-product-feature
-   'postgres :prompt-cont-regexp "^[-[:alnum:]_]*[-(][#>] "))
+    (("J" #'sql-postgres "postgres"))))
+  :preface
+  (defun configure-sql ()
+    (sql-set-product-feature 'postgres :prompt-regexp "^[-[:alnum:]_]*=[#>] ")
+    (sql-set-product-feature 'postgres :prompt-cont-regexp "^[-[:alnum:]_]*[-(][#>] "))
+  :hook
+  (((sql-mode sql-interactive-mode) . sqlup-mode)
+   ((sql-mode sql-interactive-mode) . configure-sql)
+   ((sql-mode sql-interactive-mode) . sqlind-minor-mode)))
 
 (use-package emacs-sql-indent
   :straight
