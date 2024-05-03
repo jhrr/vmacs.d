@@ -19,7 +19,9 @@
     (("o" #'org-jump-to-inbox "jump to inbox")
      ("g" #'org-jump-to-gtd "jump to gtd file")
      ("i" #'org-roam-jump-to-index "jump to org-roam index")
-     ("k" #'org-roam-node-find "jump to org-roam file"))
+     ("k" #'org-roam-node-find "jump to org-roam file")
+     ("R" #'org-transclusion-refresh "refresh transclusion node")
+     ("t" #'org-transclusion-move-to-source "jump to transclusion source"))
     "Capture"
     (("c" #'org-capture "capture")
      ("q" #'org-quick-capture "quick capture"))
@@ -139,10 +141,10 @@
 
   (add-hook 'org-mode-hook
             #'(lambda () (progn
-                      (lambda () (push '("--" . ?—) prettify-symbols-alist))
-                      (setq fill-column 70)
-                      (setq evil-shift-width 2)
-                      (turn-on-auto-fill))))
+                           (lambda () (push '("--" . ?—) prettify-symbols-alist))
+                           (setq fill-column 70)
+                           (setq evil-shift-width 2)
+                           (turn-on-auto-fill))))
   :config
   (use-package org-contrib :straight t)
   (use-package org-transclusion :straight t)

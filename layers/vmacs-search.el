@@ -1,4 +1,4 @@
-;;; vmacs-search.el --- Configure greppage and findage.
+;;; vmacs-search.el --- Configure greppage and findage. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

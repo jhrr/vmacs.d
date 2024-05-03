@@ -1,4 +1,4 @@
-;;; vmacs-sql.el --- Configure SQL.
+;;; vmacs-sql.el --- Configure SQL mode. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

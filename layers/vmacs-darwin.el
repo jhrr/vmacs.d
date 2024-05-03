@@ -1,23 +1,37 @@
-;;; vmacs-darwin.el --- Darwin/macOS configuration.
+;;; vmacs-darwin.el --- Darwin/macOS configuration. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
 ;;; Code:
 
-(add-to-list 'frameset-filter-alist '(ns-transparent-titlebar . :never))
-(add-to-list 'frameset-filter-alist '(ns-appearance . :never))
-(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(use-package emacs
+  :preface
+  (defun insert-hash ()
+    "Insert a hash character."
+    (interactive)
+    (insert "#"))
+  (global-set-key "\263" #'insert-hash)
 
-(setq ring-bell-function #'ignore)
-(setq frame-resize-pixelwise t)
-(setq browse-url-browser-function (quote browse-url-generic))
-(setq browse-url-generic-program "open")
-(setq ns-use-proxy-icon nil)
+  (defun insert-euro ()
+    "Insert a euro character."
+    (interactive)
+    (insert "€"))
+  (global-set-key "\262" #'insert-euro)
+  :init
+  (add-to-list 'frameset-filter-alist '(ns-transparent-titlebar . :never))
+  (add-to-list 'frameset-filter-alist '(ns-appearance . :never))
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 
-;; Add fonts to list in order of preference.
-(set-face-attribute
- 'default nil
- :font (font-candidate '"Inconsolata LGC 12"))
+  (setq ring-bell-function #'ignore)
+  (setq frame-resize-pixelwise t)
+  (setq browse-url-browser-function (quote browse-url-generic))
+  (setq browse-url-generic-program "open")
+  (setq ns-use-proxy-icon nil)
+
+  ;; Add fonts to list in order of preference.
+  (set-face-attribute
+   'default nil
+   :font (font-candidate '"Inconsolata LGC 12")))
 
 (use-package exec-path-from-shell
   :straight t
@@ -45,18 +59,6 @@
   (progn
     (osx-trash-setup)
     (setq delete-by-moving-to-trash t)))
-
-(defun insert-hash ()
-  "Insert a hash character."
-  (interactive)
-  (insert "#"))
-(global-set-key "\263" 'insert-hash)
-
-(defun insert-euro ()
-  "Insert a euro character."
-  (interactive)
-  (insert "€"))
-(global-set-key "\262" 'insert-euro)
 
 (provide 'vmacs-darwin)
 ;;; vmacs-darwin.el ends here

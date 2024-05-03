@@ -79,17 +79,11 @@
   (with-no-warnings
     (require 'cl-lib)))
 
-(use-package f :straight t)
-(use-package s :straight t)
+(use-package f :straight t :commands (f-expand))
+(use-package s :straight t :commands (s-trim))
 (use-package el-patch :straight t)
 (use-package anaphora :straight t)
 (use-package key-chord :straight t)
-
-(defmacro use-feature (name &rest args)
-  "Like `use-package', but with `straight-use-package-by-default' disabled.
-NAME and ARGS are as in `use-package'."
-  (declare (indent defun))
-  `(use-package ,name :straight nil ,@args))
 
 (use-package vmacs-paths :load-path "layers")
 (use-package vmacs-core)
