@@ -79,7 +79,7 @@
   (with-no-warnings
     (require 'cl-lib)))
 
-(use-package f :straight t :commands (f-expand))
+(use-package f :straight t :commands (f-exists? f-expand f-traverse-upwards))
 (use-package s :straight t :commands (s-trim))
 (use-package el-patch :straight t)
 (use-package anaphora :straight t)

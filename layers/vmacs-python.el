@@ -4,6 +4,17 @@
 
 ;;; Code:
 
+(declare-function f-exists? "init")
+(declare-function f-expand "init")
+(declare-function f-traverse-upwards "init")
+
+(defconst venv-dir ".venv")
+
+(use-package pyvenv
+  :straight t
+  :commands
+  (pyvenv-workon))
+
 (use-package python
   :straight t
   :mode ("\\.py\\'" . python-mode)
@@ -32,8 +43,24 @@
     (prettify-symbols-mode -1)
     (when (executable-find "ipython")
       (setq-local python-shell-interpreter "ipython")
-      (setq-local python-shell-interpreter-args "--simple-prompt -i")))
-  :hook (python-mode . init-python-mode)
+      (setq-local python-shell-interpreter-args "--simple-prompt -i"))
+
+    (defun pyvenv-autoload ()
+      "Automatically activates pyvenv if `.venv' directory exists."
+      (f-traverse-upwards
+       (lambda (path)
+         (let ((venv-path (f-expand venv-dir path)))
+           (message venv-path)
+           (if (f-directory? venv-path)
+               (progn
+                 (pyvenv-activate venv-path)
+                 (message "Activated venv: %s" venv-path))
+             nil)))
+       default-directory))
+
+    (pyvenv-autoload))
+  :hook
+  (python-mode . init-python-mode)
   :config
   (use-package pytest :straight t))
 
