@@ -48,17 +48,19 @@
 
     (defun pyvenv-autoload ()
       "Automatically activates pyvenv if `.venv' directory exists."
-      (f-traverse-upwards
-       (lambda (path)
-         (let ((venv-path (f-expand venv-dir path)))
-           (message venv-path)
-           (if (f-directory? venv-path)
-               (progn
-                 (pyvenv-activate venv-path)
-                 (message "Activated venv: %s" venv-path))
-             nil)))
-       default-directory))
+      (when (string-match ".*\.py$" (buffer-file-name))
+        (f-traverse-upwards
+         (lambda (path)
+           (let ((venv-path (f-expand venv-dir path)))
+             (message venv-path)
+             (if (f-directory? venv-path)
+                 (progn
+                   (pyvenv-activate venv-path)
+                   (message "Activated venv: %s" venv-path))
+               nil)))
+         default-directory)))
 
+    (add-function :after after-focus-change-function (lambda () (pyvenv-autoload)))
     (pyvenv-autoload))
   :hook
   (python-mode . init-python-mode)
