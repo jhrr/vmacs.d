@@ -13,7 +13,21 @@
 (use-package pyvenv
   :straight t
   :commands
-  (pyvenv-workon))
+  (pyvenv-activate)
+  :preface
+  (defun pyvenv-autoload ()
+    "Automatically activates a virtualenv if a `.venv' directory exists."
+    (when (string-match ".*\.py$" (buffer-file-name))
+      (f-traverse-upwards
+       (lambda (path)
+         (let ((venv-path (f-expand venv-dir path)))
+           (message venv-path)
+           (if (f-directory? venv-path)
+               (progn
+                 (pyvenv-activate venv-path)
+                 (message "Activated venv: %s" venv-path))
+             nil)))
+       default-directory))))
 
 (use-package python
   :straight t
@@ -28,11 +42,11 @@
      ("w" #'pyvenv-workon "workon"))
     "Test"
     (("t" #'pytest-all "all")
-     ("T" #'pytest-one "one")
+     ("To" #'pytest-one "one")
      ("Tm" #'pytest-module "module")
      ("Ts" #'pytest-suite "suite"))))
   :preface
-  (defun init-python-mode ()
+  (defun configure-python ()
     (setq-local comment-inline-offset 2)
     (setq-local tab-width 4)
     (setq-local evil-shift-width 4)
@@ -41,31 +55,16 @@
     (setq python-indent-offset 4)
     (setq python-fill-docstring-style 'pep-257)
     (setq python-shell-completion-native-enable nil)
-    (prettify-symbols-mode -1)
+    (prettify-symbols-mode nil)
     (when (executable-find "ipython")
       (setq-local python-shell-interpreter "ipython")
       (setq-local python-shell-interpreter-args "--simple-prompt -i"))
-
-    (defun pyvenv-autoload ()
-      "Automatically activates pyvenv if `.venv' directory exists."
-      (when (string-match ".*\.py$" (buffer-file-name))
-        (f-traverse-upwards
-         (lambda (path)
-           (let ((venv-path (f-expand venv-dir path)))
-             (message venv-path)
-             (if (f-directory? venv-path)
-                 (progn
-                   (pyvenv-activate venv-path)
-                   (message "Activated venv: %s" venv-path))
-               nil)))
-         default-directory)))
-
-    (add-function :after after-focus-change-function (lambda () (pyvenv-autoload)))
-    (pyvenv-autoload))
+    (add-function :after after-focus-change-function (lambda () (pyvenv-autoload))))
   :hook
-  (python-mode . init-python-mode)
+  (python-mode . configure-python)
   :config
-  (use-package pytest :straight t))
+  (use-package pytest :straight t)
+  (pyvenv-autoload))
 
 (provide 'vmacs-python)
 ;;; vmacs-python.el ends here
