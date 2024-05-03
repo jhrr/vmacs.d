@@ -17,9 +17,9 @@
      ("w" #'pyvenv-workon "workon"))
     "Test"
     (("t" #'pytest-all "all")
-     ("tt" #'pytest-one "one")
-     ("tm" #'pytest-module "module")
-     ("ts" #'pytest-suite "suite"))))
+     ("T" #'pytest-one "one")
+     ("Tm" #'pytest-module "module")
+     ("Ts" #'pytest-suite "suite"))))
   :preface
   (defun init-python-mode ()
     (setq-local comment-inline-offset 2)
@@ -34,16 +34,6 @@
       (setq-local python-shell-interpreter "ipython")
       (setq-local python-shell-interpreter-args "--simple-prompt -i")))
   :hook (python-mode . init-python-mode)
-  :init
-  (use-package auto-virtualenvwrapper
-    :straight t
-    :commands
-    (auto-virtualenvwrapper-activate))
-
-  (add-hook 'python-mode-hook #'auto-virtualenvwrapper-activate)
-  (add-hook 'window-configuration-change-hook #'auto-virtualenvwrapper-activate)
-  (add-hook 'focus-in-hook #'auto-virtualenvwrapper-activate)
-
   :config
   (use-package pytest :straight t))
 
