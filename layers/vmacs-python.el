@@ -10,33 +10,42 @@
   :mode-hydra
   (python-mode
    ("Eval"
-    (("s" #'python-repl "shell")
-     ("eb" #'python-shell-send-buffer "buffer")
-     ("ef" #'python-shell-send-file "file"))
+    (("J" #'run-python "repl")
+     ("b" #'python-shell-send-buffer "buffer")
+     ("f" #'python-shell-send-file "file")
+     ("v" #'pyvenv-activate "activate venv")
+     ("w" #'pyvenv-workon "workon"))
     "Test"
-    (("ta" #'pytest-all "all")
+    (("t" #'pytest-all "all")
      ("tt" #'pytest-one "one")
      ("tm" #'pytest-module "module")
      ("ts" #'pytest-suite "suite"))))
-  :hook (python-mode . init-python-mode)
   :preface
   (defun init-python-mode ()
     (setq-local comment-inline-offset 2)
     (setq-local tab-width 4)
     (setq-local evil-shift-width 4)
+    (setq python-indent-guess-indent-offset nil)
+    (setq python-indent-offset 4)
+    (setq python-fill-docstring-style 'pep-257)
+    (setq python-shell-completion-native-enable nil)
     (prettify-symbols-mode -1)
     (when (executable-find "ipython")
       (setq-local python-shell-interpreter "ipython")
       (setq-local python-shell-interpreter-args "--simple-prompt -i")))
-  :config
-  (setq python-indent-guess-indent-offset nil)
-  (setq python-indent-offset 4)
-  (setq python-fill-docstring-style 'pep-257))
-
-  (use-package pytest
+  :hook (python-mode . init-python-mode)
+  :init
+  (use-package auto-virtualenvwrapper
     :straight t
-    :defer t
-    :after python)
+    :commands
+    (auto-virtualenvwrapper-activate))
+
+  (add-hook 'python-mode-hook #'auto-virtualenvwrapper-activate)
+  (add-hook 'window-configuration-change-hook #'auto-virtualenvwrapper-activate)
+  (add-hook 'focus-in-hook #'auto-virtualenvwrapper-activate)
+
+  :config
+  (use-package pytest :straight t))
 
 (provide 'vmacs-python)
 ;;; vmacs-python.el ends here

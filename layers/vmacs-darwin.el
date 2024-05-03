@@ -12,17 +12,20 @@
     "Insert a hash character."
     (interactive)
     (insert "#"))
-  (global-set-key "\263" #'insert-hash)
 
   (defun insert-euro ()
     "Insert a euro character."
     (interactive)
     (insert "€"))
-  (global-set-key "\262" #'insert-euro)
   :init
   (add-to-list 'frameset-filter-alist '(ns-transparent-titlebar . :never))
   (add-to-list 'frameset-filter-alist '(ns-appearance . :never))
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+
+  ;; Add your fonts to this list in order of preference.
+  (set-face-attribute
+   'default nil
+   :font (font-candidate '"Inconsolata LGC 12"))
 
   (setq ring-bell-function #'ignore)
   (setq frame-resize-pixelwise t)
@@ -30,10 +33,8 @@
   (setq browse-url-generic-program "open")
   (setq ns-use-proxy-icon nil)
 
-  ;; Add fonts to list in order of preference.
-  (set-face-attribute
-   'default nil
-   :font (font-candidate '"Inconsolata LGC 12")))
+  (global-set-key "\263" #'insert-hash)
+  (global-set-key "\262" #'insert-euro))
 
 (use-package exec-path-from-shell
   :straight t
@@ -43,11 +44,11 @@
   (defconst exec-path-from-shell-variables
     '("PATH"
       "MANPATH"
-      "PYTHONPATH"
       "SSH_AGENT_PID"
       "GPG_TTY"
       "TEXINPUTS"
-      "RUST_SRC_PATH"))
+      "RUST_SRC_PATH"
+      "VIRTUAL_ENV"))
   (exec-path-from-shell-initialize)
   (when-let* ((gls (executable-find "gls")))
     (setq insert-directory-program gls)))

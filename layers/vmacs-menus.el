@@ -14,9 +14,6 @@
                                 (width . 0.7)
                                 (left . 0.5))))
 
-;; TODO:
-;; (setq selectrum-refine-candidates-function #'orderless-filter)
-;; (setq selectrum-highlight-candidates-function #'orderless-highlight-matches)
 (use-package vertico
   :straight
   (:files (:defaults "extensions/*"))

@@ -12,7 +12,6 @@
   :config
   (global-flycheck-mode)
   (flycheck-set-indication-mode 'left-margin)
-
   (add-to-list 'flycheck-checkers 'proselint))
 
 (use-package reformatter
@@ -21,8 +20,12 @@
   (python-mode . ruff-format-on-save-mode)
   :config
   (reformatter-define ruff-format
-                      :program "ruff"
-                      :args `("format" "--stdin-filename" ,buffer-file-name "-")))
+    :program "ruff"
+    :args `("format" "--stdin-filename" ,buffer-file-name "-")))
+
+;; TODO: eglot
+;; (with-eval-after-load 'eglot
+;;   (add-to-list 'eglot-server-programs '(python-mode . ("ruff-lsp"))))
 
 (use-package artbollocks-mode
   :straight t
