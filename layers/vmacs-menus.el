@@ -105,7 +105,7 @@
              (make-composed-keymap keymap (current-local-map))))
         (apply fn args))))
 
-  (advice-add 'embark-completing-read-prompter :around
+  (advice-add #'embark-completing-read-prompter :around
               (with-minibuffer-keymap embark-completing-read-prompter-map))
   (define-key vertico-map (kbd "<backtab>") 'embark-act-with-completing-read)
 
@@ -117,13 +117,10 @@
 (use-package marginalia
   :straight t
   :bind
-  (:map minibuffer-local-map ("C-c m" . marginalia-cycle))
+  (:map minibuffer-local-map
+        ("C-c m" . marginalia-cycle))
   :init
-  (marginalia-mode)
-  (advice-add #'marginalia-cycle :after
-              (lambda () (when (bound-and-true-p vertico-mode) (vertico--exhibit))))
-  (setq marginalia-annotators
-        '(marginalia-annotators-heavy marginalia-annotators-light nil)))
+  (marginalia-mode))
 
 (use-package orderless
   :straight t
