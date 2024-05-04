@@ -6,6 +6,7 @@
 
 (use-package mini-frame
   :straight t
+  :disabled t
   :init
   (mini-frame-mode)
   :custom
@@ -19,7 +20,9 @@
   (:files (:defaults "extensions/*"))
   :init
   (vertico-mode)
-  (setq vertico-count 30))
+  (setq vertico-count 30)
+  (vertico-buffer-mode)
+  (vertico-multiform-mode))
 
 (use-package vertico-prescient
   :straight t
@@ -52,7 +55,7 @@
 (use-package orderless
   :straight t
   :init
-  (setq completion-styles '(orderless basic)
+  (setq completion-styles '(substring orderless basic)
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))))
 
@@ -80,23 +83,13 @@
   :bind ("C-c x" . consult-flycheck)
   :straight t)
 
+(use-package embark-consult :straight t)
+
 (use-package embark
   :straight t
   :after
   (embark-consult)
-  :config
-  (defvar embark-completing-read-prompter-map
-    (let ((map (make-sparse-keymap)))
-      (define-key map (kbd "<tab>") 'abort-recursive-edit)
-      map))
-
-  (defun embark-act-with-completing-read (&optional arg)
-    (interactive "P")
-    (let* ((embark-prompter 'embark-completing-read-prompter)
-           (act (propertize "Act" 'face 'highlight))
-           (embark-indicator (lambda (_keymap targets) nil)))
-      (embark-act arg)))
-
+  :preface
   (defun with-minibuffer-keymap (keymap)
     (lambda (fn &rest args)
       (minibuffer-with-setup-hook
@@ -105,14 +98,23 @@
              (make-composed-keymap keymap (current-local-map))))
         (apply fn args))))
 
-  (advice-add #'embark-completing-read-prompter :around
+  (defvar embark-completing-read-prompter-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "<tab>") 'abort-recursive-edit)
+      map))
+
+  (defun embark-act-with-completing-read (&optional arg)
+    (interactive "P")
+    (let* ((embark-prompter 'embark-completing-read-prompter)
+           (embark-indicators '(embark-minimal-indicator)))
+      (embark-act arg)))
+
+  (advice-add 'embark-completing-read-prompter :around
               (with-minibuffer-keymap embark-completing-read-prompter-map))
   (define-key vertico-map (kbd "<backtab>") 'embark-act-with-completing-read)
 
   (bind-key* "C-c e" 'embark-act)
   (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode))
-
-(use-package embark-consult :straight t)
 
 (use-package marginalia
   :straight t
