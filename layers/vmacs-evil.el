@@ -10,15 +10,19 @@
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
   (setq evil-search-module 'evil-search)
-  (setq key-chord-two-keys-delay 0.5)
   (setq-default cursor-in-non-selected-windows nil)
   :init
   (evil-mode)
   :config
   (define-key evil-normal-state-map ";" #'consult-buffer)
   (evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle)
-  (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
-  (key-chord-mode 1))
+
+  (use-package key-chord
+    :straight t
+    :config
+    (setq key-chord-two-keys-delay 0.5)
+    (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+    (key-chord-mode 1)))
 
 (use-package evil-collection
   :straight t

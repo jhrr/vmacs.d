@@ -1,4 +1,4 @@
-;;; vmacs-menus.el --- Menus and navigation -*- lexical-binding: t; -*-
+;;; vmacs-menus.el --- Menus and navigation. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
@@ -113,7 +113,7 @@
               (with-minibuffer-keymap embark-completing-read-prompter-map))
   (define-key vertico-map (kbd "<backtab>") 'embark-act-with-completing-read)
 
-  (bind-key* "C-c e" 'embark-act)
+  (bind-key* "C-c e" 'embark-act-with-completing-read)
   (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode))
 
 (use-package marginalia

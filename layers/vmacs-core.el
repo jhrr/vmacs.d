@@ -45,12 +45,6 @@
                            (read-string "Google: "))))))
   (bind-key "C-c G" #'google)
 
-  (defun insert-uuid ()
-    "Insert a UUID at point."
-    (interactive "*")
-    (let ((uuid (s-trim (org-id-uuid))))
-      (insert uuid)))
-
   (defun nuke-all ()
     "Kill all buffers, leaving *scratch* only."
     (interactive)

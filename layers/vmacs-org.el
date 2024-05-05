@@ -217,18 +217,13 @@
     "Save"
     (("s" #'org-journal-save-entry "save")
      ("x" #'org-journal-save-entry-and-exit "save and exit"))))
-  :init
+  :preface
   (setq org-journal-dir
         (expand-file-name "journal/" user-org-directory))
-  :config
+
   (defun iso-week ()
     "Return the ISO week number, human readable and Monday indexed."
     (concat "Week " (format-time-string "%V")))
-
-  (setq org-journal-date-prefix "#+TITLE: ")
-  (setq org-journal-date-format (concat "%Y/%m/%d, " (iso-week) ", %A"))
-  (setq org-journal-time-prefix "* ")
-  (setq org-journal-time-format "%R ")
 
   (defun get-offset-date (offset)
     "Calculate a date OFFSET from the current time."
@@ -271,8 +266,7 @@
   (defun get-specific-journal-entry ()
     "Prompt to open the journal file for a specific date."
     (interactive)
-    (let* ((selectrum-should-sort-p nil)
-           (target-journal-file
+    (let* ((target-journal-file
             (concat org-journal-dir
                     (completing-read
                      "date: " (journal-all-entries)))))
@@ -286,7 +280,12 @@
   (defun org-journal-save-entry-and-exit ()
     (interactive)
     (save-buffer)
-    (kill-buffer-and-window)))
+    (kill-buffer-and-window))
+
+  (setq org-journal-date-prefix "#+TITLE: ")
+  (setq org-journal-date-format (concat "%Y/%m/%d, " (iso-week) ", %A"))
+  (setq org-journal-time-prefix "* ")
+  (setq org-journal-time-format "%R "))
 
 (provide 'vmacs-org)
 ;;; vmacs-org.el ends here

@@ -66,10 +66,7 @@
   (load bootstrap-file nil 'nomessage))
 
 (with-no-warnings
-  (setq use-package-verbose t)
-  ;; (setq straight-use-package-by-default t)
-  ;; (setq use-package-always-defer t)
-)
+  (setq use-package-verbose t))
 
 (eval-when-compile
   (require 'use-package)
@@ -80,10 +77,8 @@
     (require 'cl-lib)))
 
 (use-package f :straight t :commands (f-exists? f-expand f-traverse-upwards))
-(use-package s :straight t :commands (s-trim))
-(use-package el-patch :straight t)
-(use-package anaphora :straight t)
-(use-package key-chord :straight t)
+(use-package s :straight :commands (s-trim))
+(use-package anaphora :straight t :commands (alambda alet awhen))
 
 (use-package vmacs-paths :load-path "layers")
 (use-package vmacs-core)

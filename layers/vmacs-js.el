@@ -18,8 +18,16 @@
   :commands
   (js2-minor-mode))
 
+(use-package json-mode
+  :straight t
+  :mode "\\.json\\'")
+
+(use-package json-reformat
+  :straight t
+  :after json-mode)
+
 (use-package css-mode
-  :defer t
+  :mode "\\.css\\'"
   :custom
   (css-indent-offset 2))
 
