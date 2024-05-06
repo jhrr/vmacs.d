@@ -221,7 +221,14 @@ With a prefix argument N, (un)comment that many sexps."
                        sly-scratch))
   :config
   (use-package sly-macrostep :straight t)
-  (use-package sly-repl-ansi-color :straight t))
+  (use-package sly-repl-ansi-color :straight t)
+
+  (let ((map sly-editing-mode-map))
+    (define-key map [remap display-local-help] #'sly-describe-symbol)
+    (define-key map [remap embark-pp-eval-defun] #'sly-compile-defun)
+    (define-key map [remap pp-macroexpand-expression] #'sly-expand-1)
+    (define-key map [remap pp-eval-expression] #'sly-interactive-eval)
+    (define-key map [remap xref-find-definitions] #'sly-edit-definition)))
 
 (provide 'vmacs-lisp)
 ;;; vmacs-lisp.el ends here

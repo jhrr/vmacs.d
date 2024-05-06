@@ -4,16 +4,18 @@
 
 ;;; Code:
 
-(use-package mini-frame
-  :straight t
+(use-package posframe
   :disabled t
-  :init
-  (mini-frame-mode)
-  :custom
-  (add-to-list 'mini-frame-ignore-commands "vr/*")
-  (mini-frame-show-parameters '((top . 70)
-                                (width . 0.7)
-                                (left . 0.5))))
+  :straight t)
+
+(use-package hydra-posframe
+  :disabled t
+  :straight
+  (hydra-posframe :type git :host github :repo "Ladicle/hydra-posframe")
+  :hook
+  (after-init . hydra-posframe-mode)
+  :config
+  (setq hydra-posframe-border-width 2))
 
 (use-package vertico
   :straight
