@@ -28,6 +28,7 @@ places
 private.el
 .python-environments/
 recentf
+request/
 synonym.cache
 url/*
 sbcl.core-for-slime

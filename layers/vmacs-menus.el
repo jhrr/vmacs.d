@@ -20,6 +20,8 @@
 (use-package vertico
   :straight
   (:files (:defaults "extensions/*"))
+  :hook
+  (rfn-eshadow-update-overlay . vertico-directory-tidy)
   :init
   (vertico-mode)
   (setq vertico-count 30)

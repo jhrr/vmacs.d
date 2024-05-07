@@ -20,11 +20,11 @@
 
 (use-package json-mode
   :straight t
-  :mode "\\.json\\'")
-
-(use-package json-reformat
-  :straight t
-  :after json-mode)
+  :mode "\\.json\\'"
+  :config
+  (use-package json-reformat
+    :straight t
+    :after json-mode))
 
 (use-package css-mode
   :mode "\\.css\\'"

@@ -27,11 +27,11 @@
 
 ;;; Commentary:
 
-;; I know many good recipes, but when it is time to cook or I am out
-;; shopping for food, my memory often fails me. As a result, I end up eating
-;; the same few meals over and over again. Or sometimes, when feeling
-;; completely uninspired, not even bothering to eat at all. It shouldn't be
-;; this way, not with org-mode in our lives.
+;; I know many good recipes, but when it is time to cook or I am out shopping
+;; for food, my memory often fails me. As a result, I end up eating the same
+;; few meals over and over again. Or sometimes, when feeling completely
+;; uninspired, not even bothering to eat at all. It shouldn't be this way, not
+;; with org-mode in our lives.
 
 ;; Making a recipe can be seen as a particular type of habit, ie a recurring
 ;; pattern of behaviour.
