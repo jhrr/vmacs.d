@@ -22,19 +22,32 @@
   (add-to-list 'frameset-filter-alist '(ns-appearance . :never))
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 
-  ;; Add your fonts to this list in order of preference.
+  (defvar face-overrides
+    '(default
+      fixed-pitch
+      fixed-pitch-serif
+      read-multiple-choice-face
+      variable-pitch
+      variable-pitch-text))
+
+  (mapc
+   (lambda (face)
+     (set-face-attribute face nil :font (font-candidate '"Inconsolata LGC 12")))
+   face-overrides)
+
+  ;; TODO: This should be something else with unicode points.
   (set-face-attribute
-   'default nil
-   :font (font-candidate '"Inconsolata LGC 12"))
+   'glyphless-char nil
+   :font (font-candidate '"Inconsolata LGC 12")))
 
-  (setq ring-bell-function #'ignore)
-  (setq frame-resize-pixelwise t)
-  (setq browse-url-browser-function (quote browse-url-generic))
-  (setq browse-url-generic-program "open")
-  (setq ns-use-proxy-icon nil)
+(setq ring-bell-function #'ignore)
+(setq frame-resize-pixelwise t)
+(setq browse-url-browser-function (quote browse-url-generic))
+(setq browse-url-generic-program "open")
+(setq ns-use-proxy-icon nil)
 
-  (global-set-key "\263" #'insert-hash)
-  (global-set-key "\262" #'insert-euro))
+(global-set-key "\263" #'insert-hash)
+(global-set-key "\262" #'insert-euro)
 
 (use-package exec-path-from-shell
   :straight t

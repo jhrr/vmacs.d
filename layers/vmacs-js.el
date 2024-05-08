@@ -20,14 +20,12 @@
 
 (use-package json-mode
   :straight t
-  :mode "\\.json\\'"
+  :mode (rx ".json" eos)
   :config
-  (use-package json-reformat
-    :straight t
-    :after json-mode))
+  (use-package json-reformat :straight t))
 
 (use-package css-mode
-  :mode "\\.css\\'"
+  :mode (rx ".css" eos)
   :custom
   (css-indent-offset 2))
 
