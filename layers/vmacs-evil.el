@@ -47,11 +47,5 @@
   :config
   (evil-commentary-mode))
 
-(use-package evil-paredit
-  :straight t
-  :after evil
-  :commands
-  (evil-paredit-mode))
-
 (provide 'vmacs-evil)
 ;;; vmacs-evil.el ends here

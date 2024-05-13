@@ -194,6 +194,7 @@ With a prefix argument N, (un)comment that many sexps."
   :commands
   (macrostep-expand))
 
+
 (use-package paredit
   :straight t
   :commands
@@ -203,7 +204,13 @@ With a prefix argument N, (un)comment that many sexps."
    (lambda (hook) (progn
                (add-hook hook 'paredit-mode)
                (add-hook hook 'evil-paredit-mode)))
-   lisp-mode-hooks))
+   lisp-mode-hooks)
+  :config
+  (use-package evil-paredit
+    :straight t
+    :after evil
+    :commands
+    (evil-paredit-mode)))
 
 (use-package sly
   :straight t
