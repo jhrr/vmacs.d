@@ -6,6 +6,10 @@
 
 ;;; Code:
 
+(use-package org-transclusion
+  :straight t
+  :commands (org-transclusion-add-all))
+
 (use-package org
   :straight t
   :mode
@@ -94,19 +98,15 @@
             "\n:END:"
             "\n#+TITLE: "))
 
-  (setq rg-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number -e -uuu")
-
   (defun grep-org ()
     "Search through the org directory tree."
     (interactive)
-    (let ((consult-ripgrep-args rg-command))
-      (consult-ripgrep user-org-directory)))
+    (consult-ripgrep user-org-directory))
 
   (defun grep-org-roam ()
     "Search org-roam directory using consult-ripgrep. With live-preview."
     (interactive)
-    (let ((consult-ripgrep-args rg-command))
-      (consult-ripgrep org-roam-directory)))
+    (consult-ripgrep org-roam-directory))
 
   :init
   (defvar user-org-directory
@@ -126,29 +126,40 @@
   (setq org-agenda-sticky t)
   (setq org-ellipsis " ...")
   (setq org-fold-core-style 'overlays)
+  (setq org-log-into-drawer t)
   (setq org-property-format "%s %s") ;; Don't tab/align property values.
   (setq org-startup-folded t)
+  (setq org-treat-insert-todo-heading-as-state-change nil)
 
   (setq org-todo-keywords
-        '((sequence "TODAY(t)" "|" "NEXT(n)" "|" "DONE(d)")
-          (sequence "BLOCKED(b@/!)")))
+        '((sequence "TODO" "TODAY" "NEXT" "|" "DONE(d!)")
+          (sequence "DELEGATED" "|" "BLOCKED(b@/!)" "CANCELLED(c@/!)")))
 
   (setq org-todo-keyword-faces
-        '(("BLOCKED" :foreground "#f76050" :weight bold)
+        '(("TODO" :foreground "#009cff" :weight bold)
           ("TODAY" :foreground "#ff6300" :weight bold)
           ("NEXT" :foreground "#ffc900" :weight bold)
-          ("DONE" :foreground "#89a976" :weight bold)))
+          ("DONE" :foreground "#89a976" :weight bold)
+          ("DELEGATED" :foreground "#75a2a9" :weight bold)
+          ("BLOCKED" :foreground "#f76050" :weight bold)
+          ("CANCELLED" :foreground "#f76050" :weight bold)))
 
   (add-hook 'org-mode-hook
             #'(lambda () (progn
-                           (lambda () (push '("--" . ?—) prettify-symbols-alist))
-                           (setq fill-column 70)
-                           (setq evil-shift-width 2)
-                           (turn-on-auto-fill))))
+                      (lambda () (push '("--" . ?—) prettify-symbols-alist))
+                      (setq fill-column 70)
+                      (setq evil-shift-width 2)
+                      (turn-on-auto-fill)
+                      (org-transclusion-add-all))))
   :config
-  (use-package org-contrib :straight t)
-  (use-package org-transclusion :straight t)
   (require 'org-checklist)
+  (use-package org-contrib :straight t)
+  (use-package org-habit
+    :config
+    (add-to-list 'org-modules 'org-habit t)
+    (setq org-habit-following-days 7
+          org-habit-preceding-days 35
+          org-habit-show-all-today t))
 
   (org-defkey org-mode-map (kbd "RET") #'(lambda () (interactive) (org-return nil))))
 
