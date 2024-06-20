@@ -17,11 +17,21 @@
     "Insert a euro character."
     (interactive)
     (insert "€"))
-  :init
+
+  (setq browse-url-browser-function #'browse-url-generic)
+  (setq browse-url-generic-program "open")
+  (setq ring-bell-function #'ignore)
+  (setq frame-resize-pixelwise t)
+  (setq ns-use-proxy-icon nil)
+
   (add-to-list 'frameset-filter-alist '(ns-transparent-titlebar . :never))
   (add-to-list 'frameset-filter-alist '(ns-appearance . :never))
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 
+  (global-set-key "\263" #'insert-hash)
+  (global-set-key "\262" #'insert-euro)
+
+  :init
   (defvar face-overrides
     '(default
       fixed-pitch
@@ -39,15 +49,6 @@
   (set-face-attribute
    'glyphless-char nil
    :font (font-candidate '"Inconsolata LGC 12")))
-
-(setq ring-bell-function #'ignore)
-(setq frame-resize-pixelwise t)
-(setq browse-url-browser-function (quote browse-url-generic))
-(setq browse-url-generic-program "open")
-(setq ns-use-proxy-icon nil)
-
-(global-set-key "\263" #'insert-hash)
-(global-set-key "\262" #'insert-euro)
 
 (use-package exec-path-from-shell
   :straight t

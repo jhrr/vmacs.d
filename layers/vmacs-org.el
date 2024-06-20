@@ -152,7 +152,6 @@
                       (turn-on-auto-fill)
                       (org-transclusion-add-all))))
   :config
-  (require 'org-checklist)
   (use-package org-contrib :straight t)
   (use-package org-habit
     :config
@@ -160,6 +159,7 @@
     (setq org-habit-following-days 7
           org-habit-preceding-days 35
           org-habit-show-all-today t))
+  (require 'org-checklist)
 
   (org-defkey org-mode-map (kbd "RET") #'(lambda () (interactive) (org-return nil))))
 
