@@ -132,12 +132,11 @@
   (setq org-treat-insert-todo-heading-as-state-change nil)
 
   (setq org-todo-keywords
-        '((sequence "TODO" "TODAY" "NEXT" "|" "DONE(d!)")
+        '((sequence "TODO" "NEXT" "|" "DONE(d!)")
           (sequence "DELEGATED" "|" "BLOCKED(b@/!)" "CANCELLED(c@/!)")))
 
   (setq org-todo-keyword-faces
         '(("TODO" :foreground "#009cff" :weight bold)
-          ("TODAY" :foreground "#ff6300" :weight bold)
           ("NEXT" :foreground "#ffc900" :weight bold)
           ("DONE" :foreground "#89a976" :weight bold)
           ("DELEGATED" :foreground "#75a2a9" :weight bold)
