@@ -7,13 +7,22 @@
 (use-package flycheck
   :straight t
   :preface
+  (flycheck-define-checker python-mypy
+    "A Python type checker using mypy."
+    :command ("mypy"
+              source-original)
+    :error-patterns
+    ((error line-start (file-name) ":" line ": error:" (message) line-end))
+    :modes python-mode)
+  (add-to-list 'flycheck-checkers 'python-mypy t)
+
   (flycheck-define-checker python-ruff
     "A Python syntax and style checker using the ruff utility.
 To override the path to the ruff executable, set
 `flycheck-python-ruff-executable'."
     :command ("ruff"
               "check"
-              "--output-format=text"
+              "--output-format=full"
               (eval (when buffer-file-name (concat "--stdin-filename=" buffer-file-name)))
               "-")
     :modes python-mode
@@ -27,6 +36,8 @@ To override the path to the ruff executable, set
               (id (one-or-more (any alpha)) (one-or-more digit)) " "
               (message (one-or-more not-newline))
               line-end)))
+  (add-to-list 'flycheck-checkers 'python-ruff t)
+
   :custom
   (flycheck-emacs-lisp-initialize-packages t)
   (flycheck-display-errors-delay 0.1)

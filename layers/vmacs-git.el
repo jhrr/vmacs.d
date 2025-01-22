@@ -41,6 +41,13 @@
   ;; (setq magit-completing-read-function #'completing-read)
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1))
 
+(use-package forge
+  :straight t
+  :preface
+  (auth-source-pass-enable)
+  (setq auth-sources '("~/.password-store"))
+  :after magit)
+
 (use-package git-auto-commit-mode :straight t)
 
 (provide 'vmacs-git)

@@ -59,19 +59,10 @@
     (jump-to-file (filename-map (directory-org org-gtd-directory))))
 
   ;; TODO: Decouple template from (insert), just pass in a reference.
-  (defun org-file-property-template ()
-    (interactive)
-    (insert ":PROPERTIES:"
-            (concat "\n:ID: " (org-id-uuid))
-            "\n:CATEGORY:"
-            "\n:END:"
-            "\n#+TITLE: "))
-
   (defun org-file-matter-property-template ()
     (interactive)
     (insert ":PROPERTIES:"
             (concat "\n:ID: " (org-id-uuid))
-            "\n:CATEGORY: matter"
             "\n:ROAM_ALIASES:"
             "\n:END:"
             "\n#+TITLE: "))
@@ -80,7 +71,6 @@
     (interactive)
     (insert ":PROPERTIES:"
             (concat "\n:ID: " (org-id-uuid))
-            "\n:CATEGORY: reading"
             "\n:Title:"
             "\n:Authors:"
             "\n:Date:"
@@ -91,10 +81,8 @@
     (interactive)
     (insert ":PROPERTIES:"
             (concat "\n:ID: " (org-id-uuid))
-            "\n:CATEGORY: work.???"
-            "\n:Project:"
-            "\n:Key:" ;; Directories on disk should share this name/key.
             "\n:ROAM_ALIASES:"
+            "\n:Project:"
             "\n:END:"
             "\n#+TITLE: "))
 
@@ -107,6 +95,11 @@
     "Search org-roam directory using consult-ripgrep. With live-preview."
     (interactive)
     (consult-ripgrep org-roam-directory))
+
+  (defun insert-uuid ()
+    "Insert a unique, random uuid at point."
+    (interactive)
+    (insert (org-id-uuid)))
 
   :init
   (defvar user-org-directory
@@ -145,11 +138,11 @@
 
   (add-hook 'org-mode-hook
             #'(lambda () (progn
-                      (lambda () (push '("--" . ?—) prettify-symbols-alist))
-                      (setq fill-column 70)
-                      (setq evil-shift-width 2)
-                      (turn-on-auto-fill)
-                      (org-transclusion-add-all))))
+                           (lambda () (push '("--" . ?—) prettify-symbols-alist))
+                           (setq fill-column 70)
+                           (setq evil-shift-width 2)
+                           (turn-on-auto-fill)
+                           (org-transclusion-add-all))))
   :config
   (use-package org-contrib :straight t)
   (use-package org-habit
@@ -195,7 +188,7 @@
   :init
   (setq org-roam-node-display-template
         (concat "${title:*} "
-                (propertize "${tags:10}" 'face 'org-tag)))
+                (propertize "${tags:16}" 'face 'org-tag)))
 
   (setq org-roam-directory (expand-file-name "index/" user-org-directory))
   (defvar org-roam-index-file (expand-file-name "index.org" org-roam-directory))
